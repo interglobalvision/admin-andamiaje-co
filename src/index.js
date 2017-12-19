@@ -1,8 +1,38 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+//eslint-disable import/first
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import { firebaseApp } from './firebase'
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+//import { logUser, logOutUser } from './actions'
+import rootReducer from './redux'
+
+import App from './components/App.jsx'
+
+const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+
+// Bind firebase auth
+firebaseApp.auth().onAuthStateChanged(user => {
+	if(user) {
+		console.log('User logged')
+
+		const { email, username } = user
+		//store.dispatch(logUser(email))
+	} else {
+		console.log('No user')
+		//store.dispatch(logOutUser())
+	}
+})
+
+
+ReactDOM.render(
+	<Provider store={store}>
+		<Router>
+			<App />
+		</Router>
+	</Provider>
+	,
+	document.getElementById('root')
+)

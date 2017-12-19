@@ -1,0 +1,107 @@
+
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.009  000.009: --- VIM STARTING ---
+000.132  000.123: Allocated generic buffers
+000.373  000.241: locale set
+000.378  000.005: clipboard setup
+000.389  000.011: window checked
+011.595  011.206: inits 1
+011.780  000.185: parsing arguments
+011.793  000.013: expanding arguments
+015.114  003.321: shell init
+015.539  000.425: Termcap init
+015.561  000.022: inits 2
+016.412  000.851: init highlight
+017.031  000.072  000.072: sourcing /usr/local/share/vim/vim80/ftoff.vim
+017.423  000.252  000.252: sourcing /Users/cas/.vim/bundle/Vundle.vim/autoload/vundle.vim
+017.779  000.219  000.219: sourcing /Users/cas/.vim/bundle/Vundle.vim/autoload/vundle/config.vim
+030.156  000.038  000.038: sourcing /Users/cas/.vim/bundle/tern_for_vim/ftdetect/tern.vim
+030.364  000.032  000.032: sourcing /Users/cas/.vim/bundle/vim-stylus/ftdetect/stylus.vim
+030.565  000.073  000.073: sourcing /Users/cas/.vim/bundle/vim-javascript/ftdetect/javascript.vim
+030.777  000.071  000.071: sourcing /Users/cas/.vim/bundle/vim-jsx/ftdetect/javascript.vim
+030.925  000.027  000.027: sourcing /Users/cas/.vim/bundle/vim-es6/ftdetect/es6.vim
+031.453  008.877  008.636: sourcing /usr/local/share/vim/vim80/filetype.vim
+031.897  000.063  000.063: sourcing /usr/local/share/vim/vim80/ftplugin.vim
+032.313  000.051  000.051: sourcing /usr/local/share/vim/vim80/indent.vim
+033.388  000.241  000.241: sourcing /usr/local/share/vim/vim80/syntax/syncolor.vim
+033.664  000.772  000.531: sourcing /usr/local/share/vim/vim80/syntax/synload.vim
+033.703  001.063  000.291: sourcing /usr/local/share/vim/vim80/syntax/syntax.vim
+034.303  000.203  000.203: sourcing /usr/local/share/vim/vim80/syntax/syncolor.vim
+035.027  000.202  000.202: sourcing /usr/local/share/vim/vim80/syntax/syncolor.vim
+035.749  000.261  000.261: sourcing /usr/local/share/vim/vim80/syntax/syncolor.vim
+036.383  002.613  001.947: sourcing /Users/cas/.vim/colors/dracula.vim
+037.128  000.224  000.224: sourcing /usr/local/share/vim/vim80/syntax/syncolor.vim
+037.837  000.219  000.219: sourcing /usr/local/share/vim/vim80/syntax/syncolor.vim
+038.394  001.906  001.463: sourcing /Users/cas/.vim/colors/Dracula.vim
+038.834  022.126  007.010: sourcing $HOME/.vimrc
+038.843  000.305: sourcing vimrc file(s)
+040.359  001.196  001.196: sourcing /Users/cas/.vim/bundle/supertab/plugin/supertab.vim
+044.798  004.270  004.270: sourcing /Users/cas/.vim/bundle/vim-fugitive/plugin/fugitive.vim
+045.535  000.331  000.331: sourcing /Users/cas/.vim/bundle/ctrlp.vim/autoload/ctrlp/mrufiles.vim
+045.727  000.762  000.431: sourcing /Users/cas/.vim/bundle/ctrlp.vim/plugin/ctrlp.vim
+047.025  001.137  001.137: sourcing /Users/cas/.vim/bundle/tagbar/plugin/tagbar.vim
+047.606  000.189  000.189: sourcing /Users/cas/.vim/bundle/vim-airline/autoload/airline.vim
+047.950  000.144  000.144: sourcing /Users/cas/.vim/bundle/vim-airline/autoload/airline/init.vim
+048.535  000.135  000.135: sourcing /Users/cas/.vim/bundle/vim-airline/autoload/airline/parts.vim
+049.442  002.211  001.743: sourcing /Users/cas/.vim/bundle/vim-airline/plugin/airline.vim
+050.258  000.639  000.639: sourcing /Users/cas/.vim/bundle/vim-surround/plugin/surround.vim
+051.235  000.085  000.085: sourcing /usr/local/share/vim/vim80/plugin/getscriptPlugin.vim
+051.545  000.260  000.260: sourcing /usr/local/share/vim/vim80/plugin/gzip.vim
+051.896  000.301  000.301: sourcing /usr/local/share/vim/vim80/plugin/logiPat.vim
+051.971  000.025  000.025: sourcing /usr/local/share/vim/vim80/plugin/manpager.vim
+052.246  000.227  000.227: sourcing /usr/local/share/vim/vim80/plugin/matchparen.vim
+052.886  000.594  000.594: sourcing /usr/local/share/vim/vim80/plugin/netrwPlugin.vim
+052.984  000.033  000.033: sourcing /usr/local/share/vim/vim80/plugin/rrhelper.vim
+053.086  000.045  000.045: sourcing /usr/local/share/vim/vim80/plugin/spellfile.vim
+053.330  000.189  000.189: sourcing /usr/local/share/vim/vim80/plugin/tarPlugin.vim
+053.511  000.125  000.125: sourcing /usr/local/share/vim/vim80/plugin/tohtml.vim
+053.766  000.200  000.200: sourcing /usr/local/share/vim/vim80/plugin/vimballPlugin.vim
+054.091  000.227  000.227: sourcing /usr/local/share/vim/vim80/plugin/zipPlugin.vim
+054.130  002.761: loading plugins
+054.229  000.099: loading packages
+054.648  000.419: loading after plugins
+054.657  000.009: inits 3
+055.228  000.571: reading viminfo
+055.282  000.054: setting raw mode
+055.289  000.007: start termcap
+055.316  000.027: clearing screen
+057.661  000.097  000.097: sourcing /usr/local/share/vim/vim80/ftplugin/javascript.vim
+134.264  075.627  075.627: sourcing /Users/cas/.vim/bundle/tern_for_vim/autoload/tern.vim
+134.643  076.188  000.561: sourcing /Users/cas/.vim/bundle/tern_for_vim/after/ftplugin/javascript_tern.vim
+135.094  000.090  000.090: sourcing /Users/cas/.vim/bundle/vim-javascript/after/ftplugin/javascript.vim
+136.303  000.630  000.630: sourcing /Users/cas/.vim/bundle/vim-javascript/indent/javascript.vim
+136.539  000.055  000.055: sourcing /Users/cas/.vim/bundle/vim-es6/indent/javascript.vim
+136.772  000.049  000.049: sourcing /usr/local/share/vim/vim80/indent/javascript.vim
+137.995  000.236  000.236: sourcing /Users/cas/.vim/bundle/html5.vim/syntax/javascript/html5.vim
+141.539  003.332  003.332: sourcing /Users/cas/.vim/bundle/vim-javascript/syntax/javascript.vim
+141.799  000.056  000.056: sourcing /Users/cas/.vim/bundle/vim-es6/syntax/javascript.vim
+142.075  000.058  000.058: sourcing /usr/local/share/vim/vim80/syntax/javascript.vim
+143.548  000.542  000.542: sourcing /Users/cas/.vim/bundle/vim-airline/autoload/airline/extensions.vim
+143.925  000.121  000.121: sourcing /Users/cas/.vim/bundle/vim-airline/autoload/airline/extensions/quickfix.vim
+144.313  000.089  000.089: sourcing /Users/cas/.vim/bundle/vim-airline/autoload/airline/extensions/netrw.vim
+144.649  000.076  000.076: sourcing /Users/cas/.vim/bundle/vim-airline/autoload/airline/extensions/term.vim
+145.081  000.161  000.161: sourcing /Users/cas/.vim/bundle/vim-airline/autoload/airline/extensions/ctrlp.vim
+145.556  000.141  000.141: sourcing /Users/cas/.vim/bundle/vim-airline/autoload/airline/extensions/tagbar.vim
+146.690  000.588  000.588: sourcing /Users/cas/.vim/bundle/vim-airline/autoload/airline/extensions/branch.vim
+147.571  000.426  000.426: sourcing /Users/cas/.vim/bundle/vim-airline/autoload/airline/extensions/whitespace.vim
+148.272  000.134  000.134: sourcing /Users/cas/.vim/bundle/vim-airline/autoload/airline/extensions/wordcount.vim
+148.795  000.099  000.099: sourcing /Users/cas/.vim/bundle/vim-airline/autoload/airline/extensions/keymap.vim
+155.620  000.166  000.166: sourcing /Users/cas/.vim/bundle/vim-airline/autoload/airline/section.vim
+156.402  000.421  000.421: sourcing /Users/cas/.vim/bundle/vim-airline/autoload/airline/highlighter.vim
+160.347  000.131  000.131: sourcing /Users/cas/.vim/bundle/vim-airline/autoload/airline/themes.vim
+160.974  001.079  000.948: sourcing /Users/cas/.vim/bundle/vim/autoload/airline/themes/dracula.vim
+173.549  000.325  000.325: sourcing /Users/cas/.vim/bundle/vim-airline/autoload/airline/util.vim
+177.889  000.316  000.316: sourcing /Users/cas/.vim/bundle/vim-airline/autoload/airline/builder.vim
+178.725  000.198  000.198: sourcing /Users/cas/.vim/bundle/vim-airline/autoload/airline/extensions/default.vim
+238.153  000.241  000.241: sourcing /Users/cas/.vim/bundle/ctrlp.vim/autoload/ctrlp/utils.vim
+253.346  112.116: opening buffers
+253.405  000.059: BufEnter autocommands
+253.408  000.003: editing files in windows
+253.716  000.308: VimEnter autocommands
+253.718  000.002: before starting main loop
+253.994  000.276: first screen update
+253.995  000.001: --- VIM STARTED ---
