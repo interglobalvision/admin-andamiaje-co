@@ -3,11 +3,15 @@
  */
 
 import { combineReducers } from 'redux'
-// import user from './reducer_user.js'
+
+import user from './user/reducer'
+import forms from './forms/reducer'
 // import messages from './reducer_messages.js'
 
-
 const appReducer = combineReducers({
+  user,
+  forms,
+  // messages,
 })
 
 // Setup root reducer
