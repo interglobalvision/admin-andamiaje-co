@@ -1,15 +1,13 @@
 /**
  * Combine All Reducers
  */
-
 import { combineReducers } from 'redux'
+import { firebaseStateReducer } from 'react-redux-firebase'
 
-import user from './user/reducer'
 import forms from './forms/reducer'
-// import messages from './reducer_messages.js'
 
 const appReducer = combineReducers({
-  user,
+  firebase: firebaseStateReducer,
   forms,
   // messages,
 })

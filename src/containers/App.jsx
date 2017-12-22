@@ -1,22 +1,24 @@
 import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { firebaseConnect, isLoaded, isEmpty, pathToJS } from 'react-redux-firebase';
 
 import LoginForm from '../components/Login.jsx';
 import ControlPanel from '../components/ControlPanel.jsx';
 import NoMatch from '../components/NoMatch.jsx';
 
 const App = (props) => {
-  if(props.user.email) {
+  const { auth } = props;
+
+  if (!isLoaded(auth)) {
     return (
       <div>
-        <Switch>
-          <Route path='/' component={ControlPanel} />
-          <Route component={NoMatch}/>
-        </Switch>
+        <span>Loading</span>
       </div>
-    );
-  } else {
+    )
+  }
+
+  if (isEmpty(auth)) {
     return (
       <div>
         <Switch>
@@ -27,15 +29,23 @@ const App = (props) => {
       </div>
     );
   }
+
+  return (
+    <div>
+      <Switch>
+        <Route path='/' component={ControlPanel} />
+        <Route component={NoMatch}/>
+      </Switch>
+    </div>
+  );
+
 };
 
-function mapStateToProps(state) {
-  console.log('state', state);
-  let { user } = state;
+// sync /todos from firebase into redux
+const firebaseWrapped = firebaseConnect()(App);
 
-  return {
-    user,
-  }
-}
-
-export default withRouter(connect(mapStateToProps, null)(App));
+export default withRouter(connect(({firebase}) => ({
+  authError: pathToJS(firebase, 'authError'),
+  auth: pathToJS(firebase, 'auth'),
+  profile: pathToJS(firebase, 'profile')
+}))(firebaseWrapped));
