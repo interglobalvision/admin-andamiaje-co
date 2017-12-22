@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import LoginForm from '../components/Login.jsx';
@@ -10,16 +10,20 @@ const App = (props) => {
   if(props.user.email) {
     return (
       <div>
-        <Route exact path='/' component={ControlPanel} />
-        <Route component={NoMatch}/>
+        <Switch>
+          <Route path='/' component={ControlPanel} />
+          <Route component={NoMatch}/>
+        </Switch>
       </div>
     );
   } else {
     return (
       <div>
-        <Route exact path='/' component={LoginForm} />
-        <Route exact path='/login' component={LoginForm} />
-        <Route component={NoMatch}/>
+        <Switch>
+          <Route exact path='/' component={LoginForm} />
+          <Route exact path='/login' component={LoginForm} />
+          <Route component={NoMatch}/>
+        </Switch>
       </div>
     );
   }
