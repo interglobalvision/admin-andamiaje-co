@@ -4,12 +4,8 @@
 import { combineReducers } from 'redux'
 import { firebaseStateReducer } from 'react-redux-firebase'
 
-import forms from './forms/reducer'
-
 const appReducer = combineReducers({
   firebase: firebaseStateReducer,
-  forms,
-  // messages,
 })
 
 // Setup root reducer

@@ -38,7 +38,6 @@ const App = (props) => {
       </Switch>
     </div>
   );
-
 };
 
 // sync /todos from firebase into redux
