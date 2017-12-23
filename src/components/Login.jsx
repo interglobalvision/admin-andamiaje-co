@@ -22,7 +22,7 @@ class LoginForm extends Component {
 
     this.setState({ isLoading: true });
 
-    return this.props.firebase
+    this.props.firebase
       .login({email, password})
       .then(() => {
         this.setState({ isLoading: false })
