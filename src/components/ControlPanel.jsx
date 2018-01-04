@@ -8,7 +8,7 @@ import NoMatch from '../components/NoMatch.jsx';
 
 const ControlPanel = () => {
   return (
-    <div>
+    <div className='container'>
       <Nav />
       <div>
         <Switch>

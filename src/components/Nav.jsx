@@ -12,9 +12,23 @@ class Nav extends Component {
   render() {
     return (
       <nav>
-        <Link to="/posts">Posts</Link>
-        <Link to="/catalogs">Catalogs</Link>
-        <button onClick={this.logOut.bind(this)}>Salir</button>
+        <div className='grid-row justify-between'>
+          <div className='grid-item item-s-3'>
+          </div>
+          <div className='grid-item item-flex'>
+            <div className='grid-row'>
+              <div className='grid-item item-flex'>
+                <Link to='/posts'>Posts</Link>
+              </div>
+              <div className='grid-item item-flex'>
+                <Link to='/catalogs'>Catalogs</Link>
+              </div>
+              <div className='grid-item item-flex'>
+                <button onClick={this.logOut.bind(this)}>Salir</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </nav>
     );
   }
