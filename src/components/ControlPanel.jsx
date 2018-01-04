@@ -8,9 +8,9 @@ import NoMatch from '../components/NoMatch.jsx';
 
 const ControlPanel = () => {
   return (
-    <div className='container'>
+    <div>
       <Nav />
-      <div>
+      <div className='container'>
         <Switch>
           <Route path='/posts' component={Posts} />
           <Route exact path='/' component={Welcome} />

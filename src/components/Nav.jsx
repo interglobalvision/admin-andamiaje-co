@@ -11,9 +11,10 @@ class Nav extends Component {
 
   render() {
     return (
-      <nav>
+      <nav className='container padding-top-small padding-bottom-small'>
         <div className='grid-row justify-between'>
           <div className='grid-item item-s-3'>
+            <h1>Andamiaje</h1>
           </div>
           <div className='grid-item item-flex'>
             <div className='grid-row'>
