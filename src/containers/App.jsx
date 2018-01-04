@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { firebaseConnect, isLoaded, isEmpty, pathToJS } from 'react-redux-firebase';
+import { firebaseConnect, isLoaded, isEmpty, getVal } from 'react-redux-firebase';
 
 import LoginForm from '../components/Login.jsx';
 import ControlPanel from '../components/ControlPanel.jsx';
@@ -44,7 +44,8 @@ const App = (props) => {
 const firebaseWrapped = firebaseConnect()(App);
 
 export default withRouter(connect(({firebase}) => ({
-  authError: pathToJS(firebase, 'authError'),
-  auth: pathToJS(firebase, 'auth'),
-  profile: pathToJS(firebase, 'profile')
-}))(firebaseWrapped));
+    authError: getVal(firebase, 'authError'),
+    auth: getVal(firebase, 'auth'),
+    profile: getVal(firebase, 'profile')
+  })
+)(firebaseWrapped));

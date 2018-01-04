@@ -1,6 +1,8 @@
 import { createStore, compose } from 'redux';
-import { reactReduxFirebase, firebaseStateReducer } from 'react-redux-firebase'
+import firebase from 'firebase';
+import { reactReduxFirebase } from 'react-redux-firebase'
 
+// Firebae configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAKtww3AfzqC-pjcG7wg_dG9UxoNfhlnsc",
   authDomain: "andamiaje-co.firebaseapp.com",
@@ -10,6 +12,10 @@ const firebaseConfig = {
   messagingSenderId: "222496116746"
 };
 
+// Init firebase instance
+firebase.initializeApp(firebaseConfig);
+
+// react-redux-firebase config
 const reduxFirebaseConfig = {
   userProfile: 'users',
   // enableLogging: true, // enable/disable Firebase's database logging
@@ -17,5 +23,5 @@ const reduxFirebaseConfig = {
 
 // Add redux Firebase to compose
 export const createStoreWithFirebase = compose(
-  reactReduxFirebase(firebaseConfig, reduxFirebaseConfig),
+  reactReduxFirebase(firebase, reduxFirebaseConfig),
 )(createStore)

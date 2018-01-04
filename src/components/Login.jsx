@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { firebaseConnect, pathToJS } from 'react-redux-firebase';
+import { firebaseConnect } from 'react-redux-firebase';
 
 class LoginForm extends Component {
   state = {
