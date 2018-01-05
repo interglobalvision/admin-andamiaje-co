@@ -15,17 +15,18 @@ class NoticiaForm extends Component {
   }
 
   addNoticia() {
-    const { title } = this.state;
+    const { title, published } = this.state;
 
     this.setState({ isLoading: true })
 
     this.props.firebase
       .push('noticias', {
         title,
+        published,
       })
       .then(() => {
         this.setState({ isLoading: false })
-        this.props.history.push('/');
+        this.props.history.push('/noticias');
       })
 
   }
