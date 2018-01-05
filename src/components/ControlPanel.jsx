@@ -3,8 +3,9 @@ import { Switch, Route } from 'react-router-dom';
 
 import Nav from './Nav';
 import Welcome from './Welcome';
-import Posts from './Posts';
-import NoMatch from '../components/NoMatch.jsx';
+import Noticias from './Noticias';
+import AddNoticia from './AddNoticia';
+import NoMatch from '../components/NoMatch';
 
 const ControlPanel = () => {
   return (
@@ -12,7 +13,8 @@ const ControlPanel = () => {
       <Nav />
       <div className='container'>
         <Switch>
-          <Route path='/posts' component={Posts} />
+          <Route exact path='/noticias' component={Noticias} />
+          <Route exact path='/noticias/add' component={AddNoticia} />
           <Route exact path='/' component={Welcome} />
           <Route component={NoMatch}/>
         </Switch>

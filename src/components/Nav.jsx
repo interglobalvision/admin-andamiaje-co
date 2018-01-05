@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { firebaseConnect } from 'react-redux-firebase';
 
+@firebaseConnect()
+@withRouter
 class Nav extends Component {
   logOut() {
     this.props.firebase.logout();
@@ -19,7 +21,7 @@ class Nav extends Component {
             </div>
             <div className='grid-item flex-grow grid-row align-items-center justify-end'>
               <div className='grid-item'>
-                <Link to='/posts'>Posts</Link>
+                <Link to='/noticias'>Noticias</Link>
               </div>
               <div className='grid-item'>
                 <Link to='/catalogs'>Catalogs</Link>
@@ -35,4 +37,4 @@ class Nav extends Component {
   }
 };
 
-export default withRouter(firebaseConnect()(Nav));
+export default Nav;
