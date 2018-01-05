@@ -11,20 +11,20 @@ class Nav extends Component {
 
   render() {
     return (
-      <nav className='container padding-top-small padding-bottom-small'>
-        <div className='grid-row justify-between'>
-          <div className='grid-item item-s-3'>
-            <h1>Andamiaje</h1>
-          </div>
-          <div className='grid-item item-flex'>
-            <div className='grid-row'>
-              <div className='grid-item item-flex'>
+      <nav className='padding-top-tiny padding-bottom-tiny'>
+        <div className='container'>
+          <div className='grid-row'>
+            <div className='grid-item item-s-3'>
+              <h1>Andamiaje</h1>
+            </div>
+            <div className='grid-item flex-grow grid-row align-items-center justify-end'>
+              <div className='grid-item'>
                 <Link to='/posts'>Posts</Link>
               </div>
-              <div className='grid-item item-flex'>
+              <div className='grid-item'>
                 <Link to='/catalogs'>Catalogs</Link>
               </div>
-              <div className='grid-item item-flex'>
+              <div className='grid-item'>
                 <button onClick={this.logOut.bind(this)}>Salir</button>
               </div>
             </div>
