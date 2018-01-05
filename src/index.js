@@ -5,6 +5,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStoreWithFirebase } from './firebase';
 
+import './styl';
+
 import rootReducer from './redux';
 
 import App from './containers/App.jsx';

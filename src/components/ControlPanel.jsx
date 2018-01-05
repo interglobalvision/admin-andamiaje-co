@@ -10,7 +10,7 @@ const ControlPanel = () => {
   return (
     <div>
       <Nav />
-      <div>
+      <div className='container'>
         <Switch>
           <Route path='/posts' component={Posts} />
           <Route exact path='/' component={Welcome} />
