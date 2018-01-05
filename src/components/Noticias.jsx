@@ -7,11 +7,13 @@ import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import NoticiasListItem from './NoticiasListItem';
 
 const Noticias = ({ firebase, noticias }) => {
-  const noticiasList = !isLoaded(noticias)
-    ? 'Loading'
-    : isEmpty(noticias)
-      ? 'No hay noticias que mostrar'
-      : Object.keys(noticias).map(
+
+  // Generate the list
+  const noticiasList = !isLoaded(noticias) // If not loaded…
+    ? 'Loading' // …show 'loading'
+    : isEmpty(noticias) // …else. If is empty…
+      ? 'No hay noticias que mostrar' // …show 'empty list'
+    : Object.keys(noticias).map( // …else map thru noticias
         (key, id) => <NoticiasListItem key={key} id={id} noticia={noticias[key]} />
       )
 
@@ -39,18 +41,19 @@ const Noticias = ({ firebase, noticias }) => {
         </div>
       </div>
 
-      {noticiasList}
+      <div class="rows-list">
+        {noticiasList}
+      </div>
 
     </section>
   );
 };
 
 export default compose(
-  firebaseConnect([
-    'noticias',
+  firebaseConnect([ // used to retrive data from firebase. this puts the data in the redux store. Also passes a firebase instace as prop to the component
+    'noticias', // connect with '/noticias'
   ]),
-  connect((state) => ({
-      noticias: state.firebase.ordered.noticias,
-    })
-  )
+  connect((state) => ({ // used to pass data from the redux store (state.fireabase) to the component as prop (noticias)
+    noticias: state.firebase.ordered.noticias,
+  }))
 )(Noticias);
