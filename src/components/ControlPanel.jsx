@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import Nav from './Nav';
 import Welcome from './Welcome';
-import Noticias from './Noticias';
+import Noticias from '../containers/Noticias';
 import AddNoticia from './AddNoticia';
 import NoMatch from '../components/NoMatch';
 
