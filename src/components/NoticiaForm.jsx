@@ -15,15 +15,15 @@ class NoticiaForm extends Component {
     isLoading: false,
   }
 
-  constructor({ noticia, id }) {
-    super();
+  constructor(props) {
+    super(props);
 
-    // If component recieves noticia as prop we use it for initial state (used for editing)
-    this.state = { ...noticia };
+    // If component recieves noticia as prop we merge it with initial state (used for editing)
+    this.state = { ...this.state, ...props.noticia };
 
-    // If component recieves an id as prop we will use it for saving (used for editing)
-    this.id = id;
   }
+
+  componentDidMunt
 
   addNoticia() {
     const { title, published } = this.state;
@@ -48,7 +48,7 @@ class NoticiaForm extends Component {
     this.setState({ isLoading: true })
 
     this.props.firebase
-      .update(`noticias/${this.id}`, {
+      .update(`noticias/${this.props.id}`, {
         title,
         published,
       })
@@ -64,7 +64,7 @@ class NoticiaForm extends Component {
       <form onSubmit={event => event.preventDefault()}>
         <div className='grid-row justify-end'>
           <div className='grid-item item-s-3'>
-            <button onClick={() => this.id ? this.updateNoticia() : this.addNoticia()}>Guardar{ this.id ? '' : ' Nueva'}</button>
+            <button onClick={() => this.props.id ? this.updateNoticia() : this.addNoticia()}>Guardar{ this.props.props.id ? '' : ' Nueva'}</button>
           </div>
         </div>
         <div className='grid-rowd'>
