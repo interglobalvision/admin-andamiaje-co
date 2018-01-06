@@ -3,8 +3,8 @@ import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { firebaseConnect } from 'react-redux-firebase';
 
-@firebaseConnect()
 @withRouter
+@firebaseConnect()
 class Nav extends Component {
   logOut() {
     this.props.firebase.logout();

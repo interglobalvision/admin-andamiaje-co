@@ -1,25 +1,35 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { firebaseConnect } from 'react-redux-firebase';
+import { isLoaded, isEmpty } from 'react-redux-firebase';
+import { withRouter } from 'react-router-dom';
 
-@firebaseConnect()
-const NoticiasList = ({ firebase }) => {
-  const N
+import NoticiasListItem from '../components/NoticiasListItem';
 
-  return (
-    <section>
-      <div className='grid-row'>
-        <div className='grid-item item-s-3'>
-          <h2>Noticias</h2>
+const NoticiasList = ({ noticias }) => {
+  if (!isLoaded(noticias)) { // If not loaded…
+    return 'Loading'; // …show 'loading'
+  } else if (isEmpty(noticias)) { // …else. If is empty…
+    return 'No hay noticias que mostrar'; // …show 'empty list'
+  } else {
+    return (
+      <section>
+        <header className='grid-row'>
+          <div className='grid-item item-s-4'>
+            <h3>Título</h3>
+          </div>
+          <div className='grid-item item-s-1'>
+            <h3>Estado</h3>
+          </div>
+        </header>
+
+        <div className="rows-list">
+          { Object.keys(noticias).map( // …else map thru noticias
+            (key, id) => <NoticiasListItem key={key} id={id} noticia={noticias[key]} />
+          ) }
         </div>
-      </div>
-      <div className='grid-row justify-end'>
-        <div className='grid-item item-s-2'>
-          <Link to='/noticias/add'>Añadir Entrada</Link>
-        </div>
-      </div>
-    </section>
-  );
+      </section>
+    );
+  }
+
 };
 
-export default NoticiasList;
+export default withRouter(NoticiasList);

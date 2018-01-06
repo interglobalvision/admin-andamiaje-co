@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded, isEmpty, getVal } from 'react-redux-firebase';
 
@@ -43,9 +44,11 @@ const App = (props) => {
 // sync /todos from firebase into redux
 const firebaseWrapped = firebaseConnect()(App);
 
-export default withRouter(connect(({firebase}) => ({
+export default compose(
+  withRouter,
+  connect(({firebase}) => ({
     authError: getVal(firebase, 'authError'),
     auth: getVal(firebase, 'auth'),
     profile: getVal(firebase, 'profile')
-  })
-)(firebaseWrapped));
+  }))
+)(firebaseWrapped);

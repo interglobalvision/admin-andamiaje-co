@@ -5,6 +5,7 @@ import Nav from './Nav';
 import Welcome from './Welcome';
 import Noticias from '../containers/Noticias';
 import AddNoticia from './AddNoticia';
+import UpdateNoticia from '../containers/UpdateNoticia';
 import NoMatch from '../components/NoMatch';
 
 const ControlPanel = () => {
@@ -15,6 +16,7 @@ const ControlPanel = () => {
         <Switch>
           <Route exact path='/noticias' component={Noticias} />
           <Route exact path='/noticias/add' component={AddNoticia} />
+          <Route path='/noticias/:key' component={UpdateNoticia} />
           <Route exact path='/' component={Welcome} />
           <Route component={NoMatch}/>
         </Switch>

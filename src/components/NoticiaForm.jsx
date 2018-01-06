@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 @firebaseConnect()
 @withRouter
 class NoticiaForm extends Component {
+
   state = {
     published: false,
     title: '',
@@ -12,6 +13,16 @@ class NoticiaForm extends Component {
       message: '',
     },
     isLoading: false,
+  }
+
+  constructor({ noticia, id }) {
+    super();
+
+    // If component recieves noticia as prop we use it for initial state (used for editing)
+    this.state = { ...noticia };
+
+    // If component recieves an id as prop we will use it for saving (used for editing)
+    this.id = id;
   }
 
   addNoticia() {
@@ -31,12 +42,29 @@ class NoticiaForm extends Component {
 
   }
 
+  updateNoticia() {
+    const { title, published } = this.state;
+
+    this.setState({ isLoading: true })
+
+    this.props.firebase
+      .update(`noticias/${this.id}`, {
+        title,
+        published,
+      })
+      .then(() => {
+        this.setState({ isLoading: false })
+        //this.props.history.push('/noticias');
+      })
+
+  }
+
   render() {
     return (
       <form onSubmit={event => event.preventDefault()}>
         <div className='grid-row justify-end'>
           <div className='grid-item item-s-3'>
-            <button onClick={() => this.addNoticia()}>Guardar Nueva</button>
+            <button onClick={() => this.id ? this.updateNoticia() : this.addNoticia()}>Guardar{ this.id ? '' : ' Nueva'}</button>
           </div>
         </div>
         <div className='grid-rowd'>
