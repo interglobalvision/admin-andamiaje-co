@@ -54,7 +54,6 @@ class NoticiaForm extends Component {
       })
       .then(() => {
         this.setState({ isLoading: false })
-        //this.props.history.push('/noticias');
       })
 
   }
@@ -64,7 +63,7 @@ class NoticiaForm extends Component {
       <form onSubmit={event => event.preventDefault()}>
         <div className='grid-row justify-end'>
           <div className='grid-item item-s-3'>
-            <button onClick={() => this.props.id ? this.updateNoticia() : this.addNoticia()}>Guardar{ this.props.props.id ? '' : ' Nueva'}</button>
+            <button onClick={() => this.props.id ? this.updateNoticia() : this.addNoticia()}>Guardar{ this.props.id ? '' : ' Nueva'}</button>
           </div>
         </div>
         <div className='grid-rowd'>
@@ -75,6 +74,7 @@ class NoticiaForm extends Component {
               name='published'
               ref={ ref => this.published = ref }
               type='checkbox'
+              disabled={this.state.isLoading}
               checked={this.state.published}
               onChange={ event => this.setState({ published: event.target.checked })}
             />
@@ -89,6 +89,7 @@ class NoticiaForm extends Component {
               name='title'
               ref={ ref => this.title = ref }
               type='text'
+              disabled={this.state.isLoading}
               value={this.state.title}
               onChange={ event => this.setState({ title: event.target.value })}
             />
