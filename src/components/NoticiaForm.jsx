@@ -63,7 +63,9 @@ class NoticiaForm extends Component {
       <form onSubmit={event => event.preventDefault()}>
         <div className='grid-row justify-end'>
           <div className='grid-item item-s-3'>
-            <button onClick={() => this.props.id ? this.updateNoticia() : this.addNoticia()}>Guardar{ this.props.id ? '' : ' Nueva'}</button>
+            <button onClick={() => this.props.id ? this.updateNoticia() : this.addNoticia()}>
+              Guardar{ this.props.id ? '' : ' Nueva'}
+            </button>
           </div>
         </div>
         <div className='grid-rowd'>
