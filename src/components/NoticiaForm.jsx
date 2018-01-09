@@ -68,6 +68,8 @@ class NoticiaForm extends Component {
   addNoticia() {
     const { title, rawContent, published, publishDate } = this.state;
 
+    const createdDate = Date.now();
+
     this.setState({ isLoading: true })
 
     this.props.firebase
@@ -76,6 +78,7 @@ class NoticiaForm extends Component {
         rawContent,
         published,
         publishDate,
+        createdDate,
       })
       .then(() => {
         this.setState({ isLoading: false })
