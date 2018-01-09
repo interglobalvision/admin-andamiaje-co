@@ -6,7 +6,7 @@ import { firebaseConnect } from 'react-redux-firebase';
 
 import NoticiasList from '../components/NoticiasList';
 
-const Noticias = ({ firebase, noticias }) => (
+const Noticias = ({ noticias }) => (
   <section>
 
     <div className='grid-row'>
@@ -32,6 +32,8 @@ export default compose(
     'noticias',
   ]),
   // Map state to props
+  // firebase = state.firebase
+  // ordered = state.firebase.ordered
   connect(({ firebase: { ordered } }) => {
     return ({
       noticias: ordered.noticias,
