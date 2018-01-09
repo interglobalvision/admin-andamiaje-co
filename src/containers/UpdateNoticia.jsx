@@ -13,7 +13,6 @@ const UpdateNoticia = ({ firebase, noticia, id }) => {
   } else if (isEmpty(noticia)) { // …else. If is empty…
     return 'Error'; // …show 'Error?'
   } else {
-      console.log(id);
     return (
       <section>
         <div className='grid-row'>

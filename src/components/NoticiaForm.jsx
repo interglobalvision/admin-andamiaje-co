@@ -2,12 +2,18 @@ import React, { Component } from 'react';
 import { firebaseConnect } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
 
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+
+import 'react-datepicker/dist/react-datepicker.css';
+
 @firebaseConnect()
 @withRouter
 class NoticiaForm extends Component {
 
   state = {
     published: false,
+    publishDate: '',
     title: '',
     error: {
       message: '',
@@ -21,12 +27,23 @@ class NoticiaForm extends Component {
     // If component recieves noticia as prop we merge it with initial state (used for editing)
     this.state = { ...this.state, ...props.noticia };
 
+    // Bind handlers
+    this.handleDateChange = this.handleDateChange.bind(this);
   }
 
-  componentDidMunt
+  componentDidMount() {
+
+    // Parse date
+    if(this.state.publishDate) {
+      this.setState({
+        publishDateDisplay: moment(this.state.publishDate),
+      });
+    }
+
+  }
 
   addNoticia() {
-    const { title, published } = this.state;
+    const { title, published, publishDate } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -34,6 +51,7 @@ class NoticiaForm extends Component {
       .push('noticias', {
         title,
         published,
+        publishDate,
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -43,7 +61,7 @@ class NoticiaForm extends Component {
   }
 
   updateNoticia() {
-    const { title, published } = this.state;
+    const { title, published, publishDate } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -51,11 +69,26 @@ class NoticiaForm extends Component {
       .update(`noticias/${this.props.id}`, {
         title,
         published,
+        publishDate
       })
       .then(() => {
         this.setState({ isLoading: false })
       })
 
+  }
+
+  handleDateChange(date) {
+    if(date) {
+      this.setState({
+        publishDateDisplay: date,
+        publishDate: date.valueOf(),
+      });
+    } else {
+      this.setState({
+        publishDateDisplay: null,
+        publishDate: null,
+      });
+    }
   }
 
   render() {
@@ -68,7 +101,32 @@ class NoticiaForm extends Component {
             </button>
           </div>
         </div>
-        <div className='grid-rowd'>
+        <div className='grid-row'>
+          <div className='grid-item item-s-12 item-m-6 item-l-3'>
+            <h4>Publicación</h4>
+            <DatePicker
+              selected={this.state.publishDateDisplay /*this is a moment object*/}
+              onChange={this.handleDateChange}
+              showTimeSelect
+              timeFormat='HH:mm'
+              timeIntervals={15}
+              dateFormat='LLL'
+              locale='es'
+              placeholderText='Fecha de publicación'
+              popperPlacement='bottom-start'
+              popperModifiers={{
+                offset: {
+                  enabled: true,
+                  offset: '0px, 12px'
+                },
+                preventOverflow: {
+                  enabled: true,
+                  escapeWithReference: false,
+                  boundariesElement: 'viewport'
+                }
+              }}
+            />
+          </div>
           <div className='grid-item item-s-2'>
             <h4>Estado</h4>
             <input
@@ -83,7 +141,7 @@ class NoticiaForm extends Component {
             <label htmlFor='published'>Publicado</label>
           </div>
         </div>
-        <div className='grid-rowd'>
+        <div className='grid-row'>
           <div className='grid-item item-s-12'>
             <h4><label htmlFor='title'>Título</label></h4>
             <input
