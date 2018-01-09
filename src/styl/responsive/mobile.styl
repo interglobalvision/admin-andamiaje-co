@@ -1,0 +1,32 @@
+.rows-list
+  > *
+    &:nth-child(odd)
+      background-color: $color-table-light
+    &:nth-child(even)
+      background-color: $color-table-dark
+
+// Datepicker Fixes
+// This is a temporary fix while it gets fixed
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list
+  padding-left: unset !important
+  padding-right: unset !important
+  width: 100px
+
+.react-datepicker__input-container,
+.react-datepicker-wrapper
+  width: 100%
+
+.react-datepicker
+  width: 314px
+
+.react-datepicker .react-datepicker__day
+  line-height: 1.4rem
+  margin: .1rem 0.166rem
+
+.react-datepicker .react-datepicker__day-name
+  line-height: 1rem
+
+// Editor (wysiwyg) styles
+.rdw-link-decorator-wrapper
+  text-decoration: underline
+  color: blue
