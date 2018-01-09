@@ -49,7 +49,6 @@ class NoticiaForm extends Component {
 
     // Parse content
     if(this.state.rawContent) {
-      console.log(this.state.rawContent);
       const contentState = convertFromRaw(JSON.parse(this.state.rawContent));
       this.setState({
         editorState: EditorState.createWithContent(contentState),
