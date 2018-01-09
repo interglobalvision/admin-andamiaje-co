@@ -1,6 +1,5 @@
 import React from 'react';
 import { isLoaded, isEmpty } from 'react-redux-firebase';
-import { withRouter } from 'react-router-dom';
 
 import NoticiasListItem from '../components/NoticiasListItem';
 
@@ -32,4 +31,4 @@ const NoticiasList = ({ noticias }) => {
 
 };
 
-export default withRouter(NoticiasList);
+export default NoticiasList;
