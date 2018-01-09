@@ -11,6 +11,8 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
+import EMOJIS from '../utilities/emojis.js';
+
 @firebaseConnect()
 @withRouter
 class NoticiaForm extends Component {
@@ -19,7 +21,7 @@ class NoticiaForm extends Component {
     published: false,
     publishDate: '',
     title: '',
-    editorState: EditorState.createEmpty(),
+    editorState: '',
     rawContent: '',
     error: {
       message: '',
@@ -49,9 +51,15 @@ class NoticiaForm extends Component {
 
     // Parse content
     if(this.state.rawContent) {
+      // Convert JSON for Editor and create with content
       const contentState = convertFromRaw(JSON.parse(this.state.rawContent));
       this.setState({
         editorState: EditorState.createWithContent(contentState),
+      });
+    } else {
+      // No saved JSON. Create Editor without content
+      this.setState({
+        editorState: EditorState.createEmpty(),
       });
     }
 
@@ -109,6 +117,7 @@ class NoticiaForm extends Component {
   }
 
   handleEditorChange(editorState) {
+    // Update Editor state and convert content to JSON for database
     if(editorState) {
       this.setState({
         editorState,
@@ -187,6 +196,15 @@ class NoticiaForm extends Component {
             id='editor'
             editorState={this.state.editorState}
             onEditorStateChange={this.handleEditorChange}
+            toolbar={{
+              options: ['inline', 'link', 'emoji', 'history'],
+              inline: {
+                options: ['bold', 'italic', 'strikethrough'],
+              },
+              emoji: {
+                emojis: EMOJIS,
+              }
+            }}
           />
         </div>
       </div>
