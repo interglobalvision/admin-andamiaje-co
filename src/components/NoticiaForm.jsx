@@ -43,14 +43,14 @@ class NoticiaForm extends Component {
   componentDidMount() {
 
     // Parse date
-    if(this.state.publishDate) {
+    if (this.state.publishDate) {
       this.setState({
         publishDateDisplay: moment(this.state.publishDate),
       });
     }
 
     // Parse content
-    if(this.state.rawContent) {
+    if (this.state.rawContent) {
       // Convert JSON for Editor and create with content
       const contentState = convertFromRaw(JSON.parse(this.state.rawContent));
       this.setState({
@@ -103,7 +103,7 @@ class NoticiaForm extends Component {
   }
 
   handleDateChange(date) {
-    if(date) {
+    if (date) {
       this.setState({
         publishDateDisplay: date,
         publishDate: date.valueOf(),
@@ -118,12 +118,10 @@ class NoticiaForm extends Component {
 
   handleEditorChange(editorState) {
     // Update Editor state and convert content to JSON for database
-    if(editorState) {
-      this.setState({
-        editorState,
-        rawContent: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
-      });
-    }
+    this.setState({
+      editorState,
+      rawContent: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
+    });
   }
 
   render() {
