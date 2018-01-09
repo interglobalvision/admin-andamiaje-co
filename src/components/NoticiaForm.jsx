@@ -5,7 +5,11 @@ import { withRouter } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
+import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+
 import 'react-datepicker/dist/react-datepicker.css';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 @firebaseConnect()
 @withRouter
@@ -15,6 +19,8 @@ class NoticiaForm extends Component {
     published: false,
     publishDate: '',
     title: '',
+    editorState: EditorState.createEmpty(),
+    rawContent: '',
     error: {
       message: '',
     },
@@ -29,6 +35,7 @@ class NoticiaForm extends Component {
 
     // Bind handlers
     this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleEditorChange = this.handleEditorChange.bind(this);
   }
 
   componentDidMount() {
@@ -40,16 +47,26 @@ class NoticiaForm extends Component {
       });
     }
 
+    // Parse content
+    if(this.state.rawContent) {
+      console.log(this.state.rawContent);
+      const contentState = convertFromRaw(JSON.parse(this.state.rawContent));
+      this.setState({
+        editorState: EditorState.createWithContent(contentState),
+      });
+    }
+
   }
 
   addNoticia() {
-    const { title, published, publishDate } = this.state;
+    const { title, rawContent, published, publishDate } = this.state;
 
     this.setState({ isLoading: true })
 
     this.props.firebase
       .push('noticias', {
         title,
+        rawContent,
         published,
         publishDate,
       })
@@ -61,13 +78,14 @@ class NoticiaForm extends Component {
   }
 
   updateNoticia() {
-    const { title, published, publishDate } = this.state;
+    const { title, rawContent, published, publishDate } = this.state;
 
     this.setState({ isLoading: true })
 
     this.props.firebase
       .update(`noticias/${this.props.id}`, {
         title,
+        rawContent,
         published,
         publishDate
       })
@@ -87,6 +105,15 @@ class NoticiaForm extends Component {
       this.setState({
         publishDateDisplay: null,
         publishDate: null,
+      });
+    }
+  }
+
+  handleEditorChange(editorState) {
+    if(editorState) {
+      this.setState({
+        editorState,
+        rawContent: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
       });
     }
   }
@@ -155,6 +182,15 @@ class NoticiaForm extends Component {
             />
           </div>
         </div>
+        <div className='grid-row'>
+        <div className='grid-item item-s-12'>
+          <Editor
+            id='editor'
+            editorState={this.state.editorState}
+            onEditorStateChange={this.handleEditorChange}
+          />
+        </div>
+      </div>
       </form>
     );
   }
