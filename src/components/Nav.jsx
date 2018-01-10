@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { firebaseConnect } from 'react-redux-firebase';
 
+import ReactSVG from 'react-svg';
+
 @withRouter
 @firebaseConnect()
 class Nav extends Component {
@@ -13,13 +15,18 @@ class Nav extends Component {
 
   render() {
     return (
-      <nav className='padding-top-tiny padding-bottom-tiny'>
+      <header id='header' className='padding-top-small padding-bottom-small margin-bottom-basic'>
         <div className='container'>
           <div className='grid-row'>
             <div className='grid-item item-s-3'>
-              <h1>Andamiaje</h1>
+              <h1 className='u-visuallyhidden'>Andamiaje</h1>
+              <ReactSVG
+                path='andamiaje-logo.svg'
+                wrapperClassName='logo-wrapper'
+                className='logo'
+              />
             </div>
-            <div className='grid-item flex-grow grid-row align-items-center justify-end'>
+            <nav className='grid-item flex-grow grid-row align-items-center justify-end'>
               <div className='grid-item'>
                 <Link to='/noticias'>Noticias</Link>
               </div>
@@ -29,10 +36,10 @@ class Nav extends Component {
               <div className='grid-item'>
                 <button onClick={this.logOut.bind(this)}>Salir</button>
               </div>
-            </div>
+            </nav>
           </div>
         </div>
-      </nav>
+      </header>
     );
   }
 };
