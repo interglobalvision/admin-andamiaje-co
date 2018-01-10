@@ -8,15 +8,15 @@ const NoticiasListItem = ({ noticia, firebase: { remove } }) => {
   const { title, published } = noticia.value;
 
   return(
-    <div className='grid-row'>
+    <div className='grid-row padding-top-micro padding-bottom-micro align-items-center'>
       <div className='grid-item item-s-4'>
-        <h3><Link to={'/noticias/' + key}>{title}</Link></h3>
+        <span><Link to={'/noticias/' + key}>{title}</Link></span>
       </div>
       <div className='grid-item item-s-1'>
-        <h3>{published ? 'Publicado' : 'Borrador'}</h3>
+        <span>{published ? 'Publicado' : 'Borrador'}</span>
       </div>
       <div className='grid-item item-s-1 offset-s-5'>
-        <p><Link to={'/noticias/' + key}>Editar</Link></p>
+        <Link to={'/noticias/' + key}>Editar</Link>
       </div>
       <div className='grid-item item-s-1'>
         <button onClick={() => window.confirm('¿Seguro que deseas eliminar esta noticia?') ? remove('noticias/' + key) : null}>Eliminar</button>
