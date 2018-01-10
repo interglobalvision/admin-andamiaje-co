@@ -15,7 +15,7 @@ class Nav extends Component {
 
   render() {
     return (
-      <header id='header' className='padding-top-small padding-bottom-small margin-bottom-basic'>
+      <header id='header' className='padding-top-small padding-bottom-small margin-bottom-basic font-color-white'>
         <div className='container'>
           <div className='grid-row'>
             <div className='grid-item item-s-3'>
@@ -34,7 +34,7 @@ class Nav extends Component {
                 <Link to='/catalogs'>Catalogs</Link>
               </div>
               <div className='grid-item'>
-                <button onClick={this.logOut.bind(this)}>Salir</button>
+                <button className='font-color-white' onClick={this.logOut.bind(this)}>Salir</button>
               </div>
             </nav>
           </div>
