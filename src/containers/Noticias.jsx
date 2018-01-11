@@ -9,17 +9,14 @@ import NoticiasList from '../components/NoticiasList';
 const Noticias = ({ noticias }) => (
   <section>
 
-    <div className='grid-row'>
-      <div className='grid-item item-s-3'>
-        <h2>Noticias</h2>
+    <header className='grid-row margin-bottom-basic'>
+      <div className='grid-item flex-grow'>
+        <h1 className='font-size-large'>Noticias</h1>
       </div>
-    </div>
-
-    <div className='grid-row justify-end'>
-      <div className='grid-item item-s-2'>
-        <Link to='/noticias/add'>Añadir Entrada</Link>
+      <div className='grid-item'>
+        <Link className='button' to='/noticias/add'>Añadir Entrada</Link>
       </div>
-    </div>
+    </header>
 
     <NoticiasList noticias={noticias} />
 

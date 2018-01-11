@@ -11,16 +11,19 @@ const NoticiasList = ({ noticias }) => {
   } else {
     return (
       <section>
-        <header className='grid-row'>
-          <div className='grid-item item-s-4'>
+        <header className='grid-row margin-bottom-tiny font-size-small font-bold'>
+          <div className='grid-item item-s-3 item-m-4 item-l-5'>
             <h3>Título</h3>
           </div>
-          <div className='grid-item item-s-1'>
+          <div className='grid-item item-s-2'>
             <h3>Estado</h3>
+          </div>
+          <div className='grid-item item-s-3 item-l-2'>
+            <h3>Fecha</h3>
           </div>
         </header>
 
-        <div className="rows-list">
+        <div className="list-rows-holder">
           { Object.keys(noticias).map( // …else map thru noticias
             (key, id) => <NoticiasListItem key={key} id={id} noticia={noticias[key]} />
           ) }

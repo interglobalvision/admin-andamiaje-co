@@ -39,26 +39,26 @@ $font-tracking-basic = .001em
 $font-tracking-wider = .05em
 
 html
-	font-family: $font-sans
-	letter-spacing: $font-tracking-basic
+  font-family: $font-sans
+  letter-spacing: $font-tracking-basic
 
 body
-	line-height: $font-leading-basic
+  line-height: $font-leading-basic
 
 .font-sans
-	font-family: $font-sans
+  font-family: $font-sans
 
 .font-serif
-	font-family: $font-serif
+  font-family: $font-serif
 
 .font-larger
-	font-size: $font-size-larger
+  font-size: $font-size-larger
 
 .line-tighter
-	line-height: $font-leading-tighter
+  line-height: $font-leading-tighter
 
 .line-larger
-	line-height: $font-leading-larger
+  line-height: $font-leading-larger
 
 // ******************************************************
 
@@ -96,21 +96,24 @@ $color-alert-notice = rgb(204, 235, 255)
 // BASIC
 
 html
-	color: $color-black
-	background-color: $color-white
+  color: $color-black
+  background-color: $color-white
 
 img
-	height: auto
-	max-width: 100%
+  height: auto
+  max-width: 100%
 
 .mobile-only
-	display: initial !important
+  display: initial !important
 
 .desktop-only
-	display: none !important
-  
+  display: none !important
+
 .font-color-white
-	color: $color-white
+  color: $color-white
+
+a:link
+  text-decoration-skip: ink
 
 // ******************************************************
 
@@ -125,89 +128,90 @@ $margin-basic = ($gutter * 2)
 $margin-mid = ($gutter * 3.5)
 $margin-large = ($gutter * 5)
 
-$font-size-basic = 12px
-$font-size-extra = 48px
-$font-size-large = 36px
-$font-size-mid = 24px
-$font-size-small = 18px
-$font-size-tiny = 8px
+$font-size-basic = 11px
+$font-size-large = $font-size-basic * 1.5
+$font-size-small = $font-size-basic * .8
 
 grid-maker(96%, $gutter, s)
 
 space-maker($margin-micro, $margin-tiny, $margin-small, $margin-basic, $margin-mid, $margin-large)
 
-font-sizes($font-size-basic, $font-size-extra, $font-size-large, $font-size-mid, $font-size-small, $font-size-tiny)
+font-sizes($font-size-basic, false, $font-size-large, false, $font-size-small, false)
 
 @import 'responsive/mobile'
 
 @media screen and (min-width: 720px)
 
-	$gutter = 21px
+  $gutter = 21px
 
-	$margin-micro = ($gutter / 3)
-	$margin-tiny = ($gutter / 2)
-	$margin-small = ($gutter)
-	$margin-basic = ($gutter * 2)
-	$margin-mid = ($gutter * 3.5)
-	$margin-large = ($gutter * 5)
+  $margin-micro = ($gutter / 3)
+  $margin-tiny = ($gutter / 2)
+  $margin-small = ($gutter)
+  $margin-basic = ($gutter * 2)
+  $margin-mid = ($gutter * 3.5)
+  $margin-large = ($gutter * 5)
 
-	$font-size-basic = 14px
+  $font-size-basic = 17px
+  $font-size-large = $font-size-basic * 1.5
+  $font-size-small = $font-size-basic * .8
 
-	space-maker($margin-micro, $margin-tiny, $margin-small, $margin-basic, $margin-mid, $margin-large)
+  space-maker($margin-micro, $margin-tiny, $margin-small, $margin-basic, $margin-mid, $margin-large)
 
-	grid-maker(680px, $gutter, m)
+  grid-maker(96%, $gutter, m)
 
-	font-sizes($font-size-basic)
+  font-sizes($font-size-basic, false, $font-size-large, false, $font-size-small, false)
 
-	.mobile-only
-		display: none !important
+  .mobile-only
+  	display: none !important
 
-	@import 'responsive/tablet-portrait'
+  @import 'responsive/tablet-portrait'
 
 @media screen and (min-width: 1024px)
 
-	$gutter = 24px
+  $gutter = 24px
 
-	$margin-micro = ($gutter / 3)
-	$margin-tiny = ($gutter / 2)
-	$margin-small = ($gutter)
-	$margin-basic = ($gutter * 2)
-	$margin-mid = ($gutter * 3.5)
-	$margin-large = ($gutter * 5)
+  $margin-micro = ($gutter / 3)
+  $margin-tiny = ($gutter / 2)
+  $margin-small = ($gutter)
+  $margin-basic = ($gutter * 2)
+  $margin-mid = ($gutter * 3.5)
+  $margin-large = ($gutter * 5)
 
-	$font-size-basic = 16px
+  grid-maker(96%, $gutter, l)
 
-	grid-maker(1000px, $gutter, l)
+  space-maker($margin-micro, $margin-tiny, $margin-small, $margin-basic, $margin-mid, $margin-large)
 
-	space-maker($margin-micro, $margin-tiny, $margin-small, $margin-basic, $margin-mid, $margin-large)
+  .desktop-only
+    display: initial !important
 
-	font-sizes($font-size-basic)
-
-	.desktop-only
-		display: initial !important
-
-	@import 'responsive/tablet-landscape'
+  @import 'responsive/tablet-landscape'
 
 @media screen and (min-width: 1280px)
 
-	grid-maker(1200px)
+  $font-size-basic = 21px
+  $font-size-large = $font-size-basic * 1.5
+  $font-size-small = $font-size-basic * .8
 
-	@import 'responsive/laptop'
+  grid-maker(1200px)
+
+  font-sizes($font-size-basic, false, $font-size-large, false, $font-size-small, false)
+
+  @import 'responsive/laptop'
 
 @media screen and (min-width: 1366px)
 
-	$gutter = 26px
+  $gutter = 26px
 
-	grid-maker(1300px, $gutter, xl)
+  grid-maker(1300px, $gutter, xl)
 
-	@import 'responsive/desktop'
+  @import 'responsive/desktop'
 
 @media screen and (min-width: 1680px)
 
-	grid-maker(1600px)
+  grid-maker(1600px)
 
-	@import 'responsive/hd'
+  @import 'responsive/hd'
 
 @media screen and (min-width: 1920px)
 
-	grid-maker(1800px)
+  grid-maker(1800px)
