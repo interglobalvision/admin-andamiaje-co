@@ -21,10 +21,10 @@ const NoticiasListItem = ({ noticia, firebase: { remove } }) => {
       <div className='grid-item item-s-3 item-l-2'>
         <span>{publishDateDisplay}</span>
       </div>
-      <div className='grid-item item-s-1'>
+      <div className='grid-item item-s-1 text-align-right'>
         <Link className='font-bold' to={'/noticias/' + key}>Editar</Link>
       </div>
-      <div className='grid-item item-s-1'>
+      <div className='grid-item item-s-2 text-align-right'>
         <button className='u-pointer font-bold' onClick={() => window.confirm('¿Seguro que deseas eliminar esta noticia?') ? remove('noticias/' + key) : null}>Eliminar</button>
       </div>
     </div>
