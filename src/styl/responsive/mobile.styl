@@ -12,15 +12,6 @@
 
 // LIST
 
-.rows-list
-  > *
-    &:nth-child(odd)
-      background-color: $color-table-light
-    &:nth-child(even)
-      background-color: $color-table-dark
-
-// FORM
-
 // Reset button styles
 button
   appearance: none
@@ -36,6 +27,18 @@ a.button
   border-radius: 5px
   padding: $margin-small
   display: inline-block
+
+.list-rows-holder
+  > *
+    &:nth-child(odd)
+      background-color: $color-table-light
+    &:nth-child(even)
+      background-color: $color-table-dark
+
+.list-rows-item
+  min-height: 4em
+
+// FORM
 
 // Datepicker Fixes
 // This is a temporary fix while it gets fixed
