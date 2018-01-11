@@ -12,7 +12,7 @@ const NoticiasListItem = ({ noticia, firebase: { remove } }) => {
 
   return(
     <div className='list-rows-item grid-row padding-top-micro padding-bottom-micro align-items-center'>
-      <div className='grid-item item-s-4 item-l-5'>
+      <div className='grid-item item-s-3 item-m-4 item-l-5'>
         <span><Link className="link-underline" to={'/noticias/' + key}>{title}</Link></span>
       </div>
       <div className='grid-item item-s-2'>
@@ -21,11 +21,13 @@ const NoticiasListItem = ({ noticia, firebase: { remove } }) => {
       <div className='grid-item item-s-3 item-l-2'>
         <span>{publishDateDisplay}</span>
       </div>
-      <div className='grid-item item-s-1 text-align-right'>
-        <Link className='font-bold' to={'/noticias/' + key}>Editar</Link>
-      </div>
-      <div className='grid-item item-s-2 text-align-right'>
-        <button className='u-pointer font-bold' onClick={() => window.confirm('¿Seguro que deseas eliminar esta noticia?') ? remove('noticias/' + key) : null}>Eliminar</button>
+      <div className='grid-item flex-grow grid-row no-gutter justify-end'>
+        <div className='grid-item'>
+          <Link className='font-bold' to={'/noticias/' + key}>Editar</Link>
+        </div>
+        <div className='grid-item'>
+          <button className='u-pointer font-bold' onClick={() => window.confirm('¿Seguro que deseas eliminar esta noticia?') ? remove('noticias/' + key) : null}>Eliminar</button>
+        </div>
       </div>
     </div>
   );
