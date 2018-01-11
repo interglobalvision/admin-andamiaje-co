@@ -112,6 +112,9 @@ img
 .font-color-white
   color: $color-white
 
+a:link
+  text-decoration-skip: ink
+
 // ******************************************************
 
 // MEDIA QUERIES
@@ -125,8 +128,8 @@ $margin-basic = ($gutter * 2)
 $margin-mid = ($gutter * 3.5)
 $margin-large = ($gutter * 5)
 
-$font-size-basic = 12px
-$font-size-large = $font-size-basic * 2
+$font-size-basic = 11px
+$font-size-large = $font-size-basic * 1.5
 $font-size-small = $font-size-basic * .8
 
 grid-maker(96%, $gutter, s)
@@ -148,8 +151,8 @@ font-sizes($font-size-basic, false, $font-size-large, false, $font-size-small, f
   $margin-mid = ($gutter * 3.5)
   $margin-large = ($gutter * 5)
 
-  $font-size-basic = 14px
-  $font-size-large = $font-size-basic * 2
+  $font-size-basic = 17px
+  $font-size-large = $font-size-basic * 1.5
   $font-size-small = $font-size-basic * .8
 
   space-maker($margin-micro, $margin-tiny, $margin-small, $margin-basic, $margin-mid, $margin-large)
@@ -174,8 +177,8 @@ font-sizes($font-size-basic, false, $font-size-large, false, $font-size-small, f
   $margin-mid = ($gutter * 3.5)
   $margin-large = ($gutter * 5)
 
-  $font-size-basic = 16px
-  $font-size-large = $font-size-basic * 2
+  $font-size-basic = 21px
+  $font-size-large = $font-size-basic * 1.5
   $font-size-small = $font-size-basic * .8
 
   grid-maker(1000px, $gutter, l)
