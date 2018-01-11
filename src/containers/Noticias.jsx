@@ -11,9 +11,8 @@ const Noticias = ({ noticias }) => (
 
     <header className='grid-row margin-bottom-basic'>
       <div className='grid-item flex-grow'>
-        <h2 className='font-size-large'>Noticias</h2>
+        <h1 className='font-size-large'>Noticias</h1>
       </div>
-
       <div className='grid-item'>
         <Link className='button' to='/noticias/add'>Añadir Entrada</Link>
       </div>
