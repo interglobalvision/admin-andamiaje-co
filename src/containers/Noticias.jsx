@@ -10,13 +10,16 @@ const Noticias = ({ noticias }) => (
   <section>
 
     <header className='grid-row margin-bottom-basic'>
-      <div className='grid-item flex-grow'>
+      <div className='grid-item'>
         <h1 className='font-size-large'>Noticias</h1>
       </div>
+    </header>
+
+    <div className='grid-row margin-bottom-basic justify-end'>
       <div className='grid-item'>
         <Link className='button' to='/noticias/add'>Añadir Entrada</Link>
       </div>
-    </header>
+    </div>
 
     <NoticiasList noticias={noticias} />
 
