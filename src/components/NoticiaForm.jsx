@@ -130,13 +130,14 @@ class NoticiaForm extends Component {
   render() {
     return (
       <form onSubmit={event => event.preventDefault()}>
-        <div className='grid-row justify-end'>
-          <div className='grid-item item-s-3'>
-            <button onClick={() => this.props.id ? this.updateNoticia() : this.addNoticia()}>
+        <div className='grid-row margin-bottom-basic justify-end'>
+          <div className='grid-item'>
+            <button className='button' onClick={() => this.props.id ? this.updateNoticia() : this.addNoticia()}>
               Guardar{ this.props.id ? '' : ' Nueva'}
             </button>
           </div>
         </div>
+        
         <div className='grid-row'>
           <div className='grid-item item-s-12 item-m-6 item-l-3'>
             <h4>Publicación</h4>
