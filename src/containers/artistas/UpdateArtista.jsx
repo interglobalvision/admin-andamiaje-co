@@ -31,7 +31,7 @@ export default compose(
   withRouter,
   // Get noticia path from firebase based on params prop (route params from react-router)
   firebaseConnect( ({ match: { params } }) => ([{
-    path: `artista/${params.key}`, // connect with '/noticias/:key'
+    path: `artistas/${params.key}`, // connect with '/noticias/:key'
     storeAs: 'artista' // Store this data in `noticia` so it doesn't conflict with `noticias`
   }])),
   // Map state to props

@@ -25,6 +25,7 @@ const ControlPanel = () => {
           <Route path='/noticias/:key' component={UpdateNoticia} />
           <Route exact path='/artistas' component={Artistas} />
           <Route exact path='/artistas/add' component={AddArtista} />
+          <Route path='/artistas/:key' component={UpdateArtista} />
           <Route exact path='/' component={Welcome} />
           <Route component={NoMatch}/>
         </Switch>

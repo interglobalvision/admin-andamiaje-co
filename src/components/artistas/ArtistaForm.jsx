@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { firebaseConnect } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
 
-import moment from 'moment';
-
 import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 
@@ -24,7 +22,7 @@ class ArtistaForm extends Component {
     galleryUrl: '',
     bioEditorState: '',
     bioRawContent: '',
-    active: '',
+    active: false,
     error: {
       message: '',
     },
@@ -35,90 +33,69 @@ class ArtistaForm extends Component {
     super(props);
 
     // If component recieves noticia as prop we merge it with initial state (used for editing)
-    this.state = { ...this.state, ...props.noticia };
+    this.state = { ...this.state, ...props.artista };
 
     // Bind handlers
-    this.handleDateChange = this.handleDateChange.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
   }
 
   componentDidMount() {
 
-    // Parse date
-    if (this.state.publishDate) {
-      this.setState({
-        publishDateDisplay: moment(this.state.publishDate),
-      });
-    }
-
     // Parse content
-    if (this.state.rawContent) {
+    if (this.state.bioRawContent) {
       // Convert JSON for Editor and create with content
-      const contentState = convertFromRaw(JSON.parse(this.state.rawContent));
+      const contentState = convertFromRaw(JSON.parse(this.state.bioRawContent));
       this.setState({
-        editorState: EditorState.createWithContent(contentState),
+        bioEditorState: EditorState.createWithContent(contentState),
       });
     } else {
       // No saved JSON. Create Editor without content
       this.setState({
-        editorState: EditorState.createEmpty(),
+        bioEditorState: EditorState.createEmpty(),
       });
     }
 
   }
 
-  addNoticia() {
-    const { title, rawContent, published, publishDate } = this.state;
-
-    const createdDate = Date.now();
+  addArtista() {
+    const { name, active, country, gallery, galleryUrl, bioRawContent } = this.state;
 
     this.setState({ isLoading: true })
 
     this.props.firebase
-      .push('noticias', {
-        title,
-        rawContent,
-        published,
-        publishDate,
-        createdDate,
+      .push('artistas', {
+        name,
+        active,
+        country,
+        gallery,
+        galleryUrl,
+        bioRawContent
       })
       .then(() => {
         this.setState({ isLoading: false })
-        this.props.history.push('/noticias');
+        this.props.history.push('/artistas');
       })
 
   }
 
-  updateNoticia() {
-    const { title, rawContent, published, publishDate } = this.state;
+  updateArtista() {
+    const { name, active, country, gallery, galleryUrl, bioRawContent } = this.state;
 
     this.setState({ isLoading: true })
 
     this.props.firebase
-      .update(`noticias/${this.props.id}`, {
-        title,
-        rawContent,
-        published,
-        publishDate
+      .update(`artistas/${this.props.id}`, {
+        name,
+        active,
+        country,
+        gallery,
+        galleryUrl,
+        bioRawContent
       })
       .then(() => {
         this.setState({ isLoading: false })
       })
 
-  }
-
-  handleDateChange(date) {
-    if (date) {
-      this.setState({
-        publishDateDisplay: date,
-        publishDate: date.valueOf(),
-      });
-    } else {
-      this.setState({
-        publishDateDisplay: null,
-        publishDate: null,
-      });
-    }
   }
 
   handleEditorChange(bioEditorState) {
@@ -134,7 +111,7 @@ class ArtistaForm extends Component {
       <form onSubmit={event => event.preventDefault()}>
         <div className='grid-row margin-bottom-basic justify-end'>
           <div className='grid-item'>
-            <button className='button' onClick={() => this.props.id ? this.updateNoticia() : this.addNoticia()}>
+            <button className='button' onClick={() => this.props.id ? this.updateArtista() : this.addArtista()}>
               Guardar{ this.props.id ? '' : ' Nueva'}
             </button>
           </div>
@@ -142,7 +119,7 @@ class ArtistaForm extends Component {
 
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='title'>Nombre</label></h4>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='name'>Nombre</label></h4>
             <input
               id='name'
               name='name'
@@ -150,13 +127,76 @@ class ArtistaForm extends Component {
               type='text'
               disabled={this.state.isLoading}
               value={this.state.name}
-              onChange={ event => this.setState({ title: event.target.value })}
+              onChange={ event => this.setState({ name: event.target.value })}
+            />
+          </div>
+        </div>
+
+        <div className='grid-row margin-bottom-basic'>
+          <div className='grid-item'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='active'>Activo</label></h4>
+            <div className='grid-row align-items-center'>
+              <input
+                id='active'
+                name='active'
+                ref={ ref => this.published = ref }
+                type='checkbox'
+                disabled={this.state.isLoading}
+                checked={this.state.active}
+                onChange={ event => this.setState({ active: event.target.checked })}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className='grid-row margin-bottom-basic'>
+          <div className='grid-item item-s-12'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='country'>País</label></h4>
+            <input
+              id='country'
+              name='country'
+              ref={ ref => this.country = ref }
+              type='text'
+              disabled={this.state.isLoading}
+              value={this.state.country}
+              onChange={ event => this.setState({ country: event.target.value })}
             />
           </div>
         </div>
 
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='gallery'>Galleria</label></h4>
+            <input
+              id='gallery'
+              name='gallery'
+              ref={ ref => this.gallery = ref }
+              type='text'
+              disabled={this.state.isLoading}
+              value={this.state.gallery}
+              onChange={ event => this.setState({ gallery: event.target.value })}
+            />
+          </div>
+        </div>
+
+        <div className='grid-row margin-bottom-basic'>
+          <div className='grid-item item-s-12'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='galleryUrl'>Galleria URL</label></h4>
+            <input
+              id='galleryUrl'
+              name='galleryUrl'
+              ref={ ref => this.gallery = ref }
+              type='url'
+              disabled={this.state.isLoading}
+              value={this.state.galleryUrl}
+              onChange={ event => this.setState({ galleryUrl: event.target.value })}
+            />
+          </div>
+        </div>
+
+        <div className='grid-row margin-bottom-basic'>
+          <div className='grid-item item-s-12'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='editor'>Bio</label></h4>
             <Editor
               id='editor'
               editorState={this.state.bioEditorState}
