@@ -4,12 +4,12 @@ import { reactReduxFirebase } from 'react-redux-firebase'
 
 // Firebae configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAKtww3AfzqC-pjcG7wg_dG9UxoNfhlnsc",
-  authDomain: "andamiaje-co.firebaseapp.com",
-  databaseURL: "https://andamiaje-co.firebaseio.com",
-  projectId: "andamiaje-co",
-  storageBucket: "andamiaje-co.appspot.com",
-  messagingSenderId: "222496116746"
+  apiKey: 'AIzaSyDfnoTqolYAjy2WvuxsPGJ7t7oycUjAVR4',
+  authDomain: 'igv-andamiaje-co.firebaseapp.com',
+  databaseURL: 'https://igv-andamiaje-co.firebaseio.com',
+  projectId: 'igv-andamiaje-co',
+  storageBucket: 'igv-andamiaje-co.appspot.com',
+  messagingSenderId: '796880348739',
 };
 
 // Init firebase instance
