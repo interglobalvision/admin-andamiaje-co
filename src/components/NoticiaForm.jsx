@@ -130,17 +130,19 @@ class NoticiaForm extends Component {
   render() {
     return (
       <form onSubmit={event => event.preventDefault()}>
-        <div className='grid-row justify-end'>
-          <div className='grid-item item-s-3'>
-            <button onClick={() => this.props.id ? this.updateNoticia() : this.addNoticia()}>
+        <div className='grid-row margin-bottom-basic justify-end'>
+          <div className='grid-item'>
+            <button className='button' onClick={() => this.props.id ? this.updateNoticia() : this.addNoticia()}>
               Guardar{ this.props.id ? '' : ' Nueva'}
             </button>
           </div>
         </div>
-        <div className='grid-row'>
-          <div className='grid-item item-s-12 item-m-6 item-l-3'>
-            <h4>Publicación</h4>
+
+        <div className='grid-row margin-bottom-basic'>
+          <div className='grid-item item-s-6 item-m-4'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label className='font-size-small' htmlFor='datepicker'>Publicación</label></h4>
             <DatePicker
+              id='datepicker'
               selected={this.state.publishDateDisplay /*this is a moment object*/}
               onChange={this.handleDateChange}
               showTimeSelect
@@ -163,23 +165,26 @@ class NoticiaForm extends Component {
               }}
             />
           </div>
-          <div className='grid-item item-s-2'>
-            <h4>Estado</h4>
-            <input
-              id='published'
-              name='published'
-              ref={ ref => this.published = ref }
-              type='checkbox'
-              disabled={this.state.isLoading}
-              checked={this.state.published}
-              onChange={ event => this.setState({ published: event.target.checked })}
-            />
-            <label htmlFor='published'>Publicado</label>
+          <div className='grid-item'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'>Estado</h4>
+            <div className='grid-row align-items-center'>
+              <input
+                id='published'
+                name='published'
+                ref={ ref => this.published = ref }
+                type='checkbox'
+                disabled={this.state.isLoading}
+                checked={this.state.published}
+                onChange={ event => this.setState({ published: event.target.checked })}
+              />
+              <label htmlFor='published' className='font-size-small'>Publicado</label>
+            </div>
           </div>
         </div>
-        <div className='grid-row'>
+
+        <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
-            <h4><label htmlFor='title'>Título</label></h4>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='title'>Título</label></h4>
             <input
               id='title'
               name='title'
@@ -191,24 +196,25 @@ class NoticiaForm extends Component {
             />
           </div>
         </div>
-        <div className='grid-row'>
-        <div className='grid-item item-s-12'>
-          <Editor
-            id='editor'
-            editorState={this.state.editorState}
-            onEditorStateChange={this.handleEditorChange}
-            toolbar={{
-              options: ['inline', 'link', 'emoji', 'history'],
-              inline: {
-                options: ['bold', 'italic', 'strikethrough'],
-              },
-              emoji: {
-                emojis: EMOJIS,
-              }
-            }}
-          />
+
+        <div className='grid-row margin-bottom-basic'>
+          <div className='grid-item item-s-12'>
+            <Editor
+              id='editor'
+              editorState={this.state.editorState}
+              onEditorStateChange={this.handleEditorChange}
+              toolbar={{
+                options: ['inline', 'link', 'emoji', 'history'],
+                inline: {
+                  options: ['bold', 'italic', 'strikethrough'],
+                },
+                emoji: {
+                  emojis: EMOJIS,
+                }
+              }}
+            />
+          </div>
         </div>
-      </div>
       </form>
     );
   }

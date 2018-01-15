@@ -15,11 +15,12 @@ const UpdateNoticia = ({ firebase, noticia, id }) => {
   } else {
     return (
       <section>
-        <div className='grid-row'>
-          <div className='grid-item item-s-3'>
-            <h2>Editar Entrada</h2>
+        <header className='grid-row margin-bottom-basic'>
+          <div className='grid-item'>
+            <h1 className='font-size-large'>Editar Entrada</h1>
           </div>
-        </div>
+        </header>
+
         <NoticiaForm id={id} noticia={noticia} />
       </section>
     );

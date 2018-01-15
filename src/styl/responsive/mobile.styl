@@ -27,6 +27,7 @@ a.button
   border-radius: 5px
   padding: $margin-small
   display: inline-block
+  cursor: pointer
 
 .list-rows-holder
   > *
@@ -40,8 +41,26 @@ a.button
 
 // FORM
 
+input
+  background-color: $color-white
+  color: $color-black
+  border: 1px solid $color-form-border
+  border-radius: 5px
+  padding: $margin-small
+  width: 100%
+
 // Datepicker Fixes
 // This is a temporary fix while it gets fixed
+.react-datepicker-popper
+  z-index: 500
+
+.react-datepicker__time-list
+  padding-right: 0 !important
+
+.react-datepicker-wrapper, .react-datepicker__input-container
+  display: block !important
+
+/*
 .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list
   padding-left: unset !important
   padding-right: unset !important
@@ -60,8 +79,31 @@ a.button
 
 .react-datepicker .react-datepicker__day-name
   line-height: 1rem
+*/
+
+// Checkbox
+input[type='checkbox']
+  margin-right: $margin-tiny
+  width: auto
 
 // Editor (wysiwyg) styles
+.DraftEditor-editorContainer
+  z-index: 0 !important
+
+.rdw-editor-toolbar, .rdw-option-wrapper, .rdw-editor-main
+  border: 1px solid $color-form-border !important
+
+.rdw-editor-toolbar
+  border-radius: 5px 5px 0 0 !important
+  margin-bottom: 0 !important
+
+.rdw-editor-main
+  border-top-width: 0 !important
+  border-radius: 0 0 5px 5px !important
+  margin-bottom: 0 !important
+  min-height: 300px
+  padding: 0 1em
+
 .rdw-link-decorator-wrapper
   text-decoration: underline
   color: blue
