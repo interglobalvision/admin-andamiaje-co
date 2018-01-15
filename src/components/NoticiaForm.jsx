@@ -139,7 +139,7 @@ class NoticiaForm extends Component {
         </div>
 
         <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12 item-m-6 item-l-3'>
+          <div className='grid-item item-s-6 item-m-4'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label className='font-size-small' htmlFor='datepicker'>Publicación</label></h4>
             <DatePicker
               id='datepicker'
@@ -165,7 +165,7 @@ class NoticiaForm extends Component {
               }}
             />
           </div>
-          <div className='grid-item item-s-2'>
+          <div className='grid-item'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'>Estado</h4>
             <div className='grid-row align-items-center'>
               <input

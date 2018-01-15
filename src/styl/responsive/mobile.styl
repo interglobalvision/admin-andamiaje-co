@@ -47,6 +47,7 @@ input
   border: 1px solid $color-form-border
   border-radius: 5px
   padding: $margin-small
+  width: 100%
 
 // Datepicker Fixes
 // This is a temporary fix while it gets fixed
@@ -55,6 +56,9 @@ input
 
 .react-datepicker__time-list
   padding-right: 0 !important
+
+.react-datepicker-wrapper, .react-datepicker__input-container
+  display: block !important
 
 /*
 .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list
@@ -80,6 +84,7 @@ input
 // Checkbox
 input[type='checkbox']
   margin-right: $margin-tiny
+  width: auto
 
 // Editor (wysiwyg) styles
 .DraftEditor-editorContainer
