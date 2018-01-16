@@ -3,13 +3,13 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
-import NoticiaForm  from '../components/NoticiaForm.jsx';
+import ArtistaForm from '../../components/artistas/ArtistaForm.jsx';
 
-const UpdateNoticia = ({ firebase, noticia, id }) => {
+const UpdateArtista = ({ firebase, artista, id }) => {
 
-  if (!isLoaded(noticia)) { // If not loaded…
+  if (!isLoaded(artista)) { // If not loaded…
     return 'Loading'; // …show 'loading'
-  } else if (isEmpty(noticia)) { // …else. If is empty…
+  } else if (isEmpty(artista)) { // …else. If is empty…
     return 'Error'; // …show 'Error?'
   } else {
     return (
@@ -20,7 +20,7 @@ const UpdateNoticia = ({ firebase, noticia, id }) => {
           </div>
         </header>
 
-        <NoticiaForm id={id} noticia={noticia} />
+        <ArtistaForm id={id} artista={artista} />
       </section>
     );
   }
@@ -29,14 +29,14 @@ const UpdateNoticia = ({ firebase, noticia, id }) => {
 export default compose(
   // Get noticia path from firebase based on params prop (route params from react-router)
   firebaseConnect( ({ match: { params } }) => ([{
-    path: `noticias/${params.key}`, // connect with '/noticias/:key'
-    storeAs: 'noticia' // Store this data in `noticia` so it doesn't conflict with `noticias`
+    path: `artistas/${params.key}`, // connect with '/noticias/:key'
+    storeAs: 'artista' // Store this data in `noticia` so it doesn't conflict with `noticias`
   }])),
   // Map state to props
-  connect(({ firebase: { data: { noticia } }}, { match }) => {
+  connect(({ firebase: { data: { artista } }}, { match }) => {
     return ({ // used to pass data from the redux store (state.fireabase) to the component as prop (noticias)
-      noticia,
+      artista,
       id: match.params.key,
     })
   })
-)(UpdateNoticia);
+)(UpdateArtista);
