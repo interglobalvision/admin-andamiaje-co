@@ -121,7 +121,6 @@ class ArtistaForm extends Component {
             <input
               id='name'
               name='name'
-              ref={ ref => this.name = ref }
               type='text'
               disabled={this.state.isLoading}
               value={this.state.name}
@@ -137,7 +136,6 @@ class ArtistaForm extends Component {
               <input
                 id='active'
                 name='active'
-                ref={ ref => this.published = ref }
                 type='checkbox'
                 disabled={this.state.isLoading}
                 checked={this.state.active}
@@ -153,7 +151,6 @@ class ArtistaForm extends Component {
             <input
               id='country'
               name='country'
-              ref={ ref => this.country = ref }
               type='text'
               disabled={this.state.isLoading}
               value={this.state.country}
@@ -168,7 +165,6 @@ class ArtistaForm extends Component {
             <input
               id='gallery'
               name='gallery'
-              ref={ ref => this.gallery = ref }
               type='text'
               disabled={this.state.isLoading}
               value={this.state.gallery}
@@ -183,7 +179,6 @@ class ArtistaForm extends Component {
             <input
               id='galleryUrl'
               name='galleryUrl'
-              ref={ ref => this.gallery = ref }
               type='url'
               disabled={this.state.isLoading}
               value={this.state.galleryUrl}

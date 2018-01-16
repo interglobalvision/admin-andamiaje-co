@@ -171,7 +171,6 @@ class NoticiaForm extends Component {
               <input
                 id='published'
                 name='published'
-                ref={ ref => this.published = ref }
                 type='checkbox'
                 disabled={this.state.isLoading}
                 checked={this.state.published}
@@ -188,7 +187,6 @@ class NoticiaForm extends Component {
             <input
               id='title'
               name='title'
-              ref={ ref => this.title = ref }
               type='text'
               disabled={this.state.isLoading}
               value={this.state.title}
