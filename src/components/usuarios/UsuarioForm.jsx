@@ -2,23 +2,14 @@ import React, { Component } from 'react';
 import { firebaseConnect } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
 
-import { convertToRaw } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
-
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-
-import ParseEditorContent from '../../utilities/editor.js';
-import EMOJIS from '../../utilities/emojis.js';
-
 @firebaseConnect()
 @withRouter
 class UsuarioForm extends Component {
 
   state = {
-    published: false,
-    title: '',
-    editorState: '',
-    rawContent: '',
+    active: false,
+    name: '',
+    displayName: '',
     error: {
       message: '',
     },
@@ -30,22 +21,10 @@ class UsuarioForm extends Component {
 
     // If component recieves usuario as prop we merge it with initial state (used for editing)
     this.state = { ...this.state, ...props.usuario };
-
-    // Bind handlers
-    this.handleDateChange = this.handleDateChange.bind(this);
-    this.handleEditorChange = this.handleEditorChange.bind(this);
-  }
-
-  componentWillMount() {
-
-    // Parse content
-    this.setState({
-      editorState: ParseEditorContent(this.state.rawContent),
-    });
   }
 
   addUsuario() {
-    const { title, rawContent, published } = this.state;
+    const { active, role, name, email, displayName } = this.state;
 
     const createdDate = Date.now();
 
@@ -53,9 +32,11 @@ class UsuarioForm extends Component {
 
     this.props.firebase
       .push('usuarios', {
-        title,
-        rawContent,
-        published,
+        active,
+        role,
+        name,
+        email,
+        displayName,
         createdDate
       })
       .then(() => {
@@ -66,15 +47,17 @@ class UsuarioForm extends Component {
   }
 
   updateUsuario() {
-    const { title, rawContent, published } = this.state;
+    const { active, role, name, email, displayName } = this.state;
 
     this.setState({ isLoading: true })
 
     this.props.firebase
       .update(`usuarios/${this.props.id}`, {
-        title,
-        rawContent,
-        published
+        active,
+        role,
+        name,
+        email,
+        displayName
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -82,12 +65,8 @@ class UsuarioForm extends Component {
 
   }
 
-  handleEditorChange(editorState) {
-    // Update Editor state and convert content to JSON for database
-    this.setState({
-      editorState,
-      rawContent: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
-    });
+  onChangeRole(event) {
+    this.setState({ role: event.target.id })
   }
 
   render() {
@@ -106,50 +85,97 @@ class UsuarioForm extends Component {
             <h4 className='font-size-small font-bold margin-bottom-tiny'>Estado</h4>
             <div className='grid-row align-items-center'>
               <input
-                id='published'
-                name='published'
+                id='active'
+                name='active'
                 type='checkbox'
                 disabled={this.state.isLoading}
-                checked={this.state.published}
-                onChange={ event => this.setState({ published: event.target.checked })}
+                checked={this.state.active}
+                onChange={ event => this.setState({ active: event.target.checked })}
               />
-              <label htmlFor='published' className='font-size-small'>Publicado</label>
+              <label htmlFor='active' className='font-size-small'>Activo</label>
+            </div>
+          </div>
+
+          <div className='grid-item'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'>Tipo de usuario</h4>
+            <div className='grid-row align-items-center'>
+              <input
+                id='admin'
+                name='role'
+                type='radio'
+                disabled={this.state.isLoading}
+                checked={this.state.role === 'admin'}
+                onChange={ this.onChangeRole.bind(this) }
+              />
+              <label htmlFor='admin' className='font-size-small'>Admin</label>
+            </div>
+            <div className='grid-row align-items-center'>
+              <input
+                id='artist'
+                name='role'
+                type='radio'
+                disabled={this.state.isLoading}
+                checked={this.state.role === 'artist'}
+                onChange={ this.onChangeRole.bind(this) }
+              />
+              <label htmlFor='artist' className='font-size-small'>Artista</label>
+            </div>
+            <div className='grid-row align-items-center'>
+              <input
+                id='member'
+                name='role'
+                type='radio'
+                disabled={this.state.isLoading}
+                checked={this.state.role === 'member'}
+                onChange={ this.onChangeRole.bind(this) }
+              />
+              <label htmlFor='member' className='font-size-small'>Miembro</label>
             </div>
           </div>
         </div>
 
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='title'>Título</label></h4>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='name'>Nombre completo</label></h4>
             <input
-              id='title'
-              name='title'
+              id='name'
+              name='name'
               type='text'
               disabled={this.state.isLoading}
-              value={this.state.title}
-              onChange={ event => this.setState({ title: event.target.value })}
+              value={this.state.name}
+              onChange={ event => this.setState({ name: event.target.value })}
             />
           </div>
         </div>
 
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
-            <Editor
-              id='editor'
-              editorState={this.state.editorState}
-              onEditorStateChange={this.handleEditorChange}
-              toolbar={{
-                options: ['inline', 'link', 'emoji', 'history'],
-                inline: {
-                  options: ['bold', 'italic', 'strikethrough'],
-                },
-                emoji: {
-                  emojis: EMOJIS,
-                }
-              }}
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='email'>Correo electronico</label></h4>
+            <input
+              id='email'
+              name='email'
+              type='text'
+              disabled={this.state.isLoading}
+              value={this.state.email}
+              onChange={ event => this.setState({ email: event.target.value })}
             />
           </div>
         </div>
+
+        <div className='grid-row margin-bottom-basic'>
+          <div className='grid-item item-s-12'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='displayName'>Nombre para mostrar</label></h4>
+            <input
+              id='displayName'
+              name='displayName'
+              type='text'
+              disabled={this.state.isLoading}
+              value={this.state.displayName}
+              onChange={ event => this.setState({ displayName: event.target.value })}
+            />
+          </div>
+        </div>
+
       </form>
     );
   }
