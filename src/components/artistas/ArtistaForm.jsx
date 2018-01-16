@@ -110,14 +110,6 @@ class ArtistaForm extends Component {
   render() {
     return (
       <form onSubmit={event => event.preventDefault()}>
-        <div className='grid-row margin-bottom-basic justify-end'>
-          <div className='grid-item'>
-            <button className='button' onClick={() => this.props.id ? this.updateArtista() : this.addArtista()}>
-              Guardar{ this.props.id ? '' : ' Nuevo'}
-            </button>
-          </div>
-        </div>
-
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='name'>Nombre</label></h4>
@@ -227,6 +219,14 @@ class ArtistaForm extends Component {
                 }
               }}
             />
+          </div>
+        </div>
+
+        <div className='grid-row margin-bottom-basic justify-end'>
+          <div className='grid-item'>
+            <button className='button' onClick={() => this.props.id ? this.updateArtista() : this.addArtista()}>
+              Guardar{ this.props.id ? '' : ' Nuevo'}
+            </button>
           </div>
         </div>
       </form>

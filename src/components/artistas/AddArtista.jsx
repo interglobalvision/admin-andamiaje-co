@@ -6,7 +6,7 @@ const AddArtista = () => {
   return (
     <section>
       <div className='grid-row'>
-        <div className='grid-item item-s-3'>
+        <div className='grid-item item-s-3 margin-bottom-basic'>
           <h2>Entrada Nueva</h2>
         </div>
       </div>
