@@ -83,7 +83,7 @@ class UsuarioForm extends Component {
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'>Estado</h4>
-            <div className='grid-row align-items-center'>
+            <div className='grid-row align-items-center margin-bottom-micro'>
               <input
                 id='active'
                 name='active'
@@ -98,7 +98,7 @@ class UsuarioForm extends Component {
 
           <div className='grid-item'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'>Tipo de usuario</h4>
-            <div className='grid-row align-items-center'>
+            <div className='grid-row align-items-center margin-bottom-micro'>
               <input
                 id='admin'
                 name='role'
@@ -109,7 +109,7 @@ class UsuarioForm extends Component {
               />
               <label htmlFor='admin' className='font-size-small'>Admin</label>
             </div>
-            <div className='grid-row align-items-center'>
+            <div className='grid-row align-items-center margin-bottom-micro'>
               <input
                 id='artist'
                 name='role'
@@ -120,7 +120,7 @@ class UsuarioForm extends Component {
               />
               <label htmlFor='artist' className='font-size-small'>Artista</label>
             </div>
-            <div className='grid-row align-items-center'>
+            <div className='grid-row align-items-center margin-bottom-micro'>
               <input
                 id='member'
                 name='role'
