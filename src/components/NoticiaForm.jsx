@@ -5,12 +5,13 @@ import { withRouter } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
-import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
+import { convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
+import ParseEditorContent from '../utilities/editor.js';
 import EMOJIS from '../utilities/emojis.js';
 
 @firebaseConnect()
@@ -40,7 +41,7 @@ class NoticiaForm extends Component {
     this.handleEditorChange = this.handleEditorChange.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
 
     // Parse date
     if (this.state.publishDate) {
@@ -50,19 +51,9 @@ class NoticiaForm extends Component {
     }
 
     // Parse content
-    if (this.state.rawContent) {
-      // Convert JSON for Editor and create with content
-      const contentState = convertFromRaw(JSON.parse(this.state.rawContent));
-      this.setState({
-        editorState: EditorState.createWithContent(contentState),
-      });
-    } else {
-      // No saved JSON. Create Editor without content
-      this.setState({
-        editorState: EditorState.createEmpty(),
-      });
-    }
-
+    this.setState({
+      editorState: ParseEditorContent(this.state.rawContent),
+    });
   }
 
   addNoticia() {

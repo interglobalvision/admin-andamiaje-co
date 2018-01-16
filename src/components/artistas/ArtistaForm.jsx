@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { firebaseConnect } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
 
-import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
+import { convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
+import ParseEditorContent from '../../utilities/editor.js';
 import EMOJIS from '../../utilities/emojis.js';
 
 @firebaseConnect()
@@ -21,6 +22,8 @@ class ArtistaForm extends Component {
     galleryUrl: '',
     bioEditorState: '',
     bioRawContent: '',
+    cvEditorState: '',
+    cvRawContent: '',
     error: {
       message: '',
     },
@@ -34,29 +37,19 @@ class ArtistaForm extends Component {
     this.state = { ...this.state, ...props.artista };
 
     // Bind handlers
-    this.handleEditorChange = this.handleEditorChange.bind(this);
+    this.handleBioEditorChange = this.handleBioEditorChange.bind(this);
+    this.handleCvEditorChange = this.handleCvEditorChange.bind(this);
   }
 
-  componentDidMount() {
-
-    // Parse content
-    if (this.state.bioRawContent) {
-      // Convert JSON for Editor and create with content
-      const contentState = convertFromRaw(JSON.parse(this.state.bioRawContent));
-      this.setState({
-        bioEditorState: EditorState.createWithContent(contentState),
-      });
-    } else {
-      // No saved JSON. Create Editor without content
-      this.setState({
-        bioEditorState: EditorState.createEmpty(),
-      });
-    }
-
+  componentWillMount() {
+    this.setState({
+      bioEditorState: ParseEditorContent(this.state.bioRawContent),
+      cvEditorState: ParseEditorContent(this.state.cvRawContent),
+    });
   }
 
   addArtista() {
-    const { name, active, country, gallery, galleryUrl, bioRawContent } = this.state;
+    const { name, active, country, gallery, galleryUrl, bioRawContent, cvRawContent } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -68,6 +61,7 @@ class ArtistaForm extends Component {
         gallery,
         galleryUrl,
         bioRawContent,
+        cvRawContent,
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -77,7 +71,7 @@ class ArtistaForm extends Component {
   }
 
   updateArtista() {
-    const { name, active, country, gallery, galleryUrl, bioRawContent } = this.state;
+    const { name, active, country, gallery, galleryUrl, bioRawContent, cvRawContent } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -88,7 +82,8 @@ class ArtistaForm extends Component {
         country,
         gallery,
         galleryUrl,
-        bioRawContent
+        bioRawContent,
+        cvRawContent,
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -96,11 +91,19 @@ class ArtistaForm extends Component {
 
   }
 
-  handleEditorChange(bioEditorState) {
+  handleBioEditorChange(bioEditorState) {
     // Update Editor state and convert content to JSON for database
     this.setState({
       bioEditorState,
       bioRawContent: JSON.stringify(convertToRaw(bioEditorState.getCurrentContent())),
+    });
+  }
+
+  handleCvEditorChange(cvEditorState) {
+    // Update Editor state and convert content to JSON for database
+    this.setState({
+      cvEditorState,
+      cvRawContent: JSON.stringify(convertToRaw(cvEditorState.getCurrentContent())),
     });
   }
 
@@ -161,7 +164,7 @@ class ArtistaForm extends Component {
 
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='gallery'>Pagina web de Galeria</label></h4>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='gallery'>Galeria</label></h4>
             <input
               id='gallery'
               name='gallery'
@@ -175,7 +178,7 @@ class ArtistaForm extends Component {
 
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='galleryUrl'>Galleria URL</label></h4>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='galleryUrl'>Pagina web de Galeria</label></h4>
             <input
               id='galleryUrl'
               name='galleryUrl'
@@ -193,7 +196,27 @@ class ArtistaForm extends Component {
             <Editor
               id='editor'
               editorState={this.state.bioEditorState}
-              onEditorStateChange={this.handleEditorChange}
+              onEditorStateChange={this.handleBioEditorChange}
+              toolbar={{
+                options: ['inline', 'link', 'emoji', 'history'],
+                inline: {
+                  options: ['bold', 'italic', 'strikethrough'],
+                },
+                emoji: {
+                  emojis: EMOJIS,
+                }
+              }}
+            />
+          </div>
+        </div>
+
+        <div className='grid-row margin-bottom-basic'>
+          <div className='grid-item item-s-12'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='editor'>CV</label></h4>
+            <Editor
+              id='editor'
+              editorState={this.state.cvEditorState}
+              onEditorStateChange={this.handleCvEditorChange}
               toolbar={{
                 options: ['inline', 'link', 'emoji', 'history'],
                 inline: {
