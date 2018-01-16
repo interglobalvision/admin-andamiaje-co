@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
@@ -28,7 +27,6 @@ const UpdateArtista = ({ firebase, artista, id }) => {
 };
 
 export default compose(
-  withRouter,
   // Get noticia path from firebase based on params prop (route params from react-router)
   firebaseConnect( ({ match: { params } }) => ([{
     path: `artistas/${params.key}`, // connect with '/noticias/:key'
