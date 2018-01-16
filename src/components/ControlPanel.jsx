@@ -12,6 +12,10 @@ import Artistas from '../containers/artistas/Artistas';
 import AddArtista from './artistas/AddArtista';
 import UpdateArtista from '../containers/artistas/UpdateArtista';
 
+import Obras from '../containers/obras/Obras';
+import AddObra from './obras/AddObra';
+import UpdateObra from '../containers/obras/UpdateObra';
+
 import NoMatch from '../components/NoMatch';
 
 const ControlPanel = () => {
@@ -26,6 +30,9 @@ const ControlPanel = () => {
           <Route exact path='/artistas' component={Artistas} />
           <Route exact path='/artistas/add' component={AddArtista} />
           <Route path='/artistas/:key' component={UpdateArtista} />
+          <Route exact path='/obras' component={Obras} />
+          <Route exact path='/obras/add' component={AddObra} />
+          <Route path='/obras/:key' component={UpdateObra} />
           <Route exact path='/' component={Welcome} />
           <Route component={NoMatch}/>
         </Switch>
