@@ -5,7 +5,7 @@ import { withFirebase } from 'react-redux-firebase';
 
 const ObrasListItem = ({ obra, firebase: { remove } }) => {
   const { key } = obra;
-  const { title, year } = obra.value;
+  const { title, year, medium } = obra.value;
 
   return(
     <div className='list-rows-item grid-row padding-top-micro padding-bottom-micro align-items-center'>
@@ -14,6 +14,9 @@ const ObrasListItem = ({ obra, firebase: { remove } }) => {
       </div>
       <div className='grid-item item-s-3'>
         <span>{year}</span>
+      </div>
+      <div className='grid-item item-s-3'>
+        <span>{medium}</span>
       </div>
       <div className='grid-item flex-grow grid-row no-gutter justify-end'>
         <div className='grid-item'>
