@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom';
 import { convertFromRaw, convertToRaw, EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 
-import 'react-datepicker/dist/react-datepicker.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import EMOJIS from '../../utilities/emojis.js';
@@ -15,14 +14,13 @@ import EMOJIS from '../../utilities/emojis.js';
 class ArtistaForm extends Component {
 
   state = {
-    active: '',
+    active: false,
     name: '',
     country: '',
     gallery: '',
     galleryUrl: '',
     bioEditorState: '',
     bioRawContent: '',
-    active: false,
     error: {
       message: '',
     },
@@ -32,7 +30,7 @@ class ArtistaForm extends Component {
   constructor(props) {
     super(props);
 
-    // If component recieves noticia as prop we merge it with initial state (used for editing)
+    // If component recieves artista as prop we merge it with initial state (used for editing)
     this.state = { ...this.state, ...props.artista };
 
     // Bind handlers
@@ -69,7 +67,7 @@ class ArtistaForm extends Component {
         country,
         gallery,
         galleryUrl,
-        bioRawContent
+        bioRawContent,
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -112,7 +110,7 @@ class ArtistaForm extends Component {
         <div className='grid-row margin-bottom-basic justify-end'>
           <div className='grid-item'>
             <button className='button' onClick={() => this.props.id ? this.updateArtista() : this.addArtista()}>
-              Guardar{ this.props.id ? '' : ' Nueva'}
+              Guardar{ this.props.id ? '' : ' Nuevo'}
             </button>
           </div>
         </div>
@@ -166,7 +164,7 @@ class ArtistaForm extends Component {
 
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='gallery'>Galleria</label></h4>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='gallery'>Pagina web de Galeria</label></h4>
             <input
               id='gallery'
               name='gallery'
