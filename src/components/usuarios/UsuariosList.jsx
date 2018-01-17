@@ -16,6 +16,9 @@ const UsuariosList = ({ usuarios }) => {
             <h3>Nombre</h3>
           </div>
           <div className='grid-item item-s-2'>
+            <h3>Tipo</h3>
+          </div>
+          <div className='grid-item item-s-2'>
             <h3>Estado</h3>
           </div>
         </header>
