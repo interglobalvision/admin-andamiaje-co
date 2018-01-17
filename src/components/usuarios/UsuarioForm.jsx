@@ -8,7 +8,9 @@ class UsuarioForm extends Component {
 
   state = {
     active: false,
+    role: '',
     name: '',
+    email: '',
     displayName: '',
     error: {
       message: '',
@@ -25,25 +27,27 @@ class UsuarioForm extends Component {
 
   addUsuario() {
     const { active, role, name, email, displayName } = this.state;
+    const password = '123123123';
+    const signIn = false;
 
-    const createdDate = Date.now();
+    this.setState({ isLoading: true });
 
-    this.setState({ isLoading: true })
-
-    this.props.firebase
-      .push('usuarios', {
+    this.props.firebase.createUser(
+      {
+        email,
+        password,
+        signIn // don't sign in after createUser
+      },
+      {
         active,
         role,
         name,
-        email,
-        displayName,
-        createdDate
-      })
-      .then(() => {
-        this.setState({ isLoading: false })
-        this.props.history.push('/usuarios');
-      })
-
+        displayName
+      }
+    ).then(() => {
+      this.setState({ isLoading: false })
+      this.props.history.push('/usuarios');
+    });
   }
 
   updateUsuario() {
@@ -52,7 +56,7 @@ class UsuarioForm extends Component {
     this.setState({ isLoading: true })
 
     this.props.firebase
-      .update(`usuarios/${this.props.id}`, {
+      .update(`users/${this.props.id}`, {
         active,
         role,
         name,
@@ -63,10 +67,6 @@ class UsuarioForm extends Component {
         this.setState({ isLoading: false })
       })
 
-  }
-
-  onChangeRole(event) {
-    this.setState({ role: event.target.id })
   }
 
   render() {
@@ -105,7 +105,7 @@ class UsuarioForm extends Component {
                 type='radio'
                 disabled={this.state.isLoading}
                 checked={this.state.role === 'admin'}
-                onChange={ this.onChangeRole.bind(this) }
+                onChange={ event => this.setState({ role: event.target.id }) }
               />
               <label htmlFor='admin' className='font-size-small'>Admin</label>
             </div>
@@ -116,7 +116,7 @@ class UsuarioForm extends Component {
                 type='radio'
                 disabled={this.state.isLoading}
                 checked={this.state.role === 'artist'}
-                onChange={ this.onChangeRole.bind(this) }
+                onChange={ event => this.setState({ role: event.target.id }) }
               />
               <label htmlFor='artist' className='font-size-small'>Artista</label>
             </div>
@@ -127,7 +127,7 @@ class UsuarioForm extends Component {
                 type='radio'
                 disabled={this.state.isLoading}
                 checked={this.state.role === 'member'}
-                onChange={ this.onChangeRole.bind(this) }
+                onChange={ event => this.setState({ role: event.target.id }) }
               />
               <label htmlFor='member' className='font-size-small'>Miembro</label>
             </div>
@@ -150,11 +150,11 @@ class UsuarioForm extends Component {
 
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='email'>Correo electronico</label></h4>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='email'>Correo electrónico</label></h4>
             <input
               id='email'
               name='email'
-              type='text'
+              type='email'
               disabled={this.state.isLoading}
               value={this.state.email}
               onChange={ event => this.setState({ email: event.target.value })}
