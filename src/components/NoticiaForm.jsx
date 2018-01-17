@@ -121,14 +121,6 @@ class NoticiaForm extends Component {
   render() {
     return (
       <form onSubmit={event => event.preventDefault()}>
-        <div className='grid-row margin-bottom-basic justify-end'>
-          <div className='grid-item'>
-            <button className='button' onClick={() => this.props.id ? this.updateNoticia() : this.addNoticia()}>
-              Guardar{ this.props.id ? '' : ' Nueva'}
-            </button>
-          </div>
-        </div>
-
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-6 item-m-4'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label className='font-size-small' htmlFor='datepicker'>Publicación</label></h4>
@@ -202,6 +194,14 @@ class NoticiaForm extends Component {
                 }
               }}
             />
+          </div>
+        </div>
+
+        <div className='grid-row margin-bottom-basic justify-end'>
+          <div className='grid-item'>
+            <button className='button' onClick={() => this.props.id ? this.updateNoticia() : this.addNoticia()}>
+              Guardar{ this.props.id ? '' : ' Nueva'}
+            </button>
           </div>
         </div>
       </form>
