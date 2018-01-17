@@ -47,6 +47,8 @@ class UsuarioForm extends Component {
     ).then(() => {
       this.setState({ isLoading: false })
       this.props.history.push('/usuarios');
+    }).catch( err => {
+      console.log(err);
     });
   }
 
@@ -65,7 +67,7 @@ class UsuarioForm extends Component {
       })
       .then(() => {
         this.setState({ isLoading: false })
-      })
+      });
 
   }
 
