@@ -5,7 +5,7 @@ import { withFirebase } from 'react-redux-firebase';
 
 const UsuariosListItem = ({ usuario, firebase: { remove } }) => {
   const { key } = usuario;
-  const { name, role, active } = usuario.userProfile.value;
+  const { name, role, active } = usuario.value;
 
   let displayRole;
 
