@@ -5,11 +5,11 @@ import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
 import UsuarioForm  from '../../components/usuarios/UsuarioForm.jsx';
 
-const UpdateUsuario = ({ firebase, usuario, id }) => {
+const UpdateUsuario = ({ firebase, user, id }) => {
 
-  if (!isLoaded(usuario)) { // If not loaded…
+  if (!isLoaded(user)) { // If not loaded…
     return 'Loading'; // …show 'loading'
-  } else if (isEmpty(usuario)) { // …else. If is empty…
+  } else if (isEmpty(user)) { // …else. If is empty…
     return 'Error'; // …show 'Error?'
   } else {
     return (
@@ -20,7 +20,7 @@ const UpdateUsuario = ({ firebase, usuario, id }) => {
           </div>
         </header>
 
-        <UsuarioForm id={id} usuario={usuario} />
+        <UsuarioForm id={id} usuario={user} />
       </section>
     );
   }
@@ -29,13 +29,13 @@ const UpdateUsuario = ({ firebase, usuario, id }) => {
 export default compose(
   // Get usuario path from firebase based on params prop (route params from react-router)
   firebaseConnect( ({ match: { params } }) => ([{
-    path: `usuarios/${params.key}`, // connect with '/usuarios/:key'
-    storeAs: 'usuario' // Store this data in `usuario` so it doesn't conflict with `usuarios`
+    path: `users/${params.key}`, // connect with '/users/:key'
+    storeAs: 'user' // Store this data in `user` so it doesn't conflict with `users`
   }])),
   // Map state to props
-  connect(({ firebase: { data: { usuario } }}, { match }) => {
-    return ({ // used to pass data from the redux store (state.fireabase) to the component as prop (usuarios)
-      usuario,
+  connect(({ firebase: { data: { user } }}, { match }) => {
+    return ({ // used to pass data from the redux store (state.firebase) to the component as prop (users)
+      user,
       id: match.params.key,
     })
   })
