@@ -3,6 +3,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { withFirebase } from 'react-redux-firebase';
 
+import axios from 'axios';
+
 const UsuariosListItem = ({ usuario, firebase: { remove } }) => {
   const { key } = usuario;
   const { name, role, active } = usuario.value;
@@ -24,6 +26,26 @@ const UsuariosListItem = ({ usuario, firebase: { remove } }) => {
       break;
   }
 
+  const removeUser = (key) => {
+    const deleteUser = 'https://us-central1-igv-andamiaje-co.cloudfunctions.net/deleteUser';
+
+    axios.get(deleteUser, {
+      params: {
+        uid: key,
+      },
+    	headers: {
+        'Access-Control-Allow-Origin': '*',
+    	},
+      mode: 'no-cors'
+    })
+    .then(() => {
+      remove('users/' + key);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+
   return(
     <div className='list-rows-item grid-row padding-top-micro padding-bottom-micro align-items-center'>
       <div className='grid-item item-s-3 item-m-4 item-l-5'>
@@ -40,7 +62,7 @@ const UsuariosListItem = ({ usuario, firebase: { remove } }) => {
           <Link className='font-bold' to={'/usuarios/' + key}>Editar</Link>
         </div>
         <div className='grid-item'>
-          <button className='u-pointer font-bold' onClick={() => window.confirm('¿Seguro que deseas eliminar esta usuario?') ? remove('users/' + key) : null}>Eliminar</button>
+          <button className='u-pointer font-bold' onClick={() => window.confirm('¿Seguro que deseas eliminar esta usuario?') ? removeUser(key) : null}>Eliminar</button>
         </div>
       </div>
     </div>
