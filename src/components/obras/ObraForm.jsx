@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom';
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
+import ArtistaSelectContainer from '../../containers/artistas/ArtistaSelectContainer';
+
 @firebaseConnect()
 @withRouter
 class ObraForm extends Component {
@@ -26,6 +28,9 @@ class ObraForm extends Component {
 
     // If component recieves obra as prop we merge it with initial state (used for editing)
     this.state = { ...this.state, ...props.obra };
+
+    // Bind
+    this.handleArtistaChange = this.handleArtistaChange.bind(this);
 
   }
 
@@ -68,6 +73,15 @@ class ObraForm extends Component {
         this.setState({ isLoading: false })
       })
 
+  }
+
+  handleArtistaChange({artista, artistaName}) {
+    if(artista !== undefined || artista !== '') {
+      this.setState({
+        artista,
+        artistaName,
+      });
+    }
   }
 
   render() {
@@ -114,6 +128,7 @@ class ObraForm extends Component {
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='artista'>Artista</label></h4>
+            <ArtistaSelectContainer onChange={this.handleArtistaChange} />
             <input
               id='artista'
               name='artista'
