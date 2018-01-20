@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { firebaseConnect } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
 
+import axios from 'axios';
+
+import words from 'random-words';
+
 @firebaseConnect()
 @withRouter
 class UsuarioForm extends Component {
@@ -27,29 +31,51 @@ class UsuarioForm extends Component {
 
   addUsuario() {
     const { active, role, name, email, displayName } = this.state;
-    const password = '123123123';
-    const signIn = false;
+
+    // create
+    const _this = this;
+    const { firebase } = this.props;
+
+    const wordsArray = words({exactly: 3});
+    for (let i = 0; i < wordsArray.length; i++) {
+      wordsArray[i] = wordsArray[i].replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+    }
+    const password = wordsArray.join('');
+
+    const createUser = 'https://us-central1-igv-andamiaje-co.cloudfunctions.net/createUser';
 
     this.setState({ isLoading: true });
 
-    this.props.firebase.createUser(
-      {
-        email,
-        password,
-        signIn // don't sign in after createUser
+    axios.get(createUser, {
+      params: {
+        email: email,
+        password: password,
       },
-      {
-        active,
-        role,
-        name,
-        displayName
-      }
-    ).then(() => {
-      this.setState({ isLoading: false })
-      this.props.history.push('/usuarios');
-    }).catch( err => {
-      console.log(err);
+    	headers: {
+        'Access-Control-Allow-Origin': '*',
+    	},
+      mode: 'no-cors'
+    })
+    .then((response) => {
+      // use child() and set() to push to users
+      // so we can define our own UID
+      firebase.set('users/' + response.data.uid,
+        {
+          active,
+          role,
+          name,
+          email,
+          displayName
+        })
+        .then((ref) => {
+          _this.setState({ isLoading: false });
+          this.props.history.push('/usuarios');
+        });
+    })
+    .catch((error) => {
+      console.log(error);
     });
+
   }
 
   updateUsuario() {
@@ -66,7 +92,7 @@ class UsuarioForm extends Component {
         displayName
       })
       .then(() => {
-        this.setState({ isLoading: false })
+        this.setState({ isLoading: false });
       });
 
   }
