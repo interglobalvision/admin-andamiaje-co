@@ -36,11 +36,10 @@ class UsuarioForm extends Component {
     const _this = this;
     const { firebase } = this.props;
 
-    const wordsArray = words({exactly: 3});
-    for (let i = 0; i < wordsArray.length; i++) {
-      wordsArray[i] = wordsArray[i].replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
-    }
-    const password = wordsArray.join('');
+    const passWordA = words().replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+    const passWordB = words().replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+
+    const password = passWordA + passWordB;
 
     const createUser = 'https://us-central1-igv-andamiaje-co.cloudfunctions.net/createUser';
 
