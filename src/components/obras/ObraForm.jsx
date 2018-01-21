@@ -132,7 +132,7 @@ class ObraForm extends Component {
             <input
               id='artista'
               name='artista'
-              type='text'
+              type='hidden'
               disabled={this.state.isLoading}
               value={this.state.artista}
               onChange={ event => this.setState({ artista: event.target.value })}
