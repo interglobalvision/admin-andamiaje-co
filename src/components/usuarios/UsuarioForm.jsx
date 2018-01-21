@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import axios from 'axios';
 
-import words from 'random-words';
+import randomString from 'random-string';
 
 @firebaseConnect()
 @withRouter
@@ -36,10 +36,7 @@ class UsuarioForm extends Component {
     const _this = this;
     const { firebase } = this.props;
 
-    const passWordA = words().replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
-    const passWordB = words().replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
-
-    const password = passWordA + passWordB;
+    const password = randomString({length: 10});
 
     const createUser = 'https://us-central1-igv-andamiaje-co.cloudfunctions.net/createUser';
 

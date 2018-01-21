@@ -10,7 +10,7 @@
     "globie-styl-library": "^1.0.0",
     "kouto-swiss": "^1.1.0",
     "moment": "^2.20.1",
-    "random-words": "^0.0.1",
+    "random-string": "^0.2.0",
     "react": "^16.2.0",
     "react-datepicker": "^1.0.4",
     "react-dom": "^16.2.0",
