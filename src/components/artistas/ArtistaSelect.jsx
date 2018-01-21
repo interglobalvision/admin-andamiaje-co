@@ -18,6 +18,7 @@ class ArtistaSelect extends Component {
 
   render() {
     const { artistas } = this.props;
+
     if (!isLoaded(artistas)) { // If not loaded…
       return 'Loading'; // …show 'loading'
     } else if (isEmpty(artistas)) { // …else. If is empty…
@@ -27,11 +28,11 @@ class ArtistaSelect extends Component {
       );
     } else {
       return (
-        <select onChange={this.handleChange}>
+        <select onChange={this.handleChange} value={this.props.value}>
           <option value=''></option>
-          { artistas.map(artista => (
+          { artistas.map(artista =>
             <option key={artista.key} value={artista.key}>{artista.value.name}</option>
-          ))}
+          )}
         </select>
       );
     }

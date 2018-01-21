@@ -6,8 +6,8 @@ import { firebaseConnect } from 'react-redux-firebase';
 
 import ArtistaSelect from '../../components/artistas/ArtistaSelect';
 
-const ArtistaSelectContainer = ({ onChange, artistas }) => (
-  <ArtistaSelect artistas={artistas} onChange={onChange} />
+const ArtistaSelectContainer = ({ value, onChange, artistas }) => (
+  <ArtistaSelect artistas={artistas} onChange={onChange} value={value} />
 );
 
 export default compose(

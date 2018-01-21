@@ -128,7 +128,7 @@ class ObraForm extends Component {
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='artista'>Artista</label></h4>
-            <ArtistaSelectContainer onChange={this.handleArtistaChange} />
+            <ArtistaSelectContainer value={this.state.artista} onChange={this.handleArtistaChange} />
             <input
               id='artista'
               name='artista'
