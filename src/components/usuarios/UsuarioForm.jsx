@@ -16,6 +16,7 @@ class UsuarioForm extends Component {
     name: '',
     email: '',
     displayName: '',
+    password: '',
     error: {
       message: '',
     },
@@ -31,12 +32,17 @@ class UsuarioForm extends Component {
 
   addUsuario() {
     const { active, role, name, email, displayName } = this.state;
+    let { password } = this.state;
 
     // create
     const _this = this;
     const { firebase } = this.props;
 
-    const password = randomString({length: 10});
+    if (password === '' || password === undefined) {
+      password = randomString({length: 10});
+    }
+
+    debugger;
 
     const createUser = 'https://us-central1-igv-andamiaje-co.cloudfunctions.net/createUser';
 
@@ -61,7 +67,8 @@ class UsuarioForm extends Component {
           role,
           name,
           email,
-          displayName
+          displayName,
+          password
         })
         .then((ref) => {
           _this.setState({ isLoading: false });
@@ -76,6 +83,7 @@ class UsuarioForm extends Component {
 
   updateUsuario() {
     const { active, role, name, email, displayName } = this.state;
+    let { password } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -85,7 +93,8 @@ class UsuarioForm extends Component {
         role,
         name,
         email,
-        displayName
+        displayName,
+        password
       })
       .then(() => {
         this.setState({ isLoading: false });
@@ -196,6 +205,20 @@ class UsuarioForm extends Component {
               disabled={this.state.isLoading}
               value={this.state.displayName}
               onChange={ event => this.setState({ displayName: event.target.value })}
+            />
+          </div>
+        </div>
+
+        <div className='grid-row margin-bottom-basic'>
+          <div className='grid-item item-s-12'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='password'>Contraseña</label></h4>
+            <input
+              id='password'
+              name='password'
+              type='text'
+              disabled={this.state.isLoading}
+              value={this.state.password}
+              onChange={ event => this.setState({ password: event.target.value })}
             />
           </div>
         </div>
