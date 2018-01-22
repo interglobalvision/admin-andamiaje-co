@@ -6,6 +6,8 @@ import axios from 'axios';
 
 import randomString from 'random-string';
 
+import FirebaseFunctionsBase from '../../utilities/constants.js';
+
 @firebaseConnect()
 @withRouter
 class UsuarioForm extends Component {
@@ -44,13 +46,13 @@ class UsuarioForm extends Component {
     }
 
     // create user function url
-    const createUser = 'https://us-central1-igv-andamiaje-co.cloudfunctions.net/createUser';
+    const createUserFunction = FirebaseFunctionsBase + 'createUser';
 
     // loading. disables inputs
     this.setState({ isLoading: true });
 
     // call create user function
-    axios.get(createUser, {
+    axios.get(createUserFunction, {
       params: {
         email: email,
         password: password,
@@ -98,12 +100,12 @@ class UsuarioForm extends Component {
     }
 
     // create user function url
-    const updateUser = 'https://us-central1-igv-andamiaje-co.cloudfunctions.net/updateUser';
+    const updateUserFunction = FirebaseFunctionsBase + 'updateUser';
 
     this.setState({ isLoading: true })
 
     // call update user function
-    axios.get(updateUser, {
+    axios.get(updateUserFunction, {
       params: {
         email: email,
         password: password,

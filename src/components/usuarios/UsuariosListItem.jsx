@@ -5,6 +5,8 @@ import { withFirebase } from 'react-redux-firebase';
 
 import axios from 'axios';
 
+import FirebaseFunctionsBase from '../../utilities/constants.js';
+
 const UsuariosListItem = ({ usuario, firebase: { remove } }) => {
   const { key } = usuario;
   const { name, role, active } = usuario.value;
@@ -27,9 +29,9 @@ const UsuariosListItem = ({ usuario, firebase: { remove } }) => {
   }
 
   const removeUser = (key) => {
-    const deleteUser = 'https://us-central1-igv-andamiaje-co.cloudfunctions.net/deleteUser';
+    const deleteUserFunction = FirebaseFunctionsBase + 'deleteUser';
 
-    axios.get(deleteUser, {
+    axios.get(deleteUserFunction, {
       params: {
         uid: key,
       },
