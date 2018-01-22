@@ -3,23 +3,23 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 
-import LotesGroup from '../../components/lotes/LotesGroup';
+import ObrasGroup from '../../components/obras/ObrasGroup';
 
-const LotesGroupContainer = ({ onChange, lotes }) => (
-  <LotesGroup lotes={lotes} onChange={onChange} />
+const ObrasGroupContainer = ({ onChange, obras }) => (
+  <ObrasGroup obras={obras} onChange={onChange} />
 );
 
 export default compose(
   // Get artista path from firebase based on params prop (route params from react-router)
   firebaseConnect([
-    'lotes',
+    'obras',
   ]),
   // Map state to props
   // firebase = state.firebase
   // ordered = state.firebase.ordered
   connect(({ firebase: { ordered } }) => {
     return ({
-      lotes: ordered.lotes,
+      obras: ordered.obras,
     })
   })
-)(LotesGroupContainer);
+)(ObrasGroupContainer);

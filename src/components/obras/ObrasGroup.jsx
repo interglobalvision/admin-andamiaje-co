@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { isLoaded, isEmpty } from 'react-redux-firebase';
 
-class LotesGroup extends Component {
+class ObrasGroup extends Component {
 
   state = {
-    lotesGroup: [],
+    obrasGroup: [],
   }
 
   constructor(props) {
@@ -14,38 +14,38 @@ class LotesGroup extends Component {
 
     // Bind
     this.handleSelectChange = this.handleSelectChange.bind(this);
-    this.addLoteToGroup = this.addLoteToGroup.bind(this);
+    this.addObraToGroup = this.addObraToGroup.bind(this);
   }
 
-  addLoteToGroup(event) {
-    const selectedLote = this.state.selectedLote;
-    let lotesGroup = this.state.lotesGroup;
+  addObraToGroup(event) {
+    const selectedObra = this.state.selectedObra;
+    let obrasGroup = this.state.obrasGroup;
 
     // this needs to check if this already is in the group
 
-    lotesGroup.push(selectedLote);
+    obrasGroup.push(selectedObra);
 
-    this.setState({ lotesGroup });
+    this.setState({ obrasGroup });
 
-    this.props.onChange({ lotesGroup });
+    this.props.onChange({ obrasGroup });
   }
 
   handleSelectChange(event) {
     const id = event.target.options[event.target.selectedIndex].value;
     const title = event.target.options[event.target.selectedIndex].text;
 
-    this.setState({ selectedLote: {
+    this.setState({ selectedObra: {
       id,
       title
     } });
   }
 
   render() {
-    const { lotes } = this.props;
+    const { obras } = this.props;
 
-    if (!isLoaded(lotes)) { // If not loaded…
+    if (!isLoaded(obras)) { // If not loaded…
       return 'Loading'; // …show 'loading'
-    } else if (isEmpty(lotes)) { // …else. If is empty…
+    } else if (isEmpty(obras)) { // …else. If is empty…
       return (
         <select>
         </select>
@@ -54,22 +54,22 @@ class LotesGroup extends Component {
       return (
         <div>
           <div>
-            { this.state.lotesGroup.map(lote =>
-              <h3 key={lote.id}>{lote.title}</h3>
+            { this.state.obrasGroup.map(obra =>
+              <h3 key={obra.id}>{obra.title}</h3>
             )}
           </div>
           <select onChange={this.handleSelectChange}>
             <option value=''></option>
-            { lotes.map(lote =>
-              <option key={lote.key} value={lote.key}>{lote.value.title}</option>
+            { obras.map(obra =>
+              <option key={obra.key} value={obra.key}>{obra.value.title}</option>
             )}
           </select>
 
-          <button onClick={this.addLoteToGroup}>Add</button>
+          <button className='button' onClick={this.addObraToGroup}>Add</button>
         </div>
       );
     }
   }
 };
 
-export default LotesGroup;
+export default ObrasGroup;

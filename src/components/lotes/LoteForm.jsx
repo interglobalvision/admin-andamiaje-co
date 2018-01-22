@@ -6,7 +6,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import ArtistaSelectContainer from '../../containers/artistas/ArtistaSelectContainer';
 
-import LotesGroupContainer from '../../containers/lotes/LotesGroupContainer';
+import ObrasGroupContainer from '../../containers/obras/ObrasGroupContainer';
 
 @firebaseConnect()
 @withRouter
@@ -18,6 +18,7 @@ class LoteForm extends Component {
     artista: '',
     images: '',
     obras: '',
+    obrasGroup: [],
     medium: '',
     error: {
       message: '',
@@ -33,12 +34,12 @@ class LoteForm extends Component {
 
     // Bind
     this.handleArtistaChange = this.handleArtistaChange.bind(this);
-    this.handleLotesGroupChange = this.handleLotesGroupChange.bind(this);
+    this.handleObrasGroupChange = this.handleObrasGroupChange.bind(this);
 
   }
 
   addLote() {
-    const { title, price, artista, images, obras, medium } = this.state;
+    const { title, price, artista, images, obras, obrasGroup, medium } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -49,6 +50,7 @@ class LoteForm extends Component {
         artista,
         images,
         obras,
+        obrasGroup,
         medium,
       })
       .then(() => {
@@ -59,7 +61,7 @@ class LoteForm extends Component {
   }
 
   updateLote() {
-    const { title, price, artista, images, obras, medium } = this.state;
+    const { title, price, artista, images, obras, obrasGroup, medium } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -70,6 +72,7 @@ class LoteForm extends Component {
         artista,
         images,
         obras,
+        obrasGroup,
         medium,
       })
       .then(() => {
@@ -87,9 +90,9 @@ class LoteForm extends Component {
     }
   }
 
-  handleLotesGroupChange({lotesGroup}) {
-    if(lotesGroup.length) {
-      this.setState({ lotesGroup });
+  handleObrasGroupChange({obrasGroup}) {
+    if(obrasGroup.length) {
+      this.setState({ obrasGroup });
     }
   }
 
@@ -165,7 +168,7 @@ class LoteForm extends Component {
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='obras'>Obras</label></h4>
-              <LotesGroupContainer onChange={this.handleLotesGroupChange} />
+              <ObrasGroupContainer onChange={this.handleObrasGroupChange} />
           </div>
         </div>
 
