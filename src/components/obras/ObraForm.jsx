@@ -87,13 +87,6 @@ class ObraForm extends Component {
   render() {
     return (
       <form onSubmit={event => event.preventDefault()}>
-        <div className='grid-row margin-bottom-basic justify-end'>
-          <div className='grid-item'>
-            <button className='button' onClick={() => this.props.id ? this.updateObra() : this.addObra()}>
-              Guardar{ this.props.id ? '' : ' Nuevo'}
-            </button>
-          </div>
-        </div>
 
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
@@ -129,14 +122,6 @@ class ObraForm extends Component {
           <div className='grid-item item-s-12'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='artista'>Artista</label></h4>
             <ArtistaSelectContainer value={this.state.artista} onChange={this.handleArtistaChange} />
-            <input
-              id='artista'
-              name='artista'
-              type='hidden'
-              disabled={this.state.isLoading}
-              value={this.state.artista}
-              onChange={ event => this.setState({ artista: event.target.value })}
-            />
           </div>
         </div>
 
@@ -179,6 +164,14 @@ class ObraForm extends Component {
               value={this.state.medium}
               onChange={ event => this.setState({ medium: event.target.value })}
             />
+          </div>
+        </div>
+
+        <div className='grid-row margin-bottom-basic justify-end'>
+          <div className='grid-item'>
+            <button className='button' onClick={() => this.props.id ? this.updateObra() : this.addObra()}>
+              Guardar{ this.props.id ? '' : ' Nuevo'}
+            </button>
           </div>
         </div>
 
