@@ -3,7 +3,7 @@ import { isLoaded, isEmpty } from 'react-redux-firebase';
 
 import UsuariosListItem from '../../components/usuarios/UsuariosListItem';
 
-const UsuariosList = ({ usuarios }) => {
+const UsuariosList = ({ usuarios, currentUID }) => {
   if (!isLoaded(usuarios)) { // If not loaded…
     return 'Loading'; // …show 'loading'
   } else if (isEmpty(usuarios)) { // …else. If is empty…
@@ -25,7 +25,7 @@ const UsuariosList = ({ usuarios }) => {
 
         <div className="list-rows-holder">
           { Object.keys(usuarios).map( // …else map thru usuarios
-            (key, id) => <UsuariosListItem key={key} id={id} usuario={usuarios[key]} />
+            (key, id) => <UsuariosListItem key={key} id={id} usuario={usuarios[key]} currentUID={currentUID} />
           ) }
         </div>
       </section>

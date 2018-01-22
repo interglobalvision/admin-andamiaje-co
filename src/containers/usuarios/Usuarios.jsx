@@ -6,7 +6,7 @@ import { firebaseConnect } from 'react-redux-firebase';
 
 import UsuariosList from '../../components/usuarios/UsuariosList';
 
-const Usuarios = ({ users }) => (
+const Usuarios = ({ users, currentUID }) => (
   <section>
 
     <header className='grid-row margin-bottom-basic'>
@@ -21,7 +21,7 @@ const Usuarios = ({ users }) => (
       </div>
     </div>
 
-    <UsuariosList usuarios={users} />
+    <UsuariosList usuarios={users} currentUID={currentUID} />
 
   </section>
 );
@@ -34,9 +34,10 @@ export default compose(
   // Map state to props
   // firebase = state.firebase
   // ordered = state.firebase.ordered
-  connect(({ firebase: { ordered } }) => {
+  connect(({ firebase }) => {
     return ({
-      users: ordered.users,
+      users: firebase.ordered.users,
+      currentUID: firebase.auth.uid,
     })
   })
 )(Usuarios);
