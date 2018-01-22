@@ -34,20 +34,22 @@ class UsuarioForm extends Component {
     const { active, role, name, email, displayName } = this.state;
     let { password } = this.state;
 
-    // create
+    // create context references for callback
     const _this = this;
     const { firebase } = this.props;
 
+    // generate random password if empty
     if (password === '' || password === undefined) {
       password = randomString({length: 10});
     }
 
-    debugger;
-
+    // create user function url
     const createUser = 'https://us-central1-igv-andamiaje-co.cloudfunctions.net/createUser';
 
+    // loading. disables inputs
     this.setState({ isLoading: true });
 
+    // call create user function
     axios.get(createUser, {
       params: {
         email: email,
@@ -59,8 +61,8 @@ class UsuarioForm extends Component {
       mode: 'no-cors'
     })
     .then((response) => {
-      // use child() and set() to push to users
-      // so we can define our own UID
+      // use set() to push to user profile
+      // with UID from user
       firebase.set('users/' + response.data.uid,
         {
           active,
@@ -85,10 +87,38 @@ class UsuarioForm extends Component {
     const { active, role, name, email, displayName } = this.state;
     let { password } = this.state;
 
+    // create context references for callback
+    const _this = this;
+    const { firebase } = this.props;
+    const uid = this.props.id;
+
+    // generate random password if empty
+    if (password === '' || password === undefined) {
+      password = randomString({length: 10});
+    }
+
+    // create user function url
+    const updateUser = 'https://us-central1-igv-andamiaje-co.cloudfunctions.net/updateUser';
+
     this.setState({ isLoading: true })
 
-    this.props.firebase
-      .update(`users/${this.props.id}`, {
+    // call update user function
+    axios.get(updateUser, {
+      params: {
+        email: email,
+        password: password,
+        uid: uid
+      },
+    	headers: {
+        'Access-Control-Allow-Origin': '*',
+    	},
+      mode: 'no-cors'
+    })
+    .then((response) => {
+      console.log(response.data);
+
+      // update user profile
+      firebase.update(`users/${uid}`, {
         active,
         role,
         name,
@@ -97,8 +127,12 @@ class UsuarioForm extends Component {
         password
       })
       .then(() => {
-        this.setState({ isLoading: false });
+        _this.setState({ isLoading: false });
       });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 
   }
 
@@ -107,7 +141,10 @@ class UsuarioForm extends Component {
       <form onSubmit={event => event.preventDefault()}>
         <div className='grid-row margin-bottom-basic justify-end'>
           <div className='grid-item'>
-            <button className='button' onClick={() => this.props.id ? this.updateUsuario() : this.addUsuario()}>
+            <button
+              className='button' onClick={() => this.props.id ? this.updateUsuario() : this.addUsuario()}
+              disabled={this.state.isLoading}
+            >
               Guardar{ this.props.id ? '' : ' Nueva'}
             </button>
           </div>
