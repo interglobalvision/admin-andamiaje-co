@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
-import UsuarioForm  from '../../components/usuarios/UsuarioForm.jsx';
+import UsuarioForm from '../../components/usuarios/UsuarioForm.jsx';
 
 const UpdateUsuario = ({ firebase, user, id }) => {
 
