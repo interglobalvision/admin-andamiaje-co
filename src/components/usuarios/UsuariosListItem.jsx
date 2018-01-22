@@ -7,7 +7,7 @@ import axios from 'axios';
 
 import FirebaseFunctionsBase from '../../utilities/constants.js';
 
-const UsuariosListItem = ({ usuario, firebase: { remove } }) => {
+const UsuariosListItem = ({ usuario, firebase: { remove }, currentUID }) => {
   const { key } = usuario;
   const { name, role, active } = usuario.value;
 
@@ -64,7 +64,11 @@ const UsuariosListItem = ({ usuario, firebase: { remove } }) => {
           <Link className='font-bold' to={'/usuarios/' + key}>Editar</Link>
         </div>
         <div className='grid-item'>
-          <button className='u-pointer font-bold' onClick={() => window.confirm('¿Seguro que deseas eliminar esta usuario?') ? removeUser(key) : null}>Eliminar</button>
+          <button
+            className='u-pointer font-bold'
+            onClick={() => window.confirm('¿Seguro que deseas eliminar esta usuario?') ? removeUser(key) : null}
+            disabled={key === currentUID}
+          >Eliminar</button>
         </div>
       </div>
     </div>
