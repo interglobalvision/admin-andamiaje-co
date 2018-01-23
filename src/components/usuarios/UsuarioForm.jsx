@@ -36,102 +36,111 @@ class UsuarioForm extends Component {
     const { active, role, name, email, displayName } = this.state;
     let { password } = this.state;
 
-    // create context references for callback
+    // Create context references for callback
     const _this = this;
     const { firebase } = this.props;
 
-    // generate random password if empty
+    // Generate random password if empty
     if (password === '' || password === undefined) {
       password = randomString({length: 10});
     }
 
-    // create user function url
+    // Create user function url
     const createUserFunction = CloudFunctionsUrl + '/createUser';
 
-    // loading. disables inputs
+    // Loading. disables inputs
     this.setState({ isLoading: true });
 
-    firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
-    .then(idToken => {
-      // call create user function
-      axios.get(createUserFunction, {
-        params: {
-          email: email,
-          password: password,
-        },
-      	headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Authorization': idToken,
-      	},
-        mode: 'no-cors'
-      })
-      .then((response) => {
-        // use set() to push to user profile
-        // with UID from user
-        console.log(response);
+    // Get current user auth token and make a req to create a new user
+    firebase.auth().currentUser.getIdToken(true /* Force refresh */)
+      .then(idToken => (
 
-        firebase.set('users/' + response.data.uid,
-          {
-            active,
-            role,
-            name,
-            email,
-            displayName,
-            password
-          })
-          .then((ref) => {
-            _this.setState({ isLoading: false });
-            this.props.history.push('/usuarios');
-          });
-      })
-      .catch((error) => {
-        // Error creating user
-        console.log(error);
+        // Call create user function
+        axios.get(createUserFunction, {
+          params: {
+            email: email,
+            password: password,
+          },
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Authorization': idToken,
+          },
+          mode: 'no-cors'
+        })
+
+      )).then(response => (
+
+        // Use set() to push to user profile with UID from user
+        firebase.set('users/' + response.data.uid, {
+          active,
+          role,
+          name,
+          email,
+          displayName,
+          password
+        })
+
+      )).catch(error => {
+
+        // Unset loading
+        _this.setState({ isLoading: false });
+
+        // Error handling
+        if (error.response) {
+          console.log(error.response.data);
+        }
+
+      }).then(() => {
+
+        // Unset loading
+        _this.setState({ isLoading: false });
+
+        // Redirect to /usuarios
+        this.props.history.push('/usuarios');
+
       });
-    }).catch(error => {
-      // Error creating ID token
-      console.log(error);
-    });
   }
 
   updateUsuario() {
     const { active, role, name, email, displayName } = this.state;
     let { password } = this.state;
 
-    // create context references for callback
+    // Create context references for callback
     const _this = this;
     const { firebase } = this.props;
     const uid = this.props.id;
 
-    // generate random password if empty
+    // Generate random password if empty
     if (password === '' || password === undefined) {
       password = randomString({length: 10});
     }
 
-    // create user function url
+    // Create user function url
     const updateUserFunction = CloudFunctionsUrl + '/updateUser';
 
+    // Set loading
     this.setState({ isLoading: true })
 
     firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
-    .then(idToken => {
-      // call update user function
-      axios.get(updateUserFunction, {
-        params: {
-          email: email,
-          password: password,
-          uid: uid
-        },
-      	headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Authorization': idToken,
-      	},
-        mode: 'no-cors'
-      })
-      .then((response) => {
-        console.log(response.data);
+      .then(idToken => (
 
-        // update user profile
+        // Call update user function
+        axios.get(updateUserFunction, {
+          params: {
+            email: email,
+            password: password,
+            uid: uid
+          },
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Authorization': idToken,
+          },
+          mode: 'no-cors'
+        })
+
+      )).then((response) => (
+
+        // Update user profile
         firebase.update(`users/${uid}`, {
           active,
           role,
@@ -140,22 +149,23 @@ class UsuarioForm extends Component {
           displayName,
           password
         })
-        .then(() => {
-          _this.setState({ isLoading: false });
-        })
-        .catch((error) => {
+
+      )).then(() => {
+
+        // Unset loading
+        _this.setState({ isLoading: false });
+
+      }).catch((error) => {
+
+        // Unset loading
+        _this.setState({ isLoading: false });
+
+        if (error.response) {
           // Error updating user profile
-          console.log(error);
-        });
-      })
-      .catch((error) => {
-        // Error updating user account
-        console.log(error);
+          console.log(error.response.data);
+        }
+
       });
-    }).catch(error => {
-      // Error creating ID token
-      console.log(error);
-    });
   }
 
   render() {
