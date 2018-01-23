@@ -1,3 +1,3 @@
-const FirebaseFunctionsBase = 'https://us-central1-igv-andamiaje-co.cloudfunctions.net/';
+const CloudFunctionsUrl = 'https://us-central1-igv-andamiaje-co.cloudfunctions.net';
 
-export default FirebaseFunctionsBase;
+export default CloudFunctionsUrl;

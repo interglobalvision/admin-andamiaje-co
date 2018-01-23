@@ -5,7 +5,7 @@ import { withFirebase } from 'react-redux-firebase';
 
 import axios from 'axios';
 
-import FirebaseFunctionsBase from '../../utilities/constants.js';
+import CloudFunctionsUrl from '../../utilities/constants.js';
 
 const UsuariosListItem = ({ usuario, firebase: { remove }, currentUID }) => {
   const { key } = usuario;
@@ -29,7 +29,7 @@ const UsuariosListItem = ({ usuario, firebase: { remove }, currentUID }) => {
   }
 
   const removeUser = (key) => {
-    const deleteUserFunction = FirebaseFunctionsBase + 'deleteUser';
+    const deleteUserFunction = CloudFunctionsUrl + '/deleteUser';
 
     axios.get(deleteUserFunction, {
       params: {
@@ -65,7 +65,7 @@ const UsuariosListItem = ({ usuario, firebase: { remove }, currentUID }) => {
         </div>
         <div className='grid-item'>
           <button
-            className='u-pointer font-bold'
+            className={key === currentUID ? '' : 'u-pointer font-bold'}
             onClick={() => window.confirm('¿Seguro que deseas eliminar esta usuario?') ? removeUser(key) : null}
             disabled={key === currentUID}
           >Eliminar</button>

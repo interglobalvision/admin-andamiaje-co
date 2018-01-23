@@ -6,7 +6,7 @@ import axios from 'axios';
 
 import randomString from 'random-string';
 
-import FirebaseFunctionsBase from '../../utilities/constants.js';
+import CloudFunctionsUrl from '../../utilities/constants.js';
 
 @firebaseConnect()
 @withRouter
@@ -46,7 +46,7 @@ class UsuarioForm extends Component {
     }
 
     // create user function url
-    const createUserFunction = FirebaseFunctionsBase + 'createUser';
+    const createUserFunction = CloudFunctionsUrl + '/createUser';
 
     // loading. disables inputs
     this.setState({ isLoading: true });
@@ -100,7 +100,7 @@ class UsuarioForm extends Component {
     }
 
     // create user function url
-    const updateUserFunction = FirebaseFunctionsBase + 'updateUser';
+    const updateUserFunction = CloudFunctionsUrl + '/updateUser';
 
     this.setState({ isLoading: true })
 
