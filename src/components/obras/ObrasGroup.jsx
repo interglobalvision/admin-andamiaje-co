@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { isLoaded, isEmpty } from 'react-redux-firebase';
 
+import ObrasGroupItem from '../../components/obras/ObrasGroupItem';
+
 class ObrasGroup extends Component {
 
   state = {
@@ -53,9 +55,9 @@ class ObrasGroup extends Component {
     } else {
       return (
         <div>
-          <div>
+          <div className='grid-row padding-top-micro padding-bottom-basic align-items-center'>
             { this.state.obrasGroup.map(obra =>
-              <h3 key={obra.id}>{obra.title}</h3>
+              <ObrasGroupItem key={obra.id} obra={obra} />
             )}
           </div>
           <select onChange={this.handleSelectChange}>
