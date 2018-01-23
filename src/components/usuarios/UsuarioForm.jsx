@@ -51,38 +51,47 @@ class UsuarioForm extends Component {
     // loading. disables inputs
     this.setState({ isLoading: true });
 
-    // call create user function
-    axios.get(createUserFunction, {
-      params: {
-        email: email,
-        password: password,
-      },
-    	headers: {
-        'Access-Control-Allow-Origin': '*',
-    	},
-      mode: 'no-cors'
-    })
-    .then((response) => {
-      // use set() to push to user profile
-      // with UID from user
-      firebase.set('users/' + response.data.uid,
-        {
-          active,
-          role,
-          name,
-          email,
-          displayName,
-          password
-        })
-        .then((ref) => {
-          _this.setState({ isLoading: false });
-          this.props.history.push('/usuarios');
-        });
-    })
-    .catch((error) => {
+    firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
+    .then(idToken => {
+      // call create user function
+      axios.get(createUserFunction, {
+        params: {
+          email: email,
+          password: password,
+        },
+      	headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': idToken,
+      	},
+        mode: 'no-cors'
+      })
+      .then((response) => {
+        // use set() to push to user profile
+        // with UID from user
+        console.log(response);
+
+        firebase.set('users/' + response.data.uid,
+          {
+            active,
+            role,
+            name,
+            email,
+            displayName,
+            password
+          })
+          .then((ref) => {
+            _this.setState({ isLoading: false });
+            this.props.history.push('/usuarios');
+          });
+      })
+      .catch((error) => {
+        // Error creating user
+        console.log(error);
+      });
+    }).catch(error => {
+      // Error creating ID token
       console.log(error);
     });
-
   }
 
   updateUsuario() {
@@ -104,38 +113,49 @@ class UsuarioForm extends Component {
 
     this.setState({ isLoading: true })
 
-    // call update user function
-    axios.get(updateUserFunction, {
-      params: {
-        email: email,
-        password: password,
-        uid: uid
-      },
-    	headers: {
-        'Access-Control-Allow-Origin': '*',
-    	},
-      mode: 'no-cors'
-    })
-    .then((response) => {
-      console.log(response.data);
-
-      // update user profile
-      firebase.update(`users/${uid}`, {
-        active,
-        role,
-        name,
-        email,
-        displayName,
-        password
+    firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
+    .then(idToken => {
+      // call update user function
+      axios.get(updateUserFunction, {
+        params: {
+          email: email,
+          password: password,
+          uid: uid
+        },
+      	headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': idToken,
+      	},
+        mode: 'no-cors'
       })
-      .then(() => {
-        _this.setState({ isLoading: false });
+      .then((response) => {
+        console.log(response.data);
+
+        // update user profile
+        firebase.update(`users/${uid}`, {
+          active,
+          role,
+          name,
+          email,
+          displayName,
+          password
+        })
+        .then(() => {
+          _this.setState({ isLoading: false });
+        })
+        .catch((error) => {
+          // Error updating user profile
+          console.log(error);
+        });
+      })
+      .catch((error) => {
+        // Error updating user account
+        console.log(error);
       });
-    })
-    .catch((error) => {
+    }).catch(error => {
+      // Error creating ID token
       console.log(error);
     });
-
   }
 
   render() {

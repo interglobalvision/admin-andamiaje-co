@@ -7,7 +7,7 @@ import axios from 'axios';
 
 import CloudFunctionsUrl from '../../utilities/constants.js';
 
-const UsuariosListItem = ({ usuario, firebase: { remove }, currentUID }) => {
+const UsuariosListItem = ({ usuario, firebase, currentUID }) => {
   const { key } = usuario;
   const { name, role, active } = usuario.value;
 
@@ -31,20 +31,31 @@ const UsuariosListItem = ({ usuario, firebase: { remove }, currentUID }) => {
   const removeUser = (key) => {
     const deleteUserFunction = CloudFunctionsUrl + '/deleteUser';
 
-    axios.get(deleteUserFunction, {
-      params: {
-        uid: key,
-      },
-    	headers: {
-        'Access-Control-Allow-Origin': '*',
-    	},
-      mode: 'no-cors'
-    })
-    .then(() => {
-      remove('users/' + key);
-    })
-    .catch((error) => {
-      console.log(error);
+    firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
+    .then(idToken => {
+      axios.get(deleteUserFunction, {
+        params: {
+          uid: key,
+        },
+      	headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': idToken,
+      	},
+        mode: 'no-cors'
+      })
+      .then((response) => {
+        console.log(response);
+
+        firebase.remove('users/' + key);
+      })
+      .catch((error) => {
+        console.log('Error deleting user');
+        console.error(error);
+      });
+    }).catch(error => {
+      // Error creating ID token
+      console.log('Error creating ID token');
+      console.error(error);
     });
   }
 

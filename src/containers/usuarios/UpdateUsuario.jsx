@@ -5,7 +5,7 @@ import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
 import UsuarioForm from '../../components/usuarios/UsuarioForm.jsx';
 
-const UpdateUsuario = ({ firebase, user, id }) => {
+const UpdateUsuario = ({ firebase, user, id, currentUID }) => {
 
   if (!isLoaded(user)) { // If not loaded…
     return 'Loading'; // …show 'loading'
@@ -20,7 +20,7 @@ const UpdateUsuario = ({ firebase, user, id }) => {
           </div>
         </header>
 
-        <UsuarioForm id={id} usuario={user} />
+        <UsuarioForm id={id} usuario={user} currentUID={currentUID} />
       </section>
     );
   }
@@ -33,10 +33,11 @@ export default compose(
     storeAs: 'user' // Store this data in `user` so it doesn't conflict with `users`
   }])),
   // Map state to props
-  connect(({ firebase: { data: { user } }}, { match }) => {
+  connect(({ firebase }, { match }) => {
     return ({ // used to pass data from the redux store (state.firebase) to the component as prop (users)
-      user,
+      user: firebase.data.user,
       id: match.params.key,
+      currentUID: firebase.auth.uid,
     })
   })
 )(UpdateUsuario);
