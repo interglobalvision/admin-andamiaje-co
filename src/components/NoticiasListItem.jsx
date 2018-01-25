@@ -6,7 +6,7 @@ import { toastr } from 'react-redux-toastr';
 
 import moment from 'moment';
 
-import { ToastrConfirmOptions, ToastrOptionsSuccess } from '../utilities/constants.js';
+import { ToastrOptionsConfirm, ToastrOptionsSuccess } from '../utilities/toastr.js';
 
 const NoticiasListItem = ({ noticia, firebase: { remove } }) => {
   const { key } = noticia;
@@ -40,7 +40,7 @@ const NoticiasListItem = ({ noticia, firebase: { remove } }) => {
           <Link className='font-bold' to={'/noticias/' + key}>Editar</Link>
         </div>
         <div className='grid-item'>
-          <button className='u-pointer font-bold' onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta noticia?', ToastrConfirmOptions(removeNoticia, key))}>Eliminar</button>
+          <button className='u-pointer font-bold' onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta noticia?', ToastrOptionsConfirm(removeNoticia, key))}>Eliminar</button>
         </div>
       </div>
     </div>

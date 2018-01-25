@@ -7,7 +7,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import ArtistaSelectContainer from '../../containers/artistas/ArtistaSelectContainer';
 
-import { ToastrOptionsSuccess } from '../../utilities/constants.js';
+import { ToastrOptionsSuccess } from '../../utilities/toastr.js';
 
 @firebaseConnect()
 @withRouter

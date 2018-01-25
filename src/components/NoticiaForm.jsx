@@ -15,7 +15,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import ParseEditorContent from '../utilities/editor.js';
 import EMOJIS from '../utilities/emojis.js';
 
-import { ToastrOptionsSuccess } from '../utilities/constants.js';
+import { ToastrOptionsSuccess } from '../utilities/toastr.js';
 
 @firebaseConnect()
 @withRouter

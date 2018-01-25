@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { withFirebase } from 'react-redux-firebase';
 import { toastr } from 'react-redux-toastr';
 
-import { ToastrConfirmOptions, ToastrOptionsSuccess } from '../../utilities/constants.js';
+import { ToastrOptionsConfirm, ToastrOptionsSuccess } from '../../utilities/toastr.js';
 
 const ObrasListItem = ({ obra, firebase: { remove } }) => {
   const { key } = obra;
@@ -37,7 +37,7 @@ const ObrasListItem = ({ obra, firebase: { remove } }) => {
           <Link className='font-bold' to={'/obras/' + key}>Editar</Link>
         </div>
         <div className='grid-item'>
-          <button className='u-pointer font-bold' onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta obra?', ToastrConfirmOptions(removeObra, key))}>Eliminar</button>
+          <button className='u-pointer font-bold' onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta obra?', ToastrOptionsConfirm(removeObra, key))}>Eliminar</button>
         </div>
       </div>
     </div>

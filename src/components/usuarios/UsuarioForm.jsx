@@ -7,7 +7,9 @@ import axios from 'axios';
 
 import randomString from 'random-string';
 
-import { CloudFunctionsUrl, ToastrOptionsError, ToastrOptionsSuccess } from '../../utilities/constants.js';
+import { CloudFunctionsUrl } from '../../utilities/constants.js';
+
+import { ToastrOptionsError, ToastrOptionsSuccess } from '../../utilities/toastr.js';
 
 @firebaseConnect()
 @withRouter
