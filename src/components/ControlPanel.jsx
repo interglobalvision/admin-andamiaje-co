@@ -16,6 +16,10 @@ import Usuarios from '../containers/usuarios/Usuarios';
 import AddUsuario from './usuarios/AddUsuario';
 import UpdateUsuario from '../containers/usuarios/UpdateUsuario';
 
+import Obras from '../containers/obras/Obras';
+import AddObra from './obras/AddObra';
+import UpdateObra from '../containers/obras/UpdateObra';
+
 import NoMatch from '../components/NoMatch';
 
 const ControlPanel = () => {
@@ -33,6 +37,9 @@ const ControlPanel = () => {
           <Route exact path='/usuarios' component={Usuarios} />
           <Route exact path='/usuarios/add' component={AddUsuario} />
           <Route path='/usuarios/:key' component={UpdateUsuario} />
+          <Route exact path='/obras' component={Obras} />
+          <Route exact path='/obras/add' component={AddObra} />
+          <Route path='/obras/:key' component={UpdateObra} />
           <Route exact path='/' component={Welcome} />
           <Route component={NoMatch}/>
         </Switch>
