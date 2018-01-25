@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withFirebase } from 'react-redux-firebase';
-import Dropzone from 'react-dropzone';
+import Dropzone from 'react-dropzone'; // For Dropzone reference check https://github.com/react-dropzone/react-dropzone
 
 @withFirebase
 class Uploads extends Component {
@@ -12,7 +12,10 @@ class Uploads extends Component {
   constructor(props) {
     super(props);
 
+    // Path in the Storage where the files will get saves
     this.storagePath = this.props.storagePath;
+
+    // Path in the db where the files will get saved
     this.path = this.props.path;
 
     // Bind
@@ -28,7 +31,8 @@ class Uploads extends Component {
     this.props.firebase
       .uploadFiles(this.storagePath, files, this.path)
       .then(files => {
-        // Parse response
+
+        // Create an array with the data we need from the uploaded files
         const uploadedFiles = files.map( file => {
           const { key, File: { downloadURL, fullPath, name } } = file;
           return {
@@ -46,9 +50,7 @@ class Uploads extends Component {
         this.props.onChange(uploadedFiles);
 
       })
-      .catch( error => {
-        console.log(error);
-      });
+      .catch( error => console.log(error) );
 
   }
 

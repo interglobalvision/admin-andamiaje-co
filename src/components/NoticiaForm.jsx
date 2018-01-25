@@ -46,6 +46,7 @@ class NoticiaForm extends Component {
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
     this.handleUploadsChange = this.handleUploadsChange.bind(this);
+    this.deleteImage = this.deleteImage.bind(this);
   }
 
   componentWillMount() {
@@ -61,6 +62,37 @@ class NoticiaForm extends Component {
     this.setState({
       editorState: ParseEditorContent(this.state.rawContent),
     });
+  }
+
+  deleteImage(image) {
+
+    // Set Loading
+    this.setState({ isLoading: true })
+
+    // deleteFile(storagePath, dbPath)
+    this.props.firebase.deleteFile(image.fullPath, `${this.path}/${image.key}`)
+      .then(deletedImage => {
+
+        // Filter out the deleted image fromt the current state
+        const images = this.state.images.filter( image => {
+          return image.fullPath !== deletedImage.path;
+        });
+
+        // Save the new state
+        this.setState({ images });
+
+        // Update only `images` in the db entry
+        this.props.firebase
+          .update(`noticias/${this.props.id}`, {
+            images,
+          })
+          .then(() => {
+            // Unset Loading
+            this.setState({ isLoading: false })
+          })
+
+      })
+      .catch( error => console.log(error) );
   }
 
   addNoticia() {
@@ -217,7 +249,8 @@ class NoticiaForm extends Component {
         <div className='grid-row margin-bottom-basic'>
           {this.state.images.map( image => (
             <div key={image.key} className='grid-item item-s-6 item-m-3'>
-              <img src={image.downloadURL} />
+              <img src={image.downloadURL} alt="" />
+              <button onClick={() => this.deleteImage(image)}>Eliminar</button>
             </div>
           ))}
           <div className='grid-item item-s-6 item-m-3'>
