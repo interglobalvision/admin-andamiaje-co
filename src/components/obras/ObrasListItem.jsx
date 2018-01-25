@@ -16,7 +16,7 @@ const ObrasListItem = ({ obra, firebase: { remove } }) => {
     .then(() => {
 
       // Display success toast
-      toastr.success('Éxito', 'Obra eliminado', ToastrOptionsSuccess);
+      toastr.success('Éxito', 'Obra eliminada', ToastrOptionsSuccess);
 
     });
   };
