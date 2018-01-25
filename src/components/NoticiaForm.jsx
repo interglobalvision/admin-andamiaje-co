@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { firebaseConnect } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
+import { toastr } from 'react-redux-toastr';
 
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
@@ -13,6 +14,8 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import ParseEditorContent from '../utilities/editor.js';
 import EMOJIS from '../utilities/emojis.js';
+
+import { ToastrOptionsSuccess } from '../utilities/constants.js';
 
 @firebaseConnect()
 @withRouter
@@ -74,6 +77,9 @@ class NoticiaForm extends Component {
       .then(() => {
         this.setState({ isLoading: false })
         this.props.history.push('/noticias');
+
+        // Display success toast
+        toastr.success('Éxito', 'Noticia creada', ToastrOptionsSuccess);
       })
 
   }
@@ -92,6 +98,9 @@ class NoticiaForm extends Component {
       })
       .then(() => {
         this.setState({ isLoading: false })
+
+        // Display success toast
+        toastr.success('Éxito', 'Noticia actualizada', ToastrOptionsSuccess);
       })
 
   }

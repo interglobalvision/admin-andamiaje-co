@@ -6,7 +6,7 @@ import { toastr } from 'react-redux-toastr';
 
 import axios from 'axios';
 
-import { CloudFunctionsUrl, ToastrOptions, ToastrConfirmOptions } from '../../utilities/constants.js';
+import { CloudFunctionsUrl, ToastrOptionsError, ToastrConfirmOptions, ToastrOptionsSuccess } from '../../utilities/constants.js';
 
 const UsuariosListItem = ({ usuario, firebase, currentUID }) => {
   const { key } = usuario;
@@ -52,7 +52,7 @@ const UsuariosListItem = ({ usuario, firebase, currentUID }) => {
     }).then(() => {
 
       // Display success toast
-      toastr.success('Éxito', 'Usuario eliminado');
+      toastr.success('Éxito', 'Usuario eliminado', ToastrOptionsSuccess);
 
     }).catch(error => {
       // Error handling
@@ -60,7 +60,7 @@ const UsuariosListItem = ({ usuario, firebase, currentUID }) => {
         console.log(error.response.data);
 
         // Display error toast
-        toastr.error('Error', error.response.data.message, ToastrOptions);
+        toastr.error('Error', error.response.data.message, ToastrOptionsError);
       }
     });
   };

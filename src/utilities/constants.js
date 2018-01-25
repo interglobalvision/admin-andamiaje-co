@@ -1,8 +1,12 @@
 export const CloudFunctionsUrl = 'https://us-central1-igv-andamiaje-co.cloudfunctions.net';
 
-export const ToastrOptions = {
+export const ToastrOptionsError = {
   timeOut: 0,
   removeOnHover: false
+};
+
+export const ToastrOptionsSuccess = {
+  showCloseButton: false
 };
 
 export const ToastrConfirmOptions = (onOkFunc, arg) => {

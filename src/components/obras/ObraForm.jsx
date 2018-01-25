@@ -7,6 +7,8 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import ArtistaSelectContainer from '../../containers/artistas/ArtistaSelectContainer';
 
+import { ToastrOptionsSuccess } from '../../utilities/constants.js';
+
 @firebaseConnect()
 @withRouter
 class ObraForm extends Component {
@@ -54,7 +56,7 @@ class ObraForm extends Component {
         this.props.history.push('/obras');
 
         // Display success toast
-        toastr.success('Éxito', 'Obra creada');
+        toastr.success('Éxito', 'Obra creada', ToastrOptionsSuccess);
       })
 
   }

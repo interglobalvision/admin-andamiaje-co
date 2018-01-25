@@ -7,7 +7,7 @@ import axios from 'axios';
 
 import randomString from 'random-string';
 
-import { CloudFunctionsUrl, ToastrOptions } from '../../utilities/constants.js';
+import { CloudFunctionsUrl, ToastrOptionsError, ToastrOptionsSuccess } from '../../utilities/constants.js';
 
 @firebaseConnect()
 @withRouter
@@ -87,11 +87,11 @@ class UsuarioForm extends Component {
         _this.setState({ isLoading: false });
 
         // Display success toast
-        toastr.success('Éxito', 'Usuario creado');
+        toastr.success('Éxito', 'Usuario creado', ToastrOptionsSuccess);
 
         // Redirect to /usuarios
         this.props.history.push('/usuarios');
-        
+
       }).catch(error => {
 
         // Unset loading
@@ -100,7 +100,7 @@ class UsuarioForm extends Component {
         // Error handling
         if (error.response) {
           // Display error toast
-          toastr.error('Error', error.response.data.message, ToastrOptions);
+          toastr.error('Error', error.response.data.message, ToastrOptionsError);
 
           console.log(error.response.data);
         }
@@ -163,7 +163,7 @@ class UsuarioForm extends Component {
         _this.setState({ isLoading: false });
 
         // Display success toast
-        toastr.success('Éxito', 'Usuario actualizado');
+        toastr.success('Éxito', 'Usuario actualizado', ToastrOptionsSuccess);
 
       }).catch((error) => {
 
@@ -175,7 +175,7 @@ class UsuarioForm extends Component {
           console.log(error.response.data);
 
           // Display error toast
-          toastr.error('Error', error.response.data.message, ToastrOptions);
+          toastr.error('Error', error.response.data.message, ToastrOptionsError);
         }
 
       });

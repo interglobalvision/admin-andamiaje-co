@@ -6,7 +6,7 @@ import { toastr } from 'react-redux-toastr';
 
 import moment from 'moment';
 
-import { ToastrConfirmOptions } from '../utilities/constants.js';
+import { ToastrConfirmOptions, ToastrOptionsSuccess } from '../utilities/constants.js';
 
 const NoticiasListItem = ({ noticia, firebase: { remove } }) => {
   const { key } = noticia;
@@ -15,11 +15,11 @@ const NoticiasListItem = ({ noticia, firebase: { remove } }) => {
 
   const removeNoticia = (key) => {
 
-    remove('users/' + key)
+    remove('noticias/' + key)
     .then(() => {
 
       // Display success toast
-      toastr.success('Éxito', 'Noticia eliminado');
+      toastr.success('Éxito', 'Noticia eliminado', ToastrOptionsSuccess);
 
     });
   };
