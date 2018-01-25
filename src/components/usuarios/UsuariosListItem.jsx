@@ -6,7 +6,7 @@ import { toastr } from 'react-redux-toastr';
 
 import axios from 'axios';
 
-import { CloudFunctionsUrl, ToastrOptions } from '../../utilities/constants.js';
+import { CloudFunctionsUrl, ToastrOptions, ToastrConfirmOptions } from '../../utilities/constants.js';
 
 const UsuariosListItem = ({ usuario, firebase, currentUID }) => {
   const { key } = usuario;
@@ -45,6 +45,7 @@ const UsuariosListItem = ({ usuario, firebase, currentUID }) => {
         mode: 'no-cors'
       })
     }).then((response) => {
+      console.log(response);
 
       firebase.remove('users/' + key);
 
@@ -62,13 +63,6 @@ const UsuariosListItem = ({ usuario, firebase, currentUID }) => {
         toastr.error('Error', error.response.data.message, ToastrOptions);
       }
     });
-  };
-
-  const toastrConfirmOptions = {
-    onOk: ()=> removeUser(key),
-    onCancel: null,
-    okText: 'Confirmar',
-    cancelText: 'Cancelar'
   };
 
   return(
@@ -89,7 +83,7 @@ const UsuariosListItem = ({ usuario, firebase, currentUID }) => {
         <div className='grid-item'>
           <button
             className={key === currentUID ? '' : 'u-pointer font-bold'}
-            onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta usuario?', toastrConfirmOptions)}
+            onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta usuario?', ToastrConfirmOptions(removeUser, key))}
             disabled={key === currentUID}
           >Eliminar</button>
         </div>
