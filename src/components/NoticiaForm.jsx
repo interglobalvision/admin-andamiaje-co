@@ -11,8 +11,9 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
-import ParseEditorContent from '../utilities/editor.js';
-import EMOJIS from '../utilities/emojis.js';
+import Uploads from './Uploads';
+import ParseEditorContent from '../utilities/editor';
+import EMOJIS from '../utilities/emojis';
 
 @firebaseConnect()
 @withRouter
@@ -24,11 +25,16 @@ class NoticiaForm extends Component {
     title: '',
     editorState: '',
     rawContent: '',
+    images: [],
     error: {
       message: '',
     },
     isLoading: false,
   }
+
+  // Uploads
+  storagePath = 'uploads'; // path in the storage
+  path = 'uploads'; // path in the db
 
   constructor(props) {
     super(props);
@@ -39,6 +45,7 @@ class NoticiaForm extends Component {
     // Bind handlers
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
+    this.handleUploadsChange = this.handleUploadsChange.bind(this);
   }
 
   componentWillMount() {
@@ -118,6 +125,14 @@ class NoticiaForm extends Component {
     });
   }
 
+  handleUploadsChange(images) {
+
+    // Append images to state
+    this.setState({
+      images: [...this.state.images, images]
+    });
+  }
+
   render() {
     return (
       <form onSubmit={event => event.preventDefault()}>
@@ -192,6 +207,20 @@ class NoticiaForm extends Component {
                 emoji: {
                   emojis: EMOJIS,
                 }
+              }}
+            />
+          </div>
+        </div>
+
+        <div className='grid-row margin-bottom-basic'>
+          <div className='grid-item item-s-6 item-m-3'>
+            <Uploads
+              onChange={this.handleUploadsChange}
+              storagePath={this.storagePath}
+              path={this.path}
+              dropzone={{
+                accept: 'image/jpeg, image/png',
+                multiple: false
               }}
             />
           </div>
