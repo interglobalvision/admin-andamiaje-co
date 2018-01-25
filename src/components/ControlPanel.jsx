@@ -12,6 +12,10 @@ import Artistas from '../containers/artistas/Artistas';
 import AddArtista from './artistas/AddArtista';
 import UpdateArtista from '../containers/artistas/UpdateArtista';
 
+import Usuarios from '../containers/usuarios/Usuarios';
+import AddUsuario from './usuarios/AddUsuario';
+import UpdateUsuario from '../containers/usuarios/UpdateUsuario';
+
 import Obras from '../containers/obras/Obras';
 import AddObra from './obras/AddObra';
 import UpdateObra from '../containers/obras/UpdateObra';
@@ -30,6 +34,9 @@ const ControlPanel = () => {
           <Route exact path='/artistas' component={Artistas} />
           <Route exact path='/artistas/add' component={AddArtista} />
           <Route path='/artistas/:key' component={UpdateArtista} />
+          <Route exact path='/usuarios' component={Usuarios} />
+          <Route exact path='/usuarios/add' component={AddUsuario} />
+          <Route path='/usuarios/:key' component={UpdateUsuario} />
           <Route exact path='/obras' component={Obras} />
           <Route exact path='/obras/add' component={AddObra} />
           <Route path='/obras/:key' component={UpdateObra} />
