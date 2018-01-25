@@ -2,10 +2,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { withFirebase } from 'react-redux-firebase';
+import { toastr } from 'react-redux-toastr';
 
 import axios from 'axios';
 
-import CloudFunctionsUrl from '../../utilities/constants.js';
+import { CloudFunctionsUrl, ToastrOptions } from '../../utilities/constants.js';
 
 const UsuariosListItem = ({ usuario, firebase, currentUID }) => {
   const { key } = usuario;
@@ -43,21 +44,32 @@ const UsuariosListItem = ({ usuario, firebase, currentUID }) => {
       	},
         mode: 'no-cors'
       })
-      .then((response) => {
-        console.log(response);
+    }).then((response) => {
 
-        firebase.remove('users/' + key);
-      })
-      .catch((error) => {
-        console.log('Error deleting user');
-        console.error(error);
-      });
+      firebase.remove('users/' + key);
+
+    }).then(() => {
+
+      // Display success toast
+      toastr.success('Éxito', 'Usuario eliminado');
+
     }).catch(error => {
-      // Error creating ID token
-      console.log('Error creating ID token');
-      console.error(error);
+      // Error handling
+      if (error.response) {
+        console.log(error.response.data);
+
+        // Display error toast
+        toastr.error('Error', error.response.data.message, ToastrOptions);
+      }
     });
-  }
+  };
+
+  const toastrConfirmOptions = {
+    onOk: ()=> removeUser(key),
+    onCancel: null,
+    okText: 'Confirmar',
+    cancelText: 'Cancelar'
+  };
 
   return(
     <div className='list-rows-item grid-row padding-top-micro padding-bottom-micro align-items-center'>
@@ -77,7 +89,7 @@ const UsuariosListItem = ({ usuario, firebase, currentUID }) => {
         <div className='grid-item'>
           <button
             className={key === currentUID ? '' : 'u-pointer font-bold'}
-            onClick={() => window.confirm('¿Seguro que deseas eliminar esta usuario?') ? removeUser(key) : null}
+            onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta usuario?', toastrConfirmOptions)}
             disabled={key === currentUID}
           >Eliminar</button>
         </div>

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { firebaseConnect } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
+import { toastr } from 'react-redux-toastr';
 
 import axios from 'axios';
 
 import randomString from 'random-string';
 
-import CloudFunctionsUrl from '../../utilities/constants.js';
+import { CloudFunctionsUrl, ToastrOptions } from '../../utilities/constants.js';
 
 @firebaseConnect()
 @withRouter
@@ -80,23 +81,29 @@ class UsuarioForm extends Component {
           password
         })
 
-      )).catch(error => {
+      )).then(() => {
+
+        // Unset loading
+        _this.setState({ isLoading: false });
+
+        // Display success toast
+        toastr.success('Éxito', 'Usuario creado');
+
+        // Redirect to /usuarios
+        this.props.history.push('/usuarios');
+        
+      }).catch(error => {
 
         // Unset loading
         _this.setState({ isLoading: false });
 
         // Error handling
         if (error.response) {
+          // Display error toast
+          toastr.error('Error', error.response.data.message, ToastrOptions);
+
           console.log(error.response.data);
         }
-
-      }).then(() => {
-
-        // Unset loading
-        _this.setState({ isLoading: false });
-
-        // Redirect to /usuarios
-        this.props.history.push('/usuarios');
 
       });
   }
@@ -155,6 +162,9 @@ class UsuarioForm extends Component {
         // Unset loading
         _this.setState({ isLoading: false });
 
+        // Display success toast
+        toastr.success('Éxito', 'Usuario actualizado');
+
       }).catch((error) => {
 
         // Unset loading
@@ -163,6 +173,9 @@ class UsuarioForm extends Component {
         if (error.response) {
           // Error updating user profile
           console.log(error.response.data);
+
+          // Display error toast
+          toastr.error('Error', error.response.data.message, ToastrOptions);
         }
 
       });
