@@ -12,14 +12,11 @@ class Uploads extends Component {
   constructor(props) {
     super(props);
 
-    this.firebase = this.props.firebase;
     this.storagePath = this.props.storagePath;
     this.path = this.props.path;
 
     // Bind
     this.onDrop = this.onDrop.bind(this);
-
-    this.onChange = this.props.onChange;
   }
 
   onDrop(files) {
@@ -28,16 +25,16 @@ class Uploads extends Component {
     this.setState({ isLoading: true });
 
     // Upload files
-    this.firebase
+    this.props.firebase
       .uploadFiles(this.storagePath, files, this.path)
       .then(files => {
         // Parse response
         const uploadedFiles = files.map( file => {
-          const { key, File: { downloadUrl, fullPath, name } } = file;
+          const { key, File: { downloadURL, fullPath, name } } = file;
           return {
             key,
             name,
-            downloadUrl,
+            downloadURL,
             fullPath,
           };
         });
@@ -45,7 +42,8 @@ class Uploads extends Component {
         // Unset Loading
         this.setState({ isLoading: false });
 
-        this.onChange(uploadedFiles);
+        // Call onChange function (comes from props)
+        this.props.onChange(uploadedFiles);
 
       })
       .catch( error => {

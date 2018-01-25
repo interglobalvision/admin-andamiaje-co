@@ -64,7 +64,7 @@ class NoticiaForm extends Component {
   }
 
   addNoticia() {
-    const { title, rawContent, published, publishDate } = this.state;
+    const { title, rawContent, published, publishDate, images } = this.state;
 
     const createdDate = Date.now();
 
@@ -72,11 +72,12 @@ class NoticiaForm extends Component {
 
     this.props.firebase
       .push('noticias', {
+        createdDate,
         title,
         rawContent,
         published,
         publishDate,
-        createdDate,
+        images,
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -86,7 +87,7 @@ class NoticiaForm extends Component {
   }
 
   updateNoticia() {
-    const { title, rawContent, published, publishDate } = this.state;
+    const { title, rawContent, published, publishDate, images } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -95,7 +96,8 @@ class NoticiaForm extends Component {
         title,
         rawContent,
         published,
-        publishDate
+        publishDate,
+        images,
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -129,7 +131,7 @@ class NoticiaForm extends Component {
 
     // Append images to state
     this.setState({
-      images: [...this.state.images, images]
+      images: [...this.state.images, ...images]
     });
   }
 
@@ -213,6 +215,11 @@ class NoticiaForm extends Component {
         </div>
 
         <div className='grid-row margin-bottom-basic'>
+          {this.state.images.map( image => (
+            <div key={image.key} className='grid-item item-s-6 item-m-3'>
+              <img src={image.downloadURL} />
+            </div>
+          ))}
           <div className='grid-item item-s-6 item-m-3'>
             <Uploads
               onChange={this.handleUploadsChange}
