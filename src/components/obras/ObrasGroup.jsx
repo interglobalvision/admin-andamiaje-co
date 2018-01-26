@@ -29,14 +29,16 @@ class ObrasGroup extends Component {
     const id = event.target.options[event.target.selectedIndex].value;
     const title = event.target.options[event.target.selectedIndex].text;
 
-    this.setState({ selectedObra: {
-      id,
-      title
-    } });
+    this.setState({
+      selectedObra: {
+        id,
+        title
+      }
+    });
   }
 
   render() {
-    const { obras } = this.props;
+    const { obras, selectedObras } = this.props;
 
     if (!isLoaded(obras)) { // If not loaded…
       return 'Loading'; // …show 'loading'
@@ -49,15 +51,22 @@ class ObrasGroup extends Component {
       return (
         <div>
           <div className='grid-row padding-top-micro padding-bottom-basic align-items-center'>
-            { this.props.selectedObras.map(obra =>
+            { selectedObras.map(obra =>
               <ObrasGroupItem key={obra.id} obra={obra} />
             )}
           </div>
           <select onChange={this.handleSelectChange}>
             <option value=''></option>
-            { obras.map(obra =>
+            { obras.filter(obra => {
+              for (let i = 0; i < selectedObras.length; i++) {
+                if (obra.key === selectedObras[i].id) {
+                  return false;
+                }
+              }
+              return true;
+            }).map(obra =>
               <option key={obra.key} value={obra.key}>{obra.value.title}</option>
-            )}
+            ) }
           </select>
 
           <button className='button' onClick={this.addObraToGroup}>Add</button>
