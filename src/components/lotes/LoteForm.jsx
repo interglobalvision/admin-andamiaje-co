@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { firebaseConnect } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
+import { toastr } from 'react-redux-toastr';
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import ArtistaSelectContainer from '../../containers/artistas/ArtistaSelectContainer';
 
 import ObrasGroupContainer from '../../containers/obras/ObrasGroupContainer';
+
+import { ToastrOptionsSuccess } from '../utilities/toastr.js';
 
 @firebaseConnect()
 @withRouter
@@ -56,6 +59,9 @@ class LoteForm extends Component {
       .then(() => {
         this.setState({ isLoading: false })
         this.props.history.push('/lotes');
+
+        // Display success toast
+        toastr.success('Éxito', 'Lote creado', ToastrOptionsSuccess);
       })
 
   }
@@ -77,6 +83,9 @@ class LoteForm extends Component {
       })
       .then(() => {
         this.setState({ isLoading: false })
+
+        // Display success toast
+        toastr.success('Éxito', 'Lote actualizado', ToastrOptionsSuccess);
       })
 
   }
