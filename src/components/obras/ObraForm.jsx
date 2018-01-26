@@ -9,6 +9,14 @@ import ArtistaSelectContainer from '../../containers/artistas/ArtistaSelectConta
 
 import { ToastrOptionsSuccess } from '../../utilities/toastr.js';
 
+import { convertToRaw } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
+import ParseEditorContent from '../../utilities/editor.js';
+import EMOJIS from '../../utilities/emojis.js';
+
 @firebaseConnect()
 @withRouter
 class ObraForm extends Component {
@@ -20,6 +28,8 @@ class ObraForm extends Component {
     materials: '',
     dimensions: '',
     medium: '',
+    notesEditorState: '',
+    notesRawContent: '',
     error: {
       message: '',
     },
@@ -34,11 +44,19 @@ class ObraForm extends Component {
 
     // Bind
     this.handleArtistaChange = this.handleArtistaChange.bind(this);
+    this.handleNotesEditorChange = this.handleNotesEditorChange.bind(this);
+  }
 
+  componentWillMount() {
+
+    // Parse content
+    this.setState({
+      notesEditorState: ParseEditorContent(this.state.notesRawContent),
+    });
   }
 
   addObra() {
-    const { title, year, artista, materials, dimensions, medium } = this.state;
+    const { title, year, artista, materials, dimensions, medium, notesRawContent } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -50,6 +68,7 @@ class ObraForm extends Component {
         materials,
         dimensions,
         medium,
+        notesRawContent,
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -62,7 +81,7 @@ class ObraForm extends Component {
   }
 
   updateObra() {
-    const { title, year, artista, materials, dimensions, medium } = this.state;
+    const { title, year, artista, materials, dimensions, medium, notesRawContent } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -74,6 +93,7 @@ class ObraForm extends Component {
         materials,
         dimensions,
         medium,
+        notesRawContent,
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -91,6 +111,14 @@ class ObraForm extends Component {
         artistaName,
       });
     }
+  }
+
+  handleNotesEditorChange(notesEditorState) {
+    // Update Editor state and convert content to JSON for database
+    this.setState({
+      notesEditorState,
+      notesRawContent: JSON.stringify(convertToRaw(notesEditorState.getCurrentContent())),
+    });
   }
 
   render() {
@@ -172,6 +200,26 @@ class ObraForm extends Component {
               disabled={this.state.isLoading}
               value={this.state.medium}
               onChange={ event => this.setState({ medium: event.target.value })}
+            />
+          </div>
+        </div>
+
+        <div className='grid-row margin-bottom-basic'>
+          <div className='grid-item item-s-12'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='notesEditor'>Información adicional</label></h4>
+            <Editor
+              id='notesEditor'
+              editorState={this.state.notesEditorState}
+              onEditorStateChange={this.handleNotesEditorChange}
+              toolbar={{
+                options: ['inline', 'link', 'emoji', 'history'],
+                inline: {
+                  options: ['bold', 'italic', 'strikethrough'],
+                },
+                emoji: {
+                  emojis: EMOJIS,
+                }
+              }}
             />
           </div>
         </div>
