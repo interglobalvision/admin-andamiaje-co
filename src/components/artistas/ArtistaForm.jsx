@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { firebaseConnect } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
+import { toastr } from 'react-redux-toastr';
 
 import { convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
@@ -9,6 +10,8 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import ParseEditorContent from '../../utilities/editor.js';
 import EMOJIS from '../../utilities/emojis.js';
+
+import { ToastrOptionsSuccess } from '../../utilities/toastr.js';
 
 @firebaseConnect()
 @withRouter
@@ -64,8 +67,11 @@ class ArtistaForm extends Component {
         cvRawContent,
       })
       .then(() => {
-        this.setState({ isLoading: false })
+        this.setState({ isLoading: false });
         this.props.history.push('/artistas');
+
+        // Display success toast
+        toastr.success('Éxito', 'Artista creado', ToastrOptionsSuccess);
       })
 
   }
@@ -86,7 +92,10 @@ class ArtistaForm extends Component {
         cvRawContent,
       })
       .then(() => {
-        this.setState({ isLoading: false })
+        this.setState({ isLoading: false });
+
+        // Display success toast
+        toastr.success('Éxito', 'Artista actualizado', ToastrOptionsSuccess);
       })
 
   }

@@ -22,10 +22,18 @@ import UpdateObra from '../containers/obras/UpdateObra';
 
 import NoMatch from '../components/NoMatch';
 
+import ReduxToastr from 'react-redux-toastr';
+
 const ControlPanel = () => {
   return (
     <div>
       <Nav />
+      <ReduxToastr
+        preventDuplicates
+        position="top-right"
+        transitionIn="fadeIn"
+        transitionOut="fadeOut"
+      />
       <div className='container'>
         <Switch>
           <Route exact path='/noticias' component={Noticias} />
