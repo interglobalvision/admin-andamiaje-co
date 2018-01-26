@@ -15,7 +15,7 @@ class UploadField extends Component {
     // Path in the Storage where the files will get saves
     this.storagePath = this.props.storagePath;
 
-    // Path in the db where the files will get saved
+    // Path in the db where the files references will get saved, like an index of files
     this.path = this.props.path;
 
     // Bind
