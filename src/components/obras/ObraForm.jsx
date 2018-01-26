@@ -127,7 +127,7 @@ class ObraForm extends Component {
 
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='title'>Title</label></h4>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='title'>Título</label></h4>
             <input
               id='title'
               name='title'
@@ -141,7 +141,7 @@ class ObraForm extends Component {
 
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='year'>Year</label></h4>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='year'>Año</label></h4>
             <div className='grid-row align-items-center'>
               <input
                 id='year'
@@ -164,7 +164,7 @@ class ObraForm extends Component {
 
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='materials'>Materials</label></h4>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='materials'>Materiales</label></h4>
             <input
               id='materials'
               name='materials'
@@ -178,7 +178,7 @@ class ObraForm extends Component {
 
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='dimensions'>Dimensions</label></h4>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='dimensions'>Dimensiones</label></h4>
             <input
               id='dimensions'
               name='dimensions'
@@ -192,7 +192,7 @@ class ObraForm extends Component {
 
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='medium'>Medium</label></h4>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='medium'>Medio</label></h4>
             <input
               id='medium'
               name='medium'
