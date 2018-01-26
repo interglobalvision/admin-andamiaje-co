@@ -110,6 +110,48 @@ class LoteForm extends Component {
       <form onSubmit={event => event.preventDefault()}>
 
         <div className='grid-row margin-bottom-basic'>
+          <div className='grid-item'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'>Price</h4>
+            <div className='grid-row align-items-center margin-bottom-micro'>
+              <input
+                id='price-2-5'
+                name='price'
+                type='radio'
+                value='2.5'
+                disabled={this.state.isLoading}
+                checked={this.state.price === '2.5'}
+                onChange={ event => this.setState({ price: event.target.value }) }
+              />
+              <label htmlFor='price-2-5' className='font-size-small'>2.5</label>
+            </div>
+            <div className='grid-row align-items-center margin-bottom-micro'>
+              <input
+                id='price-5'
+                name='price'
+                type='radio'
+                value='5'
+                disabled={this.state.isLoading}
+                checked={this.state.price === '5'}
+                onChange={ event => this.setState({ price: event.target.value }) }
+              />
+              <label htmlFor='price-5' className='font-size-small'>5</label>
+            </div>
+            <div className='grid-row align-items-center margin-bottom-micro'>
+              <input
+                id='price-10'
+                name='price'
+                type='radio'
+                value='10'
+                disabled={this.state.isLoading}
+                checked={this.state.price === '10'}
+                onChange={ event => this.setState({ price: event.target.value }) }
+              />
+              <label htmlFor='price-10' className='font-size-small'>10</label>
+            </div>
+          </div>
+        </div>
+
+        <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='title'>Title</label></h4>
             <input
@@ -120,22 +162,6 @@ class LoteForm extends Component {
               value={this.state.title}
               onChange={ event => this.setState({ title: event.target.value })}
             />
-          </div>
-        </div>
-
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='price'>Price</label></h4>
-            <div className='grid-row align-items-center'>
-              <input
-                id='price'
-                name='price'
-                type='text'
-                disabled={this.state.isLoading}
-                value={this.state.price}
-                onChange={ event => this.setState({ price: event.target.value })}
-              />
-            </div>
           </div>
         </div>
 
