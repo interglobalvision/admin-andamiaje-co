@@ -82,15 +82,21 @@ class NoticiaForm extends Component {
         // Save the new state
         this.setState({ images });
 
-        // Update only `images` in the db entry
-        this.props.firebase
-          .update(`noticias/${this.props.id}`, {
-            images,
-          })
-          .then(() => {
-            // Unset Loading
-            this.setState({ isLoading: false })
-          })
+        // If updating a Noticia, update only `images` in the db entry
+        if (this.props.id) {
+          this.props.firebase
+            .update(`noticias/${this.props.id}`, {
+              images,
+            })
+            .then(() => {
+              // Unset Loading
+              this.setState({ isLoading: false })
+            })
+        } else {
+          // Unset Loading
+          this.setState({ isLoading: false })
+        }
+
 
       })
       .catch( error => console.log(error) );
@@ -247,30 +253,19 @@ class NoticiaForm extends Component {
           </div>
         </div>
 
-        <div className='grid-row margin-bottom-basic'>
-          {this.state.images.map( image => (
-            <div key={image.key} className='grid-item item-s-6 item-m-3'>
-              <img src={image.downloadURL} alt="" />
-              <button onClick={() => this.deleteImage(image)}>Eliminar</button>
-            </div>
-          ))}
-          { // Depending on the number of images and if mutiple uploads are enabled, show/hide the upload field
-            this.multipleUploads || (!this.multipleUploads && this.state.images.length === 0)  ?
-              <div className='grid-item item-s-6 item-m-3'>
-                <Uploads
-                  onChange={this.handleUploadsChange}
-                  storagePath={this.storagePath}
-                  path={this.path}
-                  disabled={this.state.isLoading}
-                  dropzone={{
-                    accept: 'image/jpeg, image/png',
-                    multiple: this.multipleUploads,
-                  }}
-                />
-              </div>
-              : ''
-            }
-        </div>
+        <Uploads
+          title={'Imagen Principal'}
+          files={this.state.images}
+          onChange={this.handleUploadsChange}
+          storagePath={this.storagePath}
+          path={this.path}
+          disabled={this.state.isLoading}
+          deleteFile={this.deleteImage}
+          dropzone={{
+            accept: 'image/jpeg, image/png',
+            multiple: this.multipleUploads,
+          }}
+        />
 
         <div className='grid-row margin-bottom-basic justify-end'>
           <div className='grid-item'>

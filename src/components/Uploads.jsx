@@ -1,69 +1,33 @@
 import React, { Component } from 'react';
-import { withFirebase } from 'react-redux-firebase';
-import Dropzone from 'react-dropzone'; // For Dropzone reference check https://github.com/react-dropzone/react-dropzone
+import UploadField from './UploadField';
 
-@withFirebase
 class Uploads extends Component {
-  state = {
-    isLoading: false,
-    files: [],
-  }
-
-  constructor(props) {
-    super(props);
-
-    // Path in the Storage where the files will get saves
-    this.storagePath = this.props.storagePath;
-
-    // Path in the db where the files will get saved
-    this.path = this.props.path;
-
-    // Bind
-    this.onDrop = this.onDrop.bind(this);
-  }
-
-  onDrop(files) {
-
-    // Set Loading
-    this.setState({ isLoading: true });
-
-    // Upload files
-    this.props.firebase
-      .uploadFiles(this.storagePath, files, this.path)
-      .then(files => {
-
-        // Create an array with the data we need from the uploaded files
-        const uploadedFiles = files.map( file => {
-          const { key, File: { downloadURL, fullPath, name } } = file;
-          return {
-            key,
-            name,
-            downloadURL,
-            fullPath,
-          };
-        });
-
-        // Unset Loading
-        this.setState({ isLoading: false });
-
-        // Call onChange function (comes from props)
-        this.props.onChange(uploadedFiles);
-
-      })
-      .catch( error => console.log(error) );
-
-  }
-
   render() {
-
     return(
-      <Dropzone onDrop={this.onDrop} disabled={this.state.isLoading || this.props.disabled} {...this.props.dropzone}>
-        <p>Try dropping some files here, or click to select files to upload.</p>
-      </Dropzone>
+      <section>
+        <div className='grid-row margin-bottom-tiny'>
+          <div className='grid-item item-s-12'>
+            <h4 className='font-size-small font-bold'>{this.props.title}</h4>
+          </div>
+        </div>
+        <div className='grid-row margin-bottom-basic'>
+          {this.props.files.map( file => (
+            <div key={file.key} className='grid-item item-s-6 item-m-3'>
+              <img src={file.downloadURL} alt="" />
+              <button onClick={() => this.props.deleteFile(file)}>Eliminar</button>
+            </div>
+          ))}
+          { // Depending on the number of images and if mutiple uploads are enabled, show/hide the upload field
+            this.props.dropzone.multiple || (!this.props.dropzone.multiple && this.props.files.length === 0)  ?
+              <div className='grid-item item-s-6 item-m-3'>
+                <UploadField {...this.props} />
+              </div>
+              : ''
+            }
+        </div>
+      </section>
     );
-
   }
-
 }
 
 export default Uploads;
