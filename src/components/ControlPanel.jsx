@@ -16,16 +16,27 @@ import Lotes from '../containers/lotes/Lotes';
 import AddLote from './lotes/AddLote';
 import UpdateLote from '../containers/lotes/UpdateLote';
 
+import Usuarios from '../containers/usuarios/Usuarios';
+import AddUsuario from './usuarios/AddUsuario';
+import UpdateUsuario from '../containers/usuarios/UpdateUsuario';
+
 import Obras from '../containers/obras/Obras';
 import AddObra from './obras/AddObra';
 import UpdateObra from '../containers/obras/UpdateObra';
 
 import NoMatch from '../components/NoMatch';
 
+import ReduxToastr from 'react-redux-toastr';
+
 const ControlPanel = () => {
   return (
     <div>
       <Nav />
+      <ReduxToastr
+        preventDuplicates
+        position="top-right"
+        transitionIn="fadeIn"
+        transitionOut="fadeOut" />
       <div className='container'>
         <Switch>
           <Route exact path='/noticias' component={Noticias} />
@@ -37,6 +48,9 @@ const ControlPanel = () => {
           <Route exact path='/lotes' component={Lotes} />
           <Route exact path='/lotes/add' component={AddLote} />
           <Route path='/lotes/:key' component={UpdateLote} />
+          <Route exact path='/usuarios' component={Usuarios} />
+          <Route exact path='/usuarios/add' component={AddUsuario} />
+          <Route path='/usuarios/:key' component={UpdateUsuario} />
           <Route exact path='/obras' component={Obras} />
           <Route exact path='/obras/add' component={AddObra} />
           <Route path='/obras/:key' component={UpdateObra} />
