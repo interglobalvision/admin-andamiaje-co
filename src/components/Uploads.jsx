@@ -57,7 +57,7 @@ class Uploads extends Component {
   render() {
 
     return(
-      <Dropzone onDrop={this.onDrop} disabled={this.state.isLoading} disablePreview={false} {...this.dropzone}>
+      <Dropzone onDrop={this.onDrop} disabled={this.state.isLoading || this.props.disabled} {...this.props.dropzone}>
         <p>Try dropping some files here, or click to select files to upload.</p>
       </Dropzone>
     );

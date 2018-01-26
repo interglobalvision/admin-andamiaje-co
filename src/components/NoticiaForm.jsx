@@ -35,6 +35,7 @@ class NoticiaForm extends Component {
   // Uploads
   storagePath = 'uploads'; // path in the storage
   path = 'uploads'; // path in the db
+  multipleUploads = false;
 
   constructor(props) {
     super(props);
@@ -253,17 +254,22 @@ class NoticiaForm extends Component {
               <button onClick={() => this.deleteImage(image)}>Eliminar</button>
             </div>
           ))}
-          <div className='grid-item item-s-6 item-m-3'>
-            <Uploads
-              onChange={this.handleUploadsChange}
-              storagePath={this.storagePath}
-              path={this.path}
-              dropzone={{
-                accept: 'image/jpeg, image/png',
-                multiple: false
-              }}
-            />
-          </div>
+          { // Depending on the number of images and if mutiple uploads are enabled, show/hide the upload field
+            this.multipleUploads || (!this.multipleUploads && this.state.images.length === 0)  ?
+              <div className='grid-item item-s-6 item-m-3'>
+                <Uploads
+                  onChange={this.handleUploadsChange}
+                  storagePath={this.storagePath}
+                  path={this.path}
+                  disabled={this.state.isLoading}
+                  dropzone={{
+                    accept: 'image/jpeg, image/png',
+                    multiple: this.multipleUploads,
+                  }}
+                />
+              </div>
+              : ''
+            }
         </div>
 
         <div className='grid-row margin-bottom-basic justify-end'>
