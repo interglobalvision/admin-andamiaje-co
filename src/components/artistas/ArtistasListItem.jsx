@@ -6,13 +6,13 @@ import { toastr } from 'react-redux-toastr';
 
 import { ToastrOptionsConfirm, ToastrOptionsSuccess } from '../../utilities/toastr.js';
 
-const ArtistasListItem = ({ artista, firebase: { remove } }) => {
+const ArtistasListItem = ({ artista, firebase }) => {
   const { key } = artista;
   const { name, country, active } = artista.value;
 
   const removeArtista = (key) => {
 
-    remove('artistas/' + key)
+    firebase.remove('artistas/' + key)
     .then(() => {
 
       // Display success toast
@@ -37,7 +37,7 @@ const ArtistasListItem = ({ artista, firebase: { remove } }) => {
           <Link className='font-bold' to={'/artistas/' + key}>Editar</Link>
         </div>
         <div className='grid-item'>
-          <button className='u-pointer font-bold' onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta artista?', ToastrOptionsConfirm(removeArtista, key))}>Eliminar</button>
+          <button className='u-pointer font-bold' onClick={() => toastr.confirm('¿Seguro que deseas eliminar este artista?', ToastrOptionsConfirm(removeArtista, key))}>Eliminar</button>
         </div>
       </div>
     </div>

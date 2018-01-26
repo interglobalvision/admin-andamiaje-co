@@ -8,18 +8,18 @@ import moment from 'moment';
 
 import { ToastrOptionsConfirm, ToastrOptionsSuccess } from '../utilities/toastr.js';
 
-const NoticiasListItem = ({ noticia, firebase: { remove } }) => {
+const NoticiasListItem = ({ noticia, firebase }) => {
   const { key } = noticia;
   const { title, published, publishDate } = noticia.value;
   const publishDateDisplay = moment(publishDate).format('DD-MM-YYYY');
 
   const removeNoticia = (key) => {
 
-    remove('noticias/' + key)
+    firebase.remove('noticias/' + key)
     .then(() => {
 
       // Display success toast
-      toastr.success('Éxito', 'Noticia eliminado', ToastrOptionsSuccess);
+      toastr.success('Éxito', 'Noticia eliminada', ToastrOptionsSuccess);
 
     });
   };
