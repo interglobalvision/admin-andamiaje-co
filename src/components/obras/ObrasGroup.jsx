@@ -21,15 +21,8 @@ class ObrasGroup extends Component {
 
   addObraToGroup(event) {
     const selectedObra = this.state.selectedObra;
-    let obrasGroup = this.state.obrasGroup;
 
-    // this needs to check if this already is in the group
-
-    obrasGroup.push(selectedObra);
-
-    this.setState({ obrasGroup });
-
-    this.props.onChange({ obrasGroup });
+    this.props.onChange(selectedObra);
   }
 
   handleSelectChange(event) {
@@ -56,7 +49,7 @@ class ObrasGroup extends Component {
       return (
         <div>
           <div className='grid-row padding-top-micro padding-bottom-basic align-items-center'>
-            { this.state.obrasGroup.map(obra =>
+            { this.props.selectedObras.map(obra =>
               <ObrasGroupItem key={obra.id} obra={obra} />
             )}
           </div>

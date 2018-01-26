@@ -5,8 +5,8 @@ import { firebaseConnect } from 'react-redux-firebase';
 
 import ObrasGroup from '../../components/obras/ObrasGroup';
 
-const ObrasGroupContainer = ({ onChange, obras }) => (
-  <ObrasGroup obras={obras} onChange={onChange} />
+const ObrasGroupContainer = ({ onChange, obras, selectedObras }) => (
+  <ObrasGroup obras={obras} onChange={onChange} selectedObras={selectedObras} />
 );
 
 export default compose(

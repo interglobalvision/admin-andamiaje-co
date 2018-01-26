@@ -34,7 +34,7 @@ class LoteForm extends Component {
 
     // Bind
     this.handleArtistaChange = this.handleArtistaChange.bind(this);
-    this.handleObrasGroupChange = this.handleObrasGroupChange.bind(this);
+    this.addObraToGroup = this.addObraToGroup.bind(this);
 
   }
 
@@ -90,10 +90,11 @@ class LoteForm extends Component {
     }
   }
 
-  handleObrasGroupChange({obrasGroup}) {
-    if(obrasGroup.length) {
-      this.setState({ obrasGroup });
-    }
+  addObraToGroup(selectedObra) {
+    console.log(selectedObra);
+    this.setState({
+      obrasGroup: [...this.state.obrasGroup, selectedObra]
+    });
   }
 
   render() {
@@ -168,7 +169,7 @@ class LoteForm extends Component {
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='obras'>Obras</label></h4>
-              <ObrasGroupContainer onChange={this.handleObrasGroupChange} />
+              <ObrasGroupContainer onChange={this.addObraToGroup} selectedObras={this.state.obrasGroup} />
           </div>
         </div>
 
