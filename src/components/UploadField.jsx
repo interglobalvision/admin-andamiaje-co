@@ -43,18 +43,22 @@ class UploadField extends Component {
           };
         });
 
+        // Unset Loading
+        this.setState({ isLoading: false });
+
         // Call onChange function (comes from props)
         this.props.onChange(uploadedFiles);
 
       })
       .catch( error => {
         console.log(error) ;
-      })
-      .then( () => {
         // Unset Loading
         this.setState({ isLoading: false });
       });
 
+  }
+
+  componentWillUnmount() {
   }
 
   render() {
