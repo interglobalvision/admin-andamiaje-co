@@ -91,7 +91,6 @@ class LoteForm extends Component {
   }
 
   addObraToGroup(selectedObra) {
-    console.log(selectedObra);
     this.setState({
       obrasGroup: [...this.state.obrasGroup, selectedObra]
     });
