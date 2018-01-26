@@ -84,22 +84,19 @@ class NoticiaForm extends Component {
 
         // If updating a Noticia, update only `images` in the db entry
         if (this.props.id) {
-          this.props.firebase
+          return this.props.firebase
             .update(`noticias/${this.props.id}`, {
               images,
             })
-            .then(() => {
-              // Unset Loading
-              this.setState({ isLoading: false })
-            })
-        } else {
-          // Unset Loading
-          this.setState({ isLoading: false })
         }
-
-
       })
-      .catch( error => console.log(error) );
+      .catch( error => {
+        console.log(error);
+      })
+      .then( () => {
+        // Unset Loading
+        this.setState({ isLoading: false })
+      });
   }
 
   addNoticia() {
