@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import { withFirebase } from 'react-redux-firebase';
 import { toastr } from 'react-redux-toastr';
 
-import { ToastrOptionsConfirm, ToastrOptionsSuccess } from '../utilities/toastr.js';
+import { ToastrOptionsConfirm, ToastrOptionsSuccess } from '../../utilities/toastr.js';
 
-const LotesListItem = ({ lotes, firebase: { remove } }) => {
+const LotesListItem = ({ lotes, firebase }) => {
   const { key } = lotes;
   const { title, year, medium } = lotes.value;
 

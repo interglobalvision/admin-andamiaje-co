@@ -9,7 +9,7 @@ import ArtistaSelectContainer from '../../containers/artistas/ArtistaSelectConta
 
 import ObrasGroupContainer from '../../containers/obras/ObrasGroupContainer';
 
-import { ToastrOptionsSuccess } from '../utilities/toastr.js';
+import { ToastrOptionsSuccess } from '../../utilities/toastr.js';
 
 @firebaseConnect()
 @withRouter
