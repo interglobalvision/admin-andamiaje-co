@@ -23,10 +23,11 @@ class UploadField extends Component {
     this.path = this.props.path;
 
     // Bind
-    this.onDrop = this.onDrop.bind(this);
+    this.onDropAccepted = this.onDropAccepted.bind(this);
+    this.onDropRejected = this.onDropRejected.bind(this);
   }
 
-  onDrop(files) {
+  onDropAccepted(files) {
 
     // Set Loading
     this.setState({ isLoading: true });
@@ -62,11 +63,16 @@ class UploadField extends Component {
 
   }
 
+  onDropRejected(files) {
+    console.log('REJECTED FILES', files);
+    // TODO: Send a toast
+  }
+
   render() {
     const { uploadStatus } = this.props;
 
     return(
-      <Dropzone onDrop={this.onDrop} disabled={this.state.isLoading || this.props.disabled} {...this.props.dropzone}>
+      <Dropzone onDropAccepted={this.onDropAccepted} disabled={this.state.isLoading || this.props.disabled} {...this.props.dropzone} onDropRejected={this.onDropRejected}>
         <p>{ uploadStatus.uploading  ? `Cargando ${uploadStatus.percent}% ` : this.placeholder }</p>
       </Dropzone>
     );
