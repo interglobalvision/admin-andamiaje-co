@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { withFirebase } from 'react-redux-firebase';
+import { connect } from 'react-redux'
+import { withFirebase } from 'react-redux-firebase'
+
 import Dropzone from 'react-dropzone'; // For Dropzone reference check https://github.com/react-dropzone/react-dropzone
 
 @withFirebase
@@ -11,6 +13,8 @@ class UploadField extends Component {
 
   constructor(props) {
     super(props);
+
+    this.placeholder = this.props.placeholder || 'Haz click aqurí o arrastra los archivos que quieres cargar';
 
     // Path in the Storage where the files will get saves
     this.storagePath = this.props.storagePath;
@@ -29,7 +33,7 @@ class UploadField extends Component {
 
     // Upload files
     this.props.firebase
-      .uploadFiles(this.storagePath, files, this.path)
+      .uploadFiles(this.storagePath, files, this.path, { progress: true })
       .then(files => {
 
         // Create an array with the data we need from the uploaded files
@@ -58,14 +62,12 @@ class UploadField extends Component {
 
   }
 
-  componentWillUnmount() {
-  }
-
   render() {
+    const { uploadStatus } = this.props;
 
     return(
       <Dropzone onDrop={this.onDrop} disabled={this.state.isLoading || this.props.disabled} {...this.props.dropzone}>
-        <p>Try dropping some files here, or click to select files to upload.</p>
+        <p>{ uploadStatus.uploading  ? `Cargando ${uploadStatus.percent}% ` : this.placeholder }</p>
       </Dropzone>
     );
 
@@ -73,4 +75,12 @@ class UploadField extends Component {
 
 }
 
-export default UploadField;
+// Connect to the redux store to use `uploadStatus`
+export default connect(
+  // Map state to props
+  ({ uploadStatus }) => {
+    return ({
+      uploadStatus,
+    })
+  }
+)(UploadField);
