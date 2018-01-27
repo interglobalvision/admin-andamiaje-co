@@ -74,7 +74,7 @@ class NoticiaForm extends Component {
     this.props.firebase.deleteFile(image.fullPath, `${this.path}/${image.key}`)
       .then(deletedImage => {
 
-        // Filter out the deleted image fromt the current state
+        // Filter out the deleted image from the current state
         const images = this.state.images.filter( image => {
           return image.fullPath !== deletedImage.path;
         });
