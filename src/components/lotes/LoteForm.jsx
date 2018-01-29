@@ -19,9 +19,7 @@ class LoteForm extends Component {
     title: '',
     price: '',
     artista: '',
-    images: '',
-    obras: '',
-    obrasGroup: [],
+    obras: [],
     medium: '',
     error: {
       message: '',
@@ -38,11 +36,12 @@ class LoteForm extends Component {
     // Bind
     this.handleArtistaChange = this.handleArtistaChange.bind(this);
     this.addObraToGroup = this.addObraToGroup.bind(this);
+    this.removeObraFromGroup = this.removeObraFromGroup.bind(this);
 
   }
 
   addLote() {
-    const { title, price, artista, images, obras, obrasGroup, medium } = this.state;
+    const { title, price, artista, obras, medium } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -51,9 +50,7 @@ class LoteForm extends Component {
         title,
         price,
         artista,
-        images,
         obras,
-        obrasGroup,
         medium,
       })
       .then(() => {
@@ -67,7 +64,7 @@ class LoteForm extends Component {
   }
 
   updateLote() {
-    const { title, price, artista, images, obras, obrasGroup, medium } = this.state;
+    const { title, price, artista, obras, medium } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -76,9 +73,7 @@ class LoteForm extends Component {
         title,
         price,
         artista,
-        images,
         obras,
-        obrasGroup,
         medium,
       })
       .then(() => {
@@ -101,8 +96,14 @@ class LoteForm extends Component {
 
   addObraToGroup(selectedObra) {
     this.setState({
-      obrasGroup: [...this.state.obrasGroup, selectedObra]
+      obras: [...this.state.obras, selectedObra]
     });
+  }
+
+  removeObraFromGroup(id) {
+    this.setState( currentState => ({
+      obras: currentState.obras.filter( obra => obra.id !== id )
+    }));
   }
 
   render() {
@@ -188,22 +189,8 @@ class LoteForm extends Component {
 
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='images'>images</label></h4>
-            <input
-              id='images'
-              name='images'
-              type='text'
-              disabled={this.state.isLoading}
-              value={this.state.images}
-              onChange={ event => this.setState({ images: event.target.value })}
-            />
-          </div>
-        </div>
-
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='obras'>Obras</label></h4>
-              <ObrasGroupContainer onChange={this.addObraToGroup} selectedObras={this.state.obrasGroup} />
+              <ObrasGroupContainer addObraToGroup={this.addObraToGroup} selectedObras={this.state.obras} removeObraFromGroup={this.removeObraFromGroup} />
           </div>
         </div>
 

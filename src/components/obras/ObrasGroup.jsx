@@ -6,7 +6,7 @@ import ObrasGroupItem from '../../components/obras/ObrasGroupItem';
 class ObrasGroup extends Component {
 
   state = {
-    obrasGroup: [],
+    selectedObra: {},
   }
 
   constructor(props) {
@@ -19,10 +19,14 @@ class ObrasGroup extends Component {
     this.addObraToGroup = this.addObraToGroup.bind(this);
   }
 
-  addObraToGroup(event) {
+  addObraToGroup() {
     const selectedObra = this.state.selectedObra;
 
-    this.props.onChange(selectedObra);
+    this.props.addObraToGroup(selectedObra);
+  }
+
+  removeObraFromGroup(id) {
+    this.props.removeObraFromGroup(id);
   }
 
   handleSelectChange(event) {
@@ -37,39 +41,42 @@ class ObrasGroup extends Component {
     });
   }
 
-  render() {
-    const { obras, selectedObras } = this.props;
+  // Filter out addedObras from availableObras comparing
+  // their key and id
+  filterObras(allObras = [], selectedObras = []) {
+    console.log('SELECTED OBRAS', selectedObras);
+    return allObras.filter(obra => {
+      // Find if the obra is in addedObras
+      return selectedObras.find( selectedObra => selectedObra.id === obra.key) === undefined ? true : false;
+    });
+  }
 
-    if (!isLoaded(obras)) { // If not loaded…
+  render() {
+    const { allObras, selectedObras, removeObraFromGroup } = this.props;
+    const filteredObras = this.filterObras(allObras, selectedObras);
+
+    if (!isLoaded(allObras)) { // If not loaded…
       return 'Loading'; // …show 'loading'
-    } else if (isEmpty(obras)) { // …else. If is empty…
-      return (
-        <select>
-        </select>
-      );
     } else {
       return (
         <div>
           <div className='grid-row padding-top-micro padding-bottom-basic align-items-center'>
             { selectedObras.map(obra =>
-              <ObrasGroupItem key={obra.id} obra={obra} />
+              <ObrasGroupItem key={obra.id} obra={obra} removeObraFromGroup={removeObraFromGroup} />
             )}
           </div>
-          <select onChange={this.handleSelectChange}>
-            <option value=''></option>
-            { obras.filter(obra => {
-              for (let i = 0; i < selectedObras.length; i++) {
-                if (obra.key === selectedObras[i].id) {
-                  return false;
-                }
-              }
-              return true;
-            }).map(obra =>
-              <option key={obra.key} value={obra.key}>{obra.value.title}</option>
-            ) }
-          </select>
+          { isEmpty(filteredObras) ? '' :
+            <div className='grid-row padding-bottom-basic'>
+              <select onChange={this.handleSelectChange} className='grid-item item-s-12 item-m-4'>
+                <option value=''></option>
+                { filteredObras.map(obra =>
+                  <option key={obra.key} value={obra.key}>{obra.value.title}</option>
+                ) }
+              </select>
 
-          <button className='button' onClick={this.addObraToGroup}>Add</button>
+              <button className='button grid-item item-s-12 item-m-2' onClick={this.addObraToGroup}>Agregar</button>
+            </div>
+          }
         </div>
       );
     }

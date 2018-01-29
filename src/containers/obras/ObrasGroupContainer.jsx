@@ -5,8 +5,8 @@ import { firebaseConnect } from 'react-redux-firebase';
 
 import ObrasGroup from '../../components/obras/ObrasGroup';
 
-const ObrasGroupContainer = ({ onChange, obras, selectedObras }) => (
-  <ObrasGroup obras={obras} onChange={onChange} selectedObras={selectedObras} />
+const ObrasGroupContainer = ({ addObraToGroup, allObras, selectedObras, removeObraFromGroup }) => (
+  <ObrasGroup allObras={allObras} addObraToGroup={addObraToGroup} selectedObras={selectedObras} removeObraFromGroup={removeObraFromGroup}/>
 );
 
 export default compose(
@@ -19,7 +19,7 @@ export default compose(
   // ordered = state.firebase.ordered
   connect(({ firebase: { ordered } }) => {
     return ({
-      obras: ordered.obras,
+      allObras: ordered.obras,
     })
   })
 )(ObrasGroupContainer);
