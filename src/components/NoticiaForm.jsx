@@ -12,8 +12,9 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
-import ParseEditorContent from '../utilities/editor.js';
-import EMOJIS from '../utilities/emojis.js';
+import Uploads from './Uploads';
+import ParseEditorContent from '../utilities/editor';
+import EMOJIS from '../utilities/emojis';
 
 import { ToastrOptionsSuccess } from '../utilities/toastr.js';
 
@@ -27,11 +28,17 @@ class NoticiaForm extends Component {
     title: '',
     editorState: '',
     rawContent: '',
+    images: [],
     error: {
       message: '',
     },
     isLoading: false,
   }
+
+  // Uploads
+  storagePath = 'uploads'; // path in the storage
+  path = 'uploads'; // path in the db
+  multipleUploads = false;
 
   constructor(props) {
     super(props);
@@ -42,6 +49,8 @@ class NoticiaForm extends Component {
     // Bind handlers
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
+    this.handleUploadsChange = this.handleUploadsChange.bind(this);
+    this.deleteImage = this.deleteImage.bind(this);
   }
 
   componentWillMount() {
@@ -59,8 +68,42 @@ class NoticiaForm extends Component {
     });
   }
 
+  deleteImage(image) {
+
+    // Set Loading
+    this.setState({ isLoading: true })
+
+    // deleteFile(storagePath, dbPath)
+    this.props.firebase.deleteFile(image.fullPath, `${this.path}/${image.key}`)
+      .then(deletedImage => {
+
+        // Filter out the deleted image from the current state
+        const images = this.state.images.filter( image => {
+          return image.fullPath !== deletedImage.path;
+        });
+
+        // Save the new state
+        this.setState({ images });
+
+        // If updating a Noticia, update only `images` in the db entry
+        if (this.props.id) {
+          return this.props.firebase
+            .update(`noticias/${this.props.id}`, {
+              images,
+            })
+        }
+      })
+      .catch( error => {
+        console.log(error);
+      })
+      .then( () => {
+        // Unset Loading
+        this.setState({ isLoading: false })
+      });
+  }
+
   addNoticia() {
-    const { title, rawContent, published, publishDate } = this.state;
+    const { title, rawContent, published, publishDate, images } = this.state;
 
     const createdDate = Date.now();
 
@@ -68,11 +111,12 @@ class NoticiaForm extends Component {
 
     this.props.firebase
       .push('noticias', {
+        createdDate,
         title,
         rawContent,
         published,
         publishDate,
-        createdDate,
+        images,
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -85,7 +129,7 @@ class NoticiaForm extends Component {
   }
 
   updateNoticia() {
-    const { title, rawContent, published, publishDate } = this.state;
+    const { title, rawContent, published, publishDate, images } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -94,7 +138,8 @@ class NoticiaForm extends Component {
         title,
         rawContent,
         published,
-        publishDate
+        publishDate,
+        images,
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -124,6 +169,14 @@ class NoticiaForm extends Component {
     this.setState({
       editorState,
       rawContent: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
+    });
+  }
+
+  handleUploadsChange(images) {
+
+    // Append images to state
+    this.setState({
+      images: [...this.state.images, ...images]
     });
   }
 
@@ -205,6 +258,20 @@ class NoticiaForm extends Component {
             />
           </div>
         </div>
+
+        <Uploads
+          title={'Imagen Principal'}
+          files={this.state.images}
+          onChange={this.handleUploadsChange}
+          storagePath={this.storagePath}
+          path={this.path}
+          disabled={this.state.isLoading}
+          deleteFile={this.deleteImage}
+          dropzone={{
+            accept: 'image/jpeg, image/png',
+            multiple: this.multipleUploads,
+          }}
+        />
 
         <div className='grid-row margin-bottom-basic justify-end'>
           <div className='grid-item'>
