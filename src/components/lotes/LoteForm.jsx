@@ -20,7 +20,6 @@ class LoteForm extends Component {
     price: '',
     artista: '',
     obras: [],
-    medium: '',
     error: {
       message: '',
     },
@@ -41,7 +40,7 @@ class LoteForm extends Component {
   }
 
   addLote() {
-    const { title, price, artista, obras, medium } = this.state;
+    const { title, price, artista, obras } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -51,7 +50,6 @@ class LoteForm extends Component {
         price,
         artista,
         obras,
-        medium,
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -64,7 +62,7 @@ class LoteForm extends Component {
   }
 
   updateLote() {
-    const { title, price, artista, obras, medium } = this.state;
+    const { title, price, artista, obras } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -74,7 +72,6 @@ class LoteForm extends Component {
         price,
         artista,
         obras,
-        medium,
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -170,20 +167,6 @@ class LoteForm extends Component {
           <div className='grid-item item-s-12'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='artista'>Artista</label></h4>
             <ArtistaSelectContainer value={this.state.artista} onChange={this.handleArtistaChange} />
-          </div>
-        </div>
-
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='medium'>Medium</label></h4>
-            <input
-              id='medium'
-              name='medium'
-              type='text'
-              disabled={this.state.isLoading}
-              value={this.state.medium}
-              onChange={ event => this.setState({ medium: event.target.value })}
-            />
           </div>
         </div>
 

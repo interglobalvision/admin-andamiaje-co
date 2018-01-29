@@ -31,20 +31,23 @@ class ObrasGroup extends Component {
 
   handleSelectChange(event) {
     const id = event.target.options[event.target.selectedIndex].value;
-    const title = event.target.options[event.target.selectedIndex].text;
+
+    const { value: { artista, medium, title, year } } = this.props.allObras.find( obra => obra.key === id );
 
     this.setState({
       selectedObra: {
         id,
-        title
-      }
+        artista,
+        medium,
+        title,
+        year,
+      },
     });
   }
 
   // Filter out addedObras from availableObras comparing
   // their key and id
   filterObras(allObras = [], selectedObras = []) {
-    console.log('SELECTED OBRAS', selectedObras);
     return allObras.filter(obra => {
       // Find if the obra is in addedObras
       return selectedObras.find( selectedObra => selectedObra.id === obra.key) === undefined ? true : false;
