@@ -2,10 +2,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { withFirebase } from 'react-redux-firebase';
+import { toastr } from 'react-redux-toastr';
 
-const ArtistasListItem = ({ artista, firebase: { remove } }) => {
+import { ToastrOptionsConfirm, ToastrOptionsSuccess } from '../../utilities/toastr.js';
+
+const ArtistasListItem = ({ artista, firebase }) => {
   const { key } = artista;
   const { name, country, active } = artista.value;
+
+  const removeArtista = (key) => {
+
+    firebase.remove('artistas/' + key)
+    .then(() => {
+
+      // Display success toast
+      toastr.success('Éxito', 'Artista eliminado', ToastrOptionsSuccess);
+
+    });
+  };
 
   return(
     <div className='list-rows-item grid-row padding-top-micro padding-bottom-micro align-items-center'>
@@ -23,7 +37,7 @@ const ArtistasListItem = ({ artista, firebase: { remove } }) => {
           <Link className='font-bold' to={'/artistas/' + key}>Editar</Link>
         </div>
         <div className='grid-item'>
-          <button className='u-pointer font-bold' onClick={() => window.confirm('¿Seguro que deseas eliminar esta noticia?') ? remove('artistas/' + key) : null}>Eliminar</button>
+          <button className='u-pointer font-bold' onClick={() => toastr.confirm('¿Seguro que deseas eliminar este artista?', ToastrOptionsConfirm(removeArtista, key))}>Eliminar</button>
         </div>
       </div>
     </div>

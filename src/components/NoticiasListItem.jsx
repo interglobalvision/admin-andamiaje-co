@@ -2,13 +2,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { withFirebase } from 'react-redux-firebase';
+import { toastr } from 'react-redux-toastr';
 
 import moment from 'moment';
 
-const NoticiasListItem = ({ noticia, firebase: { remove } }) => {
+import { ToastrOptionsConfirm, ToastrOptionsSuccess } from '../utilities/toastr.js';
+
+const NoticiasListItem = ({ noticia, firebase }) => {
   const { key } = noticia;
   const { title, published, publishDate } = noticia.value;
   const publishDateDisplay = moment(publishDate).format('DD-MM-YYYY');
+
+  const removeNoticia = (key) => {
+
+    firebase.remove('noticias/' + key)
+    .then(() => {
+
+      // Display success toast
+      toastr.success('Éxito', 'Noticia eliminada', ToastrOptionsSuccess);
+
+    });
+  };
 
   return(
     <div className='list-rows-item grid-row padding-top-micro padding-bottom-micro align-items-center'>
@@ -26,7 +40,7 @@ const NoticiasListItem = ({ noticia, firebase: { remove } }) => {
           <Link className='font-bold' to={'/noticias/' + key}>Editar</Link>
         </div>
         <div className='grid-item'>
-          <button className='u-pointer font-bold' onClick={() => window.confirm('¿Seguro que deseas eliminar esta noticia?') ? remove('noticias/' + key) : null}>Eliminar</button>
+          <button className='u-pointer font-bold' onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta noticia?', ToastrOptionsConfirm(removeNoticia, key))}>Eliminar</button>
         </div>
       </div>
     </div>

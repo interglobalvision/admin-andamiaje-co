@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { firebaseConnect } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
+import { toastr } from 'react-redux-toastr';
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import ArtistaSelectContainer from '../../containers/artistas/ArtistaSelectContainer';
+
+import { ToastrOptionsSuccess } from '../../utilities/toastr.js';
 
 @firebaseConnect()
 @withRouter
@@ -51,6 +54,9 @@ class ObraForm extends Component {
       .then(() => {
         this.setState({ isLoading: false })
         this.props.history.push('/obras');
+
+        // Display success toast
+        toastr.success('Éxito', 'Obra creada', ToastrOptionsSuccess);
       })
 
   }
@@ -71,6 +77,9 @@ class ObraForm extends Component {
       })
       .then(() => {
         this.setState({ isLoading: false })
+
+        // Display success toast
+        toastr.success('Éxito', 'Obra actualizada');
       })
 
   }
