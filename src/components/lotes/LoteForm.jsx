@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'; // ES6
 import { firebaseConnect } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
 import { toastr } from 'react-redux-toastr';
@@ -6,9 +7,9 @@ import { toastr } from 'react-redux-toastr';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import ArtistaSelectContainer from '../../containers/artistas/ArtistaSelectContainer';
-
 import ObrasGroupContainer from '../../containers/obras/ObrasGroupContainer';
 
+import { PRICES } from '../../utilities/constants.js';
 import { ToastrOptionsSuccess } from '../../utilities/toastr.js';
 
 @firebaseConnect()
@@ -110,42 +111,20 @@ class LoteForm extends Component {
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'>Price</h4>
-            <div className='grid-row align-items-center margin-bottom-micro'>
-              <input
-                id='price-2-5'
-                name='price'
-                type='radio'
-                value='2.5'
-                disabled={this.state.isLoading}
-                checked={this.state.price === '2.5'}
-                onChange={ event => this.setState({ price: event.target.value }) }
-              />
-              <label htmlFor='price-2-5' className='font-size-small'>2.5</label>
-            </div>
-            <div className='grid-row align-items-center margin-bottom-micro'>
-              <input
-                id='price-5'
-                name='price'
-                type='radio'
-                value='5'
-                disabled={this.state.isLoading}
-                checked={this.state.price === '5'}
-                onChange={ event => this.setState({ price: event.target.value }) }
-              />
-              <label htmlFor='price-5' className='font-size-small'>5</label>
-            </div>
-            <div className='grid-row align-items-center margin-bottom-micro'>
-              <input
-                id='price-10'
-                name='price'
-                type='radio'
-                value='10'
-                disabled={this.state.isLoading}
-                checked={this.state.price === '10'}
-                onChange={ event => this.setState({ price: event.target.value }) }
-              />
-              <label htmlFor='price-10' className='font-size-small'>10</label>
-            </div>
+            { PRICES.map( price => (
+              <div key={`price-${price.toString().replace('.','-')}`} className='grid-row align-items-center margin-bottom-micro'>
+                <input
+                  id={`price-${price.toString().replace('.','-')}`}
+                  name='price'
+                  type='radio'
+                  value={price}
+                  disabled={this.state.isLoading}
+                  checked={this.state.price === price}
+                  onChange={ event => this.setState({ price: parseFloat(event.target.value ) }) }
+                />
+                <label htmlFor={`price-${price.toString().replace('.','-')}`} className='font-size-small'>{price}</label>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -188,6 +167,15 @@ class LoteForm extends Component {
       </form>
     );
   }
+};
+
+LoteForm.propTypes = {
+  id: PropTypes.string,
+  lote: PropTypes.shape({
+    artista: PropTypes.string, // TODO: should be object
+    price: PropTypes.number,
+    title: PropTypes.string,
+  }),
 };
 
 export default LoteForm;

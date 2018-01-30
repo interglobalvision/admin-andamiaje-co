@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'; // ES6
 import { isLoaded, isEmpty } from 'react-redux-firebase';
 
 import ObrasGroupItem from '../../components/obras/ObrasGroupItem';
@@ -84,6 +85,13 @@ class ObrasGroup extends Component {
       );
     }
   }
+};
+
+ObrasGroup.propTypes = {
+  addObraToGroup: PropTypes.func.isRequired,
+  allObras: PropTypes.array,
+  removeObraFromGroup: PropTypes.func.isRequired,
+  selectedObras: PropTypes.array,
 };
 
 export default ObrasGroup;
