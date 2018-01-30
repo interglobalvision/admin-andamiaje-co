@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { isLoaded, isEmpty } from 'react-redux-firebase';
 
 import LotesListItem from '../../components/lotes/LotesListItem';
@@ -25,13 +27,17 @@ const LotesList = ({ lotes }) => {
 
         <div className="list-rows-holder">
           { Object.keys(lotes).map( // …else map thru noticias
-            (key, id) => <LotesListItem key={key} id={id} lotes={lotes[key]} />
+            (key, id) => <LotesListItem key={key} id={id} lote={lotes[key]} />
           ) }
         </div>
       </section>
     );
   }
 
+};
+
+LotesList.propTypes = {
+  lotes: PropTypes.array,
 };
 
 export default LotesList;

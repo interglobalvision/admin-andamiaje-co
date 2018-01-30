@@ -1,14 +1,15 @@
-/* global confirm */
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { Link } from 'react-router-dom';
 import { withFirebase } from 'react-redux-firebase';
 import { toastr } from 'react-redux-toastr';
 
 import { ToastrOptionsConfirm, ToastrOptionsSuccess } from '../../utilities/toastr.js';
 
-const LotesListItem = ({ lotes, firebase }) => {
-  const { key } = lotes;
-  const { title, year, medium } = lotes.value;
+const LotesListItem = ({ lote, firebase }) => {
+  const { key } = lote;
+  const { title, year, medium } = lote.value;
 
   const removeLote = (key) => {
 
@@ -43,5 +44,16 @@ const LotesListItem = ({ lotes, firebase }) => {
     </div>
   );
 }
+
+LotesListItem.propTypes = {
+  lote: PropTypes.shape({
+    key: PropTypes.string.isRequired,
+    value: PropTypes.shape({
+      title: PropTypes.string,
+      year: PropTypes.number,
+      //TODO: medium.PropTypes.array,
+    }).isRequired,
+  }),
+};
 
 export default withFirebase(LotesListItem);
