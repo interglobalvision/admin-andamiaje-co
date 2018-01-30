@@ -24,6 +24,10 @@ import Obras from '../containers/obras/Obras';
 import AddObra from './obras/AddObra';
 import UpdateObra from '../containers/obras/UpdateObra';
 
+import Catalogos from '../containers/catalogos/Catalogos';
+import AddCatalogo from './catalogos/AddCatalogo';
+import UpdateCatalogo from '../containers/catalogos/UpdateCatalogo';
+
 import NoMatch from '../components/NoMatch';
 
 import ReduxToastr from 'react-redux-toastr';
@@ -54,6 +58,9 @@ const ControlPanel = () => {
           <Route exact path='/obras' component={Obras} />
           <Route exact path='/obras/add' component={AddObra} />
           <Route path='/obras/:key' component={UpdateObra} />
+          <Route exact path='/catalogos' component={Catalogos} />
+          <Route exact path='/catalogos/add' component={AddCatalogo} />
+          <Route path='/catalogos/:key' component={UpdateCatalogo} />
           <Route exact path='/' component={Welcome} />
           <Route component={NoMatch}/>
         </Switch>
