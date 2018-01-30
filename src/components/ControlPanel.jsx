@@ -37,7 +37,6 @@ const ControlPanel = () => {
     <div>
       <Nav />
       <ReduxToastr
-        preventDuplicates
         position="top-right"
         transitionIn="fadeIn"
         transitionOut="fadeOut" />
