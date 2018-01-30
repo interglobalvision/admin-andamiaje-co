@@ -12,6 +12,10 @@ import Artistas from '../containers/artistas/Artistas';
 import AddArtista from './artistas/AddArtista';
 import UpdateArtista from '../containers/artistas/UpdateArtista';
 
+import Lotes from '../containers/lotes/Lotes';
+import AddLote from './lotes/AddLote';
+import UpdateLote from '../containers/lotes/UpdateLote';
+
 import Usuarios from '../containers/usuarios/Usuarios';
 import AddUsuario from './usuarios/AddUsuario';
 import UpdateUsuario from '../containers/usuarios/UpdateUsuario';
@@ -32,8 +36,7 @@ const ControlPanel = () => {
         preventDuplicates
         position="top-right"
         transitionIn="fadeIn"
-        transitionOut="fadeOut"
-      />
+        transitionOut="fadeOut" />
       <div className='container'>
         <Switch>
           <Route exact path='/noticias' component={Noticias} />
@@ -42,6 +45,9 @@ const ControlPanel = () => {
           <Route exact path='/artistas' component={Artistas} />
           <Route exact path='/artistas/add' component={AddArtista} />
           <Route path='/artistas/:key' component={UpdateArtista} />
+          <Route exact path='/lotes' component={Lotes} />
+          <Route exact path='/lotes/add' component={AddLote} />
+          <Route path='/lotes/:key' component={UpdateLote} />
           <Route exact path='/usuarios' component={Usuarios} />
           <Route exact path='/usuarios/add' component={AddUsuario} />
           <Route path='/usuarios/:key' component={UpdateUsuario} />
