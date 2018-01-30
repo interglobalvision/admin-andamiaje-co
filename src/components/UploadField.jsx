@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withFirebase } from 'react-redux-firebase'
+import { toastr } from 'react-redux-toastr';
 
 import Dropzone from 'react-dropzone'; // For Dropzone reference check https://github.com/react-dropzone/react-dropzone
+
+import { ToastrOptionsSuccess } from '../utilities/toastr.js';
 
 @withFirebase
 class UploadField extends Component {
@@ -64,8 +67,10 @@ class UploadField extends Component {
   }
 
   onDropRejected(files) {
-    console.log('REJECTED FILES', files);
-    // TODO: Send a toast
+    files.map( file => {
+      toastr.error('Error', `Archivo rechazado ${file.name}`, ToastrOptionsSuccess);
+    });
+
   }
 
   render() {
