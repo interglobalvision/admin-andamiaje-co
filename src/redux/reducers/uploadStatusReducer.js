@@ -3,9 +3,8 @@
 // reducer yet.
 // For updates check: https://github.com/prescottprue/react-redux-firebase/issues/346
 
-// Import actionTypes directly from react-redux-firebase
-// (use `RRF_ACTIONTYPES` as an alias)
-import { actionTypes as RRF_ACTIONTYPES } from 'react-redux-firebase/src/constants';
+// Import constants directly from react-redux-firebase
+import { constants } from 'react-redux-firebase';
 
 // This is our initial state
 const initialState = {
@@ -16,12 +15,12 @@ const initialState = {
 // The upload reducer
 export const uploadStatusReducer = (state = initialState, action) => {
   switch (action.type) {
-    case RRF_ACTIONTYPES.FILE_UPLOAD_PROGRESS:
+    case constants.actionTypes.FILE_UPLOAD_PROGRESS:
       return Object.assign({}, state, {
         uploading: true,
         percent: action.payload.percent,
       });
-    case RRF_ACTIONTYPES.FILE_UPLOAD_COMPLETE:
+    case constants.actionTypes.FILE_UPLOAD_COMPLETE:
       return  initialState;
     default:
       return state
