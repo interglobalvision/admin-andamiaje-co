@@ -3,6 +3,7 @@ import { firebaseConnect } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
 import { toastr } from 'react-redux-toastr';
 
+import urlParser from "js-video-url-parser";
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
@@ -29,6 +30,9 @@ class NoticiaForm extends Component {
     editorState: '',
     rawContent: '',
     images: [],
+    video: {
+      url: '',
+    },
     error: {
       message: '',
     },
@@ -49,6 +53,7 @@ class NoticiaForm extends Component {
     // Bind handlers
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
+    this.handleVideoChange = this.handleVideoChange.bind(this);
     this.handleUploadsChange = this.handleUploadsChange.bind(this);
     this.deleteImage = this.deleteImage.bind(this);
   }
@@ -103,7 +108,7 @@ class NoticiaForm extends Component {
   }
 
   addNoticia() {
-    const { title, rawContent, published, publishDate, images } = this.state;
+    const { title, rawContent, published, publishDate, video, images } = this.state;
 
     const createdDate = Date.now();
 
@@ -116,6 +121,7 @@ class NoticiaForm extends Component {
         rawContent,
         published,
         publishDate,
+        video,
         images,
       })
       .then(() => {
@@ -129,7 +135,7 @@ class NoticiaForm extends Component {
   }
 
   updateNoticia() {
-    const { title, rawContent, published, publishDate, images } = this.state;
+    const { title, rawContent, published, publishDate, images, video} = this.state;
 
     this.setState({ isLoading: true })
 
@@ -139,6 +145,7 @@ class NoticiaForm extends Component {
         rawContent,
         published,
         publishDate,
+        video,
         images,
       })
       .then(() => {
@@ -169,6 +176,18 @@ class NoticiaForm extends Component {
     this.setState({
       editorState,
       rawContent: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
+    });
+  }
+
+  handleVideoChange(url) {
+    const { provider, id }  = urlParser.parse(url);
+
+    this.setState({
+      video: {
+        id,
+        url,
+        provider,
+      }
     });
   }
 
@@ -259,7 +278,21 @@ class NoticiaForm extends Component {
           </div>
         </div>
 
-        <Uploads
+        <div className='grid-row margin-bottom-basic'>
+          <div className='grid-item item-s-12'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='video'>Video</label></h4>
+            <input
+              id='video'
+              name='video'
+              type='text'
+              disabled={this.state.isLoading}
+              value={this.state.video.url}
+              onChange={ event => this.handleVideoChange(event.target.value)}
+            />
+          </div>
+        </div>
+
+       <Uploads
           title={'Imagen Principal'}
           files={this.state.images}
           onChange={this.handleUploadsChange}
