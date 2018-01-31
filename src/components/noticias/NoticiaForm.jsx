@@ -3,9 +3,9 @@ import { firebaseConnect } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
 import { toastr } from 'react-redux-toastr';
 
-import urlParser from "js-video-url-parser";
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import urlParser from "js-video-url-parser";
 
 import { convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
