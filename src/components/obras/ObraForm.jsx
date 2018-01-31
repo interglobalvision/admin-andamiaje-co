@@ -16,6 +16,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import ParseEditorContent from '../../utilities/editor.js';
 import EMOJIS from '../../utilities/emojis.js';
+import { TECNICAS } from '../../utilities/constants.js';
 
 @firebaseConnect()
 @withRouter
@@ -27,7 +28,7 @@ class ObraForm extends Component {
     artista: '',
     materials: '',
     dimensions: '',
-    medium: '',
+    tecnica: '',
     notesEditorState: '',
     notesRawContent: '',
     error: {
@@ -56,7 +57,7 @@ class ObraForm extends Component {
   }
 
   addObra() {
-    const { title, year, artista, materials, dimensions, medium, notesRawContent } = this.state;
+    const { title, year, artista, materials, dimensions, tecnica, notesRawContent } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -67,7 +68,7 @@ class ObraForm extends Component {
         artista,
         materials,
         dimensions,
-        medium,
+        tecnica,
         notesRawContent,
       })
       .then(() => {
@@ -81,7 +82,7 @@ class ObraForm extends Component {
   }
 
   updateObra() {
-    const { title, year, artista, materials, dimensions, medium, notesRawContent } = this.state;
+    const { title, year, artista, materials, dimensions, tecnica, notesRawContent } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -92,7 +93,7 @@ class ObraForm extends Component {
         artista,
         materials,
         dimensions,
-        medium,
+        tecnica,
         notesRawContent,
       })
       .then(() => {
@@ -118,6 +119,12 @@ class ObraForm extends Component {
     this.setState({
       notesEditorState,
       notesRawContent: JSON.stringify(convertToRaw(notesEditorState.getCurrentContent())),
+    });
+  }
+
+  handleTecnicaChange(tecnica) {
+    this.setState({
+      tecnica,
     });
   }
 
@@ -192,15 +199,19 @@ class ObraForm extends Component {
 
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='medium'>Medio</label></h4>
-            <input
-              id='medium'
-              name='medium'
-              type='text'
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='tecnica'>Técnica</label></h4>
+            <select
+              id='tecnica'
+              name='tecnica'
               disabled={this.state.isLoading}
-              value={this.state.medium}
-              onChange={ event => this.setState({ medium: event.target.value })}
-            />
+              onChange={(event) => this.handleTecnicaChange(event.target.options[event.target.selectedIndex].value)}
+              value={this.state.tecnica}
+            >
+              <option value=''></option>
+              { Object.keys(TECNICAS).map(tecnica =>
+                <option key={tecnica} value={tecnica}>{TECNICAS[tecnica]}</option>
+              )}
+            </select>
           </div>
         </div>
 

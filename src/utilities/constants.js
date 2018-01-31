@@ -6,3 +6,13 @@ export const PRICES = [
   5,
   10,
 ];
+
+// Tecnica Values
+export const TECNICAS = {
+  escultura: 'Escultura',
+  foto: 'Foto',
+  instalacion: 'Instalación',
+  pintura: 'Pintura',
+  video: 'Video',
+  otros: 'Otros',
+};
