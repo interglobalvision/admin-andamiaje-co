@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
-import NoticiaForm  from '../components/NoticiaForm.jsx';
+import NoticiaForm  from '../../components/noticias/NoticiaForm.jsx';
 
 const UpdateNoticia = ({ firebase, noticia, id }) => {
 

@@ -4,9 +4,9 @@ import { Switch, Route } from 'react-router-dom';
 import Nav from './Nav';
 import Welcome from './Welcome';
 
-import Noticias from '../containers/Noticias';
-import AddNoticia from './AddNoticia';
-import UpdateNoticia from '../containers/UpdateNoticia';
+import Noticias from '../containers/noticias/Noticias';
+import AddNoticia from './noticias/AddNoticia';
+import UpdateNoticia from '../containers/noticias/UpdateNoticia';
 
 import Artistas from '../containers/artistas/Artistas';
 import AddArtista from './artistas/AddArtista';

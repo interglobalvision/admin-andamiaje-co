@@ -6,7 +6,7 @@ import { toastr } from 'react-redux-toastr';
 
 import moment from 'moment';
 
-import { ToastrOptionsConfirm, ToastrOptionsSuccess } from '../utilities/toastr.js';
+import { ToastrOptionsConfirm, ToastrOptionsSuccess } from '../../utilities/toastr.js';
 
 const NoticiasListItem = ({ noticia, firebase }) => {
   const { key } = noticia;

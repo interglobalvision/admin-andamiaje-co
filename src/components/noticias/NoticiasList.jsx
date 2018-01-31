@@ -1,7 +1,7 @@
 import React from 'react';
 import { isLoaded, isEmpty } from 'react-redux-firebase';
 
-import NoticiasListItem from '../components/NoticiasListItem';
+import NoticiasListItem from './NoticiasListItem';
 
 const NoticiasList = ({ noticias }) => {
   if (!isLoaded(noticias)) { // If not loaded…
