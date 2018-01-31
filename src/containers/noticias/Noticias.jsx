@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { firebaseConnect } from 'react-redux-firebase';
 
-import NoticiasList from '../components/NoticiasList';
+import NoticiasList from '../../components/noticias/NoticiasList';
 
 const Noticias = ({ noticias }) => (
   <section>

@@ -12,11 +12,11 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
-import Uploads from './Uploads';
-import ParseEditorContent from '../utilities/editor';
-import EMOJIS from '../utilities/emojis';
+import Uploads from '../fields/Uploads';
+import ParseEditorContent from '../../utilities/editor';
+import EMOJIS from '../../utilities/emojis';
 
-import { ToastrOptionsSuccess } from '../utilities/toastr.js';
+import { ToastrOptionsSuccess } from '../../utilities/toastr.js';
 
 @firebaseConnect()
 @withRouter
