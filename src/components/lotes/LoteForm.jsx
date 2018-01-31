@@ -19,7 +19,10 @@ class LoteForm extends Component {
   state = {
     title: '',
     price: '',
-    artista: '',
+    artista: {
+      id: '',
+      name: '',
+    },
     obras: [],
     error: {
       message: '',
@@ -86,8 +89,10 @@ class LoteForm extends Component {
   handleArtistaChange({artista, artistaName}) {
     if(artista !== undefined || artista !== '') {
       this.setState({
-        artista,
-        artistaName,
+        artista: {
+          id: artista,
+          name: artistaName,
+        },
       });
     }
   }
@@ -145,7 +150,7 @@ class LoteForm extends Component {
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='artista'>Artista</label></h4>
-            <ArtistaSelectContainer value={this.state.artista} onChange={this.handleArtistaChange} />
+            <ArtistaSelectContainer value={this.state.artista.id} onChange={this.handleArtistaChange} />
           </div>
         </div>
 

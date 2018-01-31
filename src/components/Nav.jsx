@@ -40,7 +40,7 @@ class Nav extends Component {
                 <Link to='/obras'>Obras</Link>
               </div>
               <div className='grid-item'>
-                <Link to='/catalogs'>Catalogs</Link>
+                <Link to='/catalogos'>Catalogs</Link>
               </div>
               <div className='grid-item'>
                 <Link to='/usuarios'>Usuarios</Link>
