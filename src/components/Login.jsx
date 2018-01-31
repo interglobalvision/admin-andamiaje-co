@@ -45,7 +45,7 @@ class LoginForm extends Component {
             <ReactSVG
               path='andamiaje-logo.svg'
               wrapperClassName='logo-wrapper'
-              className='login-logo'
+              className='black-logo'
             />
           </div>
           <div className='grid-item item-s-12'>
