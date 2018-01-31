@@ -17,7 +17,7 @@ import Uploads from '../fields/Uploads';
 import ParseEditorContent from '../../utilities/editor';
 import EMOJIS from '../../utilities/emojis';
 
-import { ToastrOptionsSuccess } from '../../utilities/toastr.js';
+import { ToastrOptionsSuccess, ToastrOptionsError } from '../../utilities/toastr.js';
 
 @firebaseConnect()
 @withRouter
@@ -180,15 +180,29 @@ class NoticiaForm extends Component {
   }
 
   handleVideoChange(url) {
-    const { provider, id }  = urlParser.parse(url);
+    const videoData = urlParser.parse(url);
 
-    this.setState({
-      video: {
-        id,
-        url,
-        provider,
-      }
-    });
+    if(videoData) {
+      const { provider, id }  = videoData;
+
+      this.setState({
+        video: {
+          id,
+          url,
+          provider,
+        }
+      });
+    } else {
+      this.setState({
+        video: {
+          url,
+          url: '',
+          provider: '',
+        }
+      });
+
+      toastr.warning('Error', 'El link del video no es correcto', ToastrOptionsError);
+    }
   }
 
   handleUploadsChange(images) {
