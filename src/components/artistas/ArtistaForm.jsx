@@ -5,13 +5,14 @@ import { toastr } from 'react-redux-toastr';
 
 import { convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
+import urlParser from "js-video-url-parser";
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import ParseEditorContent from '../../utilities/editor.js';
 import EMOJIS from '../../utilities/emojis.js';
 
-import { ToastrOptionsSuccess } from '../../utilities/toastr.js';
+import { ToastrOptionsSuccess, ToastrOptionsError } from '../../utilities/toastr.js';
 
 @firebaseConnect()
 @withRouter
@@ -27,6 +28,9 @@ class ArtistaForm extends Component {
     bioRawContent: '',
     cvEditorState: '',
     cvRawContent: '',
+    video: {
+      url: '',
+    },
     error: {
       message: '',
     },
@@ -52,7 +56,7 @@ class ArtistaForm extends Component {
   }
 
   addArtista() {
-    const { name, active, country, gallery, galleryUrl, bioRawContent, cvRawContent } = this.state;
+    const { name, active, country, gallery, galleryUrl, bioRawContent, cvRawContent, video } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -65,6 +69,7 @@ class ArtistaForm extends Component {
         galleryUrl,
         bioRawContent,
         cvRawContent,
+        video,
       })
       .then(() => {
         this.setState({ isLoading: false });
@@ -77,7 +82,7 @@ class ArtistaForm extends Component {
   }
 
   updateArtista() {
-    const { name, active, country, gallery, galleryUrl, bioRawContent, cvRawContent } = this.state;
+    const { name, active, country, gallery, galleryUrl, bioRawContent, cvRawContent, video } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -90,6 +95,7 @@ class ArtistaForm extends Component {
         galleryUrl,
         bioRawContent,
         cvRawContent,
+        video,
       })
       .then(() => {
         this.setState({ isLoading: false });
@@ -115,6 +121,33 @@ class ArtistaForm extends Component {
       cvRawContent: JSON.stringify(convertToRaw(cvEditorState.getCurrentContent())),
     });
   }
+
+  handleVideoChange(url) {
+    const videoData = urlParser.parse(url);
+
+    if(videoData) {
+      const { provider, id }  = videoData;
+
+      this.setState({
+        video: {
+          id,
+          url,
+          provider,
+        }
+      });
+    } else {
+      this.setState({
+        video: {
+          url,
+          id: '',
+          provider: '',
+        }
+      });
+
+      toastr.warning('Error', 'El link del video no es correcto', ToastrOptionsError);
+    }
+  }
+
 
   render() {
     return (
@@ -227,6 +260,20 @@ class ArtistaForm extends Component {
                   emojis: EMOJIS,
                 }
               }}
+            />
+          </div>
+        </div>
+
+        <div className='grid-row margin-bottom-basic'>
+          <div className='grid-item item-s-12'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='video'>Video</label></h4>
+            <input
+              id='video'
+              name='video'
+              type='text'
+              disabled={this.state.isLoading}
+              value={this.state.video.url}
+              onChange={ event => this.handleVideoChange(event.target.value)}
             />
           </div>
         </div>

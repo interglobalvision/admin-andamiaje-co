@@ -5,6 +5,7 @@ import { toastr } from 'react-redux-toastr';
 
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import urlParser from "js-video-url-parser";
 
 import { convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
@@ -16,7 +17,7 @@ import Uploads from '../fields/Uploads';
 import ParseEditorContent from '../../utilities/editor';
 import EMOJIS from '../../utilities/emojis';
 
-import { ToastrOptionsSuccess } from '../../utilities/toastr.js';
+import { ToastrOptionsSuccess, ToastrOptionsError } from '../../utilities/toastr.js';
 
 @firebaseConnect()
 @withRouter
@@ -29,6 +30,9 @@ class NoticiaForm extends Component {
     editorState: '',
     rawContent: '',
     images: [],
+    video: {
+      url: '',
+    },
     error: {
       message: '',
     },
@@ -49,6 +53,7 @@ class NoticiaForm extends Component {
     // Bind handlers
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
+    this.handleVideoChange = this.handleVideoChange.bind(this);
     this.handleUploadsChange = this.handleUploadsChange.bind(this);
     this.deleteImage = this.deleteImage.bind(this);
   }
@@ -103,7 +108,7 @@ class NoticiaForm extends Component {
   }
 
   addNoticia() {
-    const { title, rawContent, published, publishDate, images } = this.state;
+    const { title, rawContent, published, publishDate, video, images } = this.state;
 
     const createdDate = Date.now();
 
@@ -116,6 +121,7 @@ class NoticiaForm extends Component {
         rawContent,
         published,
         publishDate,
+        video,
         images,
       })
       .then(() => {
@@ -129,7 +135,7 @@ class NoticiaForm extends Component {
   }
 
   updateNoticia() {
-    const { title, rawContent, published, publishDate, images } = this.state;
+    const { title, rawContent, published, publishDate, images, video} = this.state;
 
     this.setState({ isLoading: true })
 
@@ -139,6 +145,7 @@ class NoticiaForm extends Component {
         rawContent,
         published,
         publishDate,
+        video,
         images,
       })
       .then(() => {
@@ -170,6 +177,32 @@ class NoticiaForm extends Component {
       editorState,
       rawContent: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
     });
+  }
+
+  handleVideoChange(url) {
+    const videoData = urlParser.parse(url);
+
+    if(videoData) {
+      const { provider, id }  = videoData;
+
+      this.setState({
+        video: {
+          id,
+          url,
+          provider,
+        }
+      });
+    } else {
+      this.setState({
+        video: {
+          url,
+          id: '',
+          provider: '',
+        }
+      });
+
+      toastr.warning('Error', 'El link del video no es correcto', ToastrOptionsError);
+    }
   }
 
   handleUploadsChange(images) {
@@ -259,7 +292,21 @@ class NoticiaForm extends Component {
           </div>
         </div>
 
-        <Uploads
+        <div className='grid-row margin-bottom-basic'>
+          <div className='grid-item item-s-12'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='video'>Video</label></h4>
+            <input
+              id='video'
+              name='video'
+              type='text'
+              disabled={this.state.isLoading}
+              value={this.state.video.url}
+              onChange={ event => this.handleVideoChange(event.target.value)}
+            />
+          </div>
+        </div>
+
+       <Uploads
           title={'Imagen Principal'}
           files={this.state.images}
           onChange={this.handleUploadsChange}
