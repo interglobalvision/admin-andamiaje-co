@@ -139,7 +139,7 @@ class ArtistaForm extends Component {
       this.setState({
         video: {
           url,
-          url: '',
+          id: '',
           provider: '',
         }
       });
