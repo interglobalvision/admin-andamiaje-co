@@ -14,6 +14,7 @@ import { Editor } from 'react-draft-wysiwyg';
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
+import Uploads from '../fields/Uploads';
 import ParseEditorContent from '../../utilities/editor.js';
 import EMOJIS from '../../utilities/emojis.js';
 import { TECNICAS } from '../../utilities/constants.js';
@@ -31,11 +32,17 @@ class ObraForm extends Component {
     tecnica: '',
     notesEditorState: '',
     notesRawContent: '',
+    images: [],
     error: {
       message: '',
     },
     isLoading: false,
   }
+
+  // Uploads
+  storagePath = 'uploads'; // path in the storage
+  path = 'uploads'; // path in the db
+  multipleUploads = true;
 
   constructor(props) {
     super(props);
@@ -46,6 +53,8 @@ class ObraForm extends Component {
     // Bind
     this.handleArtistaChange = this.handleArtistaChange.bind(this);
     this.handleNotesEditorChange = this.handleNotesEditorChange.bind(this);
+    this.handleUploadsChange = this.handleUploadsChange.bind(this);
+    this.deleteImage = this.deleteImage.bind(this);
   }
 
   componentWillMount() {
@@ -56,8 +65,42 @@ class ObraForm extends Component {
     });
   }
 
+  deleteImage(image) {
+
+    // Set Loading
+    this.setState({ isLoading: true })
+
+    // deleteFile(storagePath, dbPath)
+    this.props.firebase.deleteFile(image.fullPath, `${this.path}/${image.key}`)
+      .then(deletedImage => {
+
+        // Filter out the deleted image from the current state
+        const images = this.state.images.filter( image => {
+          return image.fullPath !== deletedImage.path;
+        });
+
+        // Save the new state
+        this.setState({ images });
+
+        // If updating an Obra, update only `images` in the db entry
+        if (this.props.id) {
+          return this.props.firebase
+            .update(`obras/${this.props.id}`, {
+              images,
+            })
+        }
+      })
+      .catch( error => {
+        console.log(error);
+      })
+      .then( () => {
+        // Unset Loading
+        this.setState({ isLoading: false })
+      });
+  }
+
   addObra() {
-    const { title, year, artista, materials, dimensions, tecnica, notesRawContent } = this.state;
+    const { title, year, artista, materials, dimensions, tecnica, notesRawContent, images } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -70,6 +113,7 @@ class ObraForm extends Component {
         dimensions,
         tecnica,
         notesRawContent,
+        images,
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -82,7 +126,7 @@ class ObraForm extends Component {
   }
 
   updateObra() {
-    const { title, year, artista, materials, dimensions, tecnica, notesRawContent } = this.state;
+    const { title, year, artista, materials, dimensions, tecnica, notesRawContent, images } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -95,6 +139,7 @@ class ObraForm extends Component {
         dimensions,
         tecnica,
         notesRawContent,
+        images,
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -125,6 +170,13 @@ class ObraForm extends Component {
   handleTecnicaChange(tecnica) {
     this.setState({
       tecnica,
+    });
+  }
+
+  handleUploadsChange(images) {
+    // Append images to state
+    this.setState({
+      images: [...this.state.images, ...images]
     });
   }
 
@@ -214,6 +266,20 @@ class ObraForm extends Component {
             </select>
           </div>
         </div>
+
+       <Uploads
+          title={'Imagen Principal'}
+          files={this.state.images}
+          onChange={this.handleUploadsChange}
+          storagePath={this.storagePath}
+          path={this.path}
+          disabled={this.state.isLoading}
+          deleteFile={this.deleteImage}
+          dropzone={{
+            accept: 'image/jpeg, image/png',
+            multiple: this.multipleUploads,
+          }}
+        />
 
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
