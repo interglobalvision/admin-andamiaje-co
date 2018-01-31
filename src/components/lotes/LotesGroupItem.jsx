@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types'; // ES6
 
 const LoteGroupItem = ({ lote, removeLoteFromGroup }) => {
-  const { title, year, medium } = lote;
+  const { artista, title } = lote;
 
   return(
     <div className='grid-item item-s-3'>
-      <h3>{title}, {year}</h3>
+      <h3>{artista.name} - {title}</h3>
       <button onClick={() => removeLoteFromGroup(lote.id)} className='button'>Retirar</button>
     </div>
   );
@@ -15,7 +15,7 @@ const LoteGroupItem = ({ lote, removeLoteFromGroup }) => {
 LoteGroupItem.propTypes = {
   lote: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    year: PropTypes.string, // TODO: should be a number
+    artista: PropTypes.object,
   }).isRequired,
   removeLoteFromGroup: PropTypes.func.isRequired,
 };

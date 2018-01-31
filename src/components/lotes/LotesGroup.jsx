@@ -33,15 +33,16 @@ class LotesGroup extends Component {
   handleSelectChange(event) {
     const id = event.target.options[event.target.selectedIndex].value;
 
-    const { value: { artista, medium, title, year } } = this.props.allLotes.find( lote => lote.key === id );
+    const { value: { artista, title } } = this.props.allLotes.find( lote => lote.key === id );
 
     this.setState({
       selectedLote: {
         id,
-        artista,
-        medium,
+        artista: {
+          id: artista.id,
+          name: artista.name,
+        },
         title,
-        year,
       },
     });
   }
@@ -74,7 +75,7 @@ class LotesGroup extends Component {
               <select onChange={this.handleSelectChange} className='grid-item item-s-12 item-m-4'>
                 <option value=''></option>
                 { filteredLotes.map(lote =>
-                  <option key={lote.key} value={lote.key}>{lote.value.title}</option>
+                  <option key={lote.key} value={lote.key}>{lote.value.artista.name} - {lote.value.title}</option>
                 ) }
               </select>
 
