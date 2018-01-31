@@ -10,8 +10,8 @@ class ArtistaSelect extends Component {
   }
 
   handleChange(event) {
-    let artista = this.props.artistas[event.target.selectedIndex - 1];
-    let artistaName = event.target.options[event.target.selectedIndex].text;
+    const artista = this.props.artistas[event.target.selectedIndex - 1].key;
+    const artistaName = event.target.options[event.target.selectedIndex].text;
 
     this.props.onChange({ artista, artistaName});
   }

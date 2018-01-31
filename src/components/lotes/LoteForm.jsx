@@ -48,8 +48,6 @@ class LoteForm extends Component {
 
     this.setState({ isLoading: true })
 
-    debugger;
-
     this.props.firebase
       .push('lotes', {
         title,
@@ -88,16 +86,14 @@ class LoteForm extends Component {
 
   }
 
-  handleArtistaChange({artista}) {
+  handleArtistaChange({artista, artistaName}) {
     if(artista !== undefined || artista !== '') {
-      console.log(artista);
-      this.setState(prevState => ({
+      this.setState({
         artista: {
-          ...prevState.artista,
-          id: artista.key,
-          name: artista.value.name
-        }
-      }));
+          id: artista,
+          name: artistaName,
+        },
+      });
     }
   }
 

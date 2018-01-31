@@ -113,7 +113,7 @@ class CatalogoForm extends Component {
   }
 
   addLoteToGroup(selectedLote) {
-    let newLote = {
+    const newLote = {
       id: selectedLote.id,
       artista: {
         id: selectedLote.artista.id,
