@@ -41,7 +41,7 @@ const App = (props) => {
   );
 };
 
-// sync /todos from firebase into redux
+// sync from firebase into redux
 const firebaseWrapped = firebaseConnect()(App);
 
 export default compose(
