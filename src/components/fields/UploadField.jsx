@@ -5,7 +5,7 @@ import { toastr } from 'react-redux-toastr';
 
 import Dropzone from 'react-dropzone'; // For Dropzone reference check https://github.com/react-dropzone/react-dropzone
 
-import { ToastrOptionsError } from '../utilities/toastr.js';
+import { ToastrOptionsError } from '../../utilities/toastr.js';
 
 @withFirebase
 class UploadField extends Component {
