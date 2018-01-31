@@ -10,7 +10,7 @@ const UsuariosList = ({ usuarios, currentUID }) => {
     return 'No hay usuarios que mostrar'; // …show 'empty list'
   } else {
     return (
-      <section>
+      <section className="margin-bottom-basic">
         <header className='grid-row margin-bottom-tiny font-size-small font-bold'>
           <div className='grid-item item-s-3 item-m-4 item-l-5'>
             <h3>Nombre</h3>
