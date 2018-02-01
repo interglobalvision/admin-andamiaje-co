@@ -268,7 +268,7 @@ class ObraForm extends Component {
         </div>
 
        <Uploads
-          title={'Imagen Principal'}
+          title={'Imagenes'}
           files={this.state.images}
           onChange={this.handleUploadsChange}
           storagePath={this.storagePath}
