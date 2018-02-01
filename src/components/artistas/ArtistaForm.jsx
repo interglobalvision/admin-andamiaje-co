@@ -9,6 +9,8 @@ import urlParser from "js-video-url-parser";
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
+import Uploads from '../fields/Uploads';
+
 import ParseEditorContent from '../../utilities/editor.js';
 import EMOJIS from '../../utilities/emojis.js';
 
@@ -28,6 +30,7 @@ class ArtistaForm extends Component {
     bioRawContent: '',
     cvEditorState: '',
     cvRawContent: '',
+    images: [],
     video: {
       url: '',
     },
@@ -36,6 +39,11 @@ class ArtistaForm extends Component {
     },
     isLoading: false,
   }
+
+  // Uploads
+  storagePath = 'uploads'; // path in the storage
+  path = 'uploads'; // path in the db
+  multipleUploads = false;
 
   constructor(props) {
     super(props);
@@ -46,6 +54,8 @@ class ArtistaForm extends Component {
     // Bind handlers
     this.handleBioEditorChange = this.handleBioEditorChange.bind(this);
     this.handleCvEditorChange = this.handleCvEditorChange.bind(this);
+    this.handleUploadsChange = this.handleUploadsChange.bind(this);
+    this.deleteImage = this.deleteImage.bind(this);
   }
 
   componentWillMount() {
@@ -106,6 +116,40 @@ class ArtistaForm extends Component {
 
   }
 
+  deleteImage(image) {
+
+    // Set Loading
+    this.setState({ isLoading: true })
+
+    // deleteFile(storagePath, dbPath)
+    this.props.firebase.deleteFile(image.fullPath, `${this.path}/${image.key}`)
+      .then(deletedImage => {
+
+        // Filter out the deleted image from the current state
+        const images = this.state.images.filter( image => {
+          return image.fullPath !== deletedImage.path;
+        });
+
+        // Save the new state
+        this.setState({ images });
+
+        // If updating a Noticia, update only `images` in the db entry
+        if (this.props.id) {
+          return this.props.firebase
+            .update(`noticias/${this.props.id}`, {
+              images,
+            })
+        }
+      })
+      .catch( error => {
+        console.log(error);
+      })
+      .then( () => {
+        // Unset Loading
+        this.setState({ isLoading: false })
+      });
+  }
+
   handleBioEditorChange(bioEditorState) {
     // Update Editor state and convert content to JSON for database
     this.setState({
@@ -148,6 +192,13 @@ class ArtistaForm extends Component {
     }
   }
 
+  handleUploadsChange(images) {
+
+    // Append images to state
+    this.setState({
+      images: [...this.state.images, ...images]
+    });
+  }
 
   render() {
     return (
@@ -223,6 +274,20 @@ class ArtistaForm extends Component {
             />
           </div>
         </div>
+
+       <Uploads
+          title={'Foto de perfil'}
+          files={this.state.images}
+          onChange={this.handleUploadsChange}
+          storagePath={this.storagePath}
+          path={this.path}
+          disabled={this.state.isLoading}
+          deleteFile={this.deleteImage}
+          dropzone={{
+            accept: 'image/jpeg, image/png',
+            multiple: this.multipleUploads,
+          }}
+        />
 
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
