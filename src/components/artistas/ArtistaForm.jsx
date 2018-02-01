@@ -66,7 +66,7 @@ class ArtistaForm extends Component {
   }
 
   addArtista() {
-    const { name, active, country, gallery, galleryUrl, bioRawContent, cvRawContent, video } = this.state;
+    const { name, active, country, gallery, galleryUrl, bioRawContent, cvRawContent, images, video } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -79,6 +79,7 @@ class ArtistaForm extends Component {
         galleryUrl,
         bioRawContent,
         cvRawContent,
+        images,
         video,
       })
       .then(() => {
@@ -92,7 +93,7 @@ class ArtistaForm extends Component {
   }
 
   updateArtista() {
-    const { name, active, country, gallery, galleryUrl, bioRawContent, cvRawContent, video } = this.state;
+    const { name, active, country, gallery, galleryUrl, bioRawContent, cvRawContent, images, video } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -105,6 +106,7 @@ class ArtistaForm extends Component {
         galleryUrl,
         bioRawContent,
         cvRawContent,
+        images,
         video,
       })
       .then(() => {
