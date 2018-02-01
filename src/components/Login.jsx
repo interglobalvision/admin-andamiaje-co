@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { firebaseConnect } from 'react-redux-firebase';
 
+import ReactSVG from 'react-svg';
+
 class LoginForm extends Component {
   state = {
     email: '',
@@ -37,27 +39,52 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <form onSubmit={event => event.preventDefault()}>
-        <input
-          ref={ ref => this.email = ref}
-          type='text'
-          placeholder='Email'
-          onChange={event => this.setState({ email: event.target.value })}
-        />
-        <input
-          ref={ ref => this.password = ref}
-          type='password'
-          placeholder='Password'
-          onChange={event => this.setState({ password: event.target.value })}
-        />
-        <button
-          onClick={() => this.login()}
-          type='submit'>
-          Iniciar Sesion
-        </button>
-        <p>{this.state.error.message}</p>
-        <p>{this.state.loading}</p>
-      </form>
+      <section className='container'>
+        <div className='grid-row margin-top-basic margin-bottom-small'>
+          <div className='grid-item item-s-12 margin-bottom-tiny'>
+            <ReactSVG
+              path='andamiaje-logo.svg'
+              wrapperClassName='logo-wrapper'
+              className='black-logo'
+            />
+          </div>
+          <div className='grid-item item-s-12'>
+            <h1>Iniciar Sesión</h1>
+          </div>
+        </div>
+        <form onSubmit={event => event.preventDefault()}>
+          <div className='grid-row'>
+            <div className='grid-item item-s-12 item-m-6 margin-bottom-small'>
+              <input
+                ref={ ref => this.email = ref}
+                type='text'
+                placeholder='Email'
+                onChange={event => this.setState({ email: event.target.value })}
+              />
+            </div>
+            <div className='grid-item item-s-12 item-m-6 margin-bottom-small'>
+              <input
+                ref={ ref => this.password = ref}
+                type='password'
+                placeholder='Password'
+                onChange={event => this.setState({ password: event.target.value })}
+              />
+            </div>
+            <div className='grid-item item-s-12 item-m-6 margin-bottom-small'>
+              <button
+                className='button'
+                onClick={() => this.login()}
+                type='submit'>
+                Iniciar Sesion
+              </button>
+              <div className='margin-top-small'>
+                <p>{this.state.error.message}</p>
+                <p>{this.state.loading}</p>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
     )
   }
 }
