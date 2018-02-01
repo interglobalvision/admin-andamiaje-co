@@ -1,6 +1,12 @@
+import React from 'react';
+
 const Welcome = (props) => {
   return (
-    'Welcome'
+    <div className='grid-row'>
+      <div className='grid-item item-s-12'>
+        <div className='font-size-large'>Bienvenidos</div>
+      </div>
+    </div>
   );
 };
 
