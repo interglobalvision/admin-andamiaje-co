@@ -84,6 +84,7 @@ const UsuariosListItem = ({ usuario, firebase, currentUID }) => {
         </div>
         <div className='grid-item'>
           <button
+            type='button'
             className={key === currentUID ? '' : 'u-pointer font-bold'}
             onClick={() => toastr.confirm('¿Seguro que deseas eliminar este usuario?', ToastrOptionsConfirm(removeUser, key))}
             disabled={key === currentUID}
