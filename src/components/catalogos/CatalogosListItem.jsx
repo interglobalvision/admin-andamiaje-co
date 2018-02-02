@@ -38,7 +38,7 @@ const CatalogosListItem = ({ catalogo, firebase }) => {
           <Link className='font-bold' to={'/catalogos/' + key}>Editar</Link>
         </div>
         <div className='grid-item'>
-          <button className='u-pointer font-bold' onClick={() => toastr.confirm('¿Seguro que deseas eliminar este catalogo?', ToastrOptionsConfirm(removeCatalogo, key))}>Eliminar</button>
+          <button type='button' className='u-pointer font-bold' onClick={() => toastr.confirm('¿Seguro que deseas eliminar este catalogo?', ToastrOptionsConfirm(removeCatalogo, key))}>Eliminar</button>
         </div>
       </div>
     </div>

@@ -78,7 +78,7 @@ class ObrasGroup extends Component {
                 ) }
               </select>
 
-              <button className='button grid-item item-s-12 item-m-2' onClick={this.addObraToGroup}>Agregar</button>
+              <button type='button' className='button grid-item item-s-12 item-m-2' onClick={this.addObraToGroup}>Agregar</button>
             </div>
           }
         </div>

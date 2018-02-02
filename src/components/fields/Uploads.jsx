@@ -17,7 +17,7 @@ class Uploads extends Component {
           {this.props.files.map( file => (
             <div key={file.key} className='grid-item item-s-6 item-m-3'>
               <img src={file.downloadURL} alt="" />
-              <button onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta noticia?', ToastrOptionsConfirm(this.props.deleteFile, file))}>Eliminar</button>
+              <button type='button' onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta imagen?', ToastrOptionsConfirm(this.props.deleteFile, file))}>Eliminar</button>
             </div>
           ))}
           { // Depending on the number of images and if mutiple uploads are enabled, show/hide the upload field

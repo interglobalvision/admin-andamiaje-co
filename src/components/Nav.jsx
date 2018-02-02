@@ -46,7 +46,7 @@ class Nav extends Component {
                 <Link to='/usuarios'>Usuarios</Link>
               </div>
               <div className='grid-item'>
-                <button className='font-color-white' onClick={this.logOut.bind(this)}>Salir</button>
+                <button type='button' className='font-color-white' onClick={this.logOut.bind(this)}>Salir</button>
               </div>
             </nav>
           </div>

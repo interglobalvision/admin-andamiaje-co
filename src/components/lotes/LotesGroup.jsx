@@ -79,7 +79,7 @@ class LotesGroup extends Component {
                 ) }
               </select>
 
-              <button className='button grid-item item-s-12 item-m-2' onClick={this.addLoteToGroup}>Agregar</button>
+              <button type='button' className='button grid-item item-s-12 item-m-2' onClick={this.addLoteToGroup}>Agregar</button>
             </div>
           }
         </div>

@@ -38,7 +38,7 @@ const LotesListItem = ({ lote, firebase }) => {
           <Link className='font-bold' to={'/lotes/' + key}>Editar</Link>
         </div>
         <div className='grid-item'>
-          <button className='u-pointer font-bold' onClick={() => toastr.confirm('¿Seguro que deseas eliminar este lote?', ToastrOptionsConfirm(removeLote, key))}>Eliminar</button>
+          <button type='button' className='u-pointer font-bold' onClick={() => toastr.confirm('¿Seguro que deseas eliminar este lote?', ToastrOptionsConfirm(removeLote, key))}>Eliminar</button>
         </div>
       </div>
     </div>

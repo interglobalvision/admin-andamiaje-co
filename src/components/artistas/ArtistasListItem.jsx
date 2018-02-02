@@ -37,7 +37,7 @@ const ArtistasListItem = ({ artista, firebase }) => {
           <Link className='font-bold' to={'/artistas/' + key}>Editar</Link>
         </div>
         <div className='grid-item'>
-          <button className='u-pointer font-bold' onClick={() => toastr.confirm('¿Seguro que deseas eliminar este artista?', ToastrOptionsConfirm(removeArtista, key))}>Eliminar</button>
+          <button type='button' className='u-pointer font-bold' onClick={() => toastr.confirm('¿Seguro que deseas eliminar este artista?', ToastrOptionsConfirm(removeArtista, key))}>Eliminar</button>
         </div>
       </div>
     </div>
