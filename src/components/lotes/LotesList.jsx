@@ -14,14 +14,11 @@ const LotesList = ({ lotes }) => {
     return (
       <section className="margin-bottom-basic">
         <header className='grid-row margin-bottom-tiny font-size-small font-bold'>
-          <div className='grid-item item-s-3 item-m-4'>
-            <h3>Title</h3>
+          <div className='grid-item item-s-3 item-m-5'>
+            <h3>Titulo</h3>
           </div>
           <div className='grid-item item-s-3'>
-            <h3>Year</h3>
-          </div>
-          <div className='grid-item item-s-3'>
-            <h3>Medium</h3>
+            <h3>Precio</h3>
           </div>
         </header>
 
