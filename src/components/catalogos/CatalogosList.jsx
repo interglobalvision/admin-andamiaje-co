@@ -15,13 +15,7 @@ const CatalogosList = ({ catalogos }) => {
       <section>
         <header className='grid-row margin-bottom-tiny font-size-small font-bold'>
           <div className='grid-item item-s-3 item-m-4'>
-            <h3>Title</h3>
-          </div>
-          <div className='grid-item item-s-3'>
-            <h3>Year</h3>
-          </div>
-          <div className='grid-item item-s-3'>
-            <h3>Medium</h3>
+            <h3>Título</h3>
           </div>
         </header>
 
