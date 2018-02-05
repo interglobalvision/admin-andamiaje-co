@@ -15,7 +15,7 @@ const LotesList = ({ lotes }) => {
       <section className="margin-bottom-basic">
         <header className='grid-row margin-bottom-tiny font-size-small font-bold'>
           <div className='grid-item item-s-3 item-m-5'>
-            <h3>Titulo</h3>
+            <h3>Título</h3>
           </div>
           <div className='grid-item item-s-3'>
             <h3>Precio</h3>
