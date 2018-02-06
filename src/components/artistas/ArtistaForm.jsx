@@ -11,7 +11,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import Uploads from '../fields/Uploads';
 
-import ParseEditorContent from '../../utilities/editor.js';
+import { ParseEditorContent, emptyEditorState } from '../../utilities/editor';
 import EMOJIS from '../../utilities/emojis.js';
 
 import { ToastrOptionsSuccess, ToastrOptionsError } from '../../utilities/toastr.js';
@@ -27,9 +27,9 @@ class ArtistaForm extends Component {
     gallery: '',
     galleryUrl: '',
     bioEditorState: '',
-    bioRawContent: '',
+    bioRawContent: emptyEditorState,
     cvEditorState: '',
-    cvRawContent: '',
+    cvRawContent: emptyEditorState,
     images: [],
     video: {
       url: '',

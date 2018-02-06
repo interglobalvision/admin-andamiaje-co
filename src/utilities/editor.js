@@ -1,6 +1,6 @@
 import { convertFromRaw, EditorState } from 'draft-js';
 
-const ParseEditorContent = (rawContent)  => {
+export const ParseEditorContent = (rawContent)  => {
 
   if (rawContent) {
     // Convert JSON for Editor and create with content
@@ -14,4 +14,17 @@ const ParseEditorContent = (rawContent)  => {
   }
 }
 
-export default ParseEditorContent;
+export const emptyEditorState = JSON.stringify({
+  "entityMap": {},
+  "blocks": [
+    {
+      "key": "3l1mm",
+      "text": "",
+      "type": "unstyled",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {}
+    }
+  ]
+});
