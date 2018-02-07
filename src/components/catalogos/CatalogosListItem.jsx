@@ -27,12 +27,6 @@ const CatalogosListItem = ({ catalogo, firebase }) => {
       <div className='grid-item item-s-3 item-m-4'>
         <span><Link className="link-underline" to={'/catalogos/' + key}>{title}</Link></span>
       </div>
-      <div className='grid-item item-s-3'>
-        <span>{year}</span>
-      </div>
-      <div className='grid-item item-s-3'>
-        <span>{medium}</span>
-      </div>
       <div className='grid-item flex-grow grid-row no-gutter justify-end'>
         <div className='grid-item'>
           <Link className='font-bold' to={'/catalogos/' + key}>Editar</Link>

@@ -31,7 +31,7 @@ class Nav extends Component {
                 <Link to='/noticias'>Noticias</Link>
               </div>
               <div className='grid-item'>
-                <Link to='/artistas'>Artistas</Link>
+                <Link to='/catalogos'>Catalogos</Link>
               </div>
               <div className='grid-item'>
                 <Link to='/lotes'>Lotes</Link>
@@ -40,7 +40,7 @@ class Nav extends Component {
                 <Link to='/obras'>Obras</Link>
               </div>
               <div className='grid-item'>
-                <Link to='/catalogos'>Catalogs</Link>
+                <Link to='/artistas'>Artistas</Link>
               </div>
               <div className='grid-item'>
                 <Link to='/usuarios'>Usuarios</Link>
