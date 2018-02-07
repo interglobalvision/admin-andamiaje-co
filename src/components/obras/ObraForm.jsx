@@ -27,7 +27,6 @@ class ObraForm extends Component {
     title: '',
     year: '',
     artista: '',
-    artistaName: '',
     materials: '',
     dimensions: '',
     tecnica: '',
@@ -101,7 +100,7 @@ class ObraForm extends Component {
   }
 
   addObra() {
-    const { title, year, artista, artistaName, materials, dimensions, tecnica, notesRawContent, images } = this.state;
+    const { title, year, artista, materials, dimensions, tecnica, notesRawContent, images } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -110,7 +109,6 @@ class ObraForm extends Component {
         title,
         year,
         artista,
-        artistaName,
         materials,
         dimensions,
         tecnica,
@@ -128,7 +126,7 @@ class ObraForm extends Component {
   }
 
   updateObra() {
-    const { title, year, artista, artistaName, materials, dimensions, tecnica, notesRawContent, images } = this.state;
+    const { title, year, artista, materials, dimensions, tecnica, notesRawContent, images } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -137,7 +135,6 @@ class ObraForm extends Component {
         title,
         year,
         artista,
-        artistaName,
         materials,
         dimensions,
         tecnica,
