@@ -68,7 +68,7 @@ class UploadField extends Component {
 
   onDropRejected(files) {
     files.map( file => {
-      toastr.warning('Error', `Archivo rechazado ${file.name}`, ToastrOptionsError);
+      return toastr.warning('Error', `Archivo rechazado ${file.name}`, ToastrOptionsError);
     });
 
   }
