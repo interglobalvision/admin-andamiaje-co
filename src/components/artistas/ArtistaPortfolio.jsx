@@ -51,6 +51,7 @@ class ArtistaPortfolio extends Component {
 
   removeItem(key) {
     const { items } = this.props;
+
     this.props.handlePortfolioChange(
       items.slice(0, key).concat(items.slice(key + 1))
     );
@@ -63,25 +64,40 @@ class ArtistaPortfolio extends Component {
     });
   }
 
+  changeValue(index, param, value) {
+    let { items } = this.props;
+
+    items[index][param] = value;
+
+    this.props.handlePortfolioChange(items);
+  }
+
 
   render() {
     return (
       <section>
-        <div className='grid-row margin-bottom-basic'>
+        <div className='grid-row margin-bottom-tiny'>
           <div className='grid-item item-s-12'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'>Portafolio</h4>
           </div>
         </div>
 
         <div className='grid-row margin-bottom-basic'>
-          {this.props.items.map( (item, key) => (
-          <article key={key} className='grid-item item-s-4 margin-bottom-basic'>
-            { item.images !== undefined && item.images[0] !== undefined && item.images[0].downloadURL !== undefined ? <img src={item.images[0].downloadURL} /> : '' }
-            <h4>{item.title}, {item.year}</h4>
-            <p>{item.dimensions}</p>
-            <button type='button' onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta entrada del portafolio?', ToastrOptionsConfirm(this.removeItem, key))}>Eliminar</button>
-          </article>
-          ))}
+          {this.props.items.map( (item, key) => {
+            const { title, images, year, dimensions } = item;
+            return (
+              <article key={key} className='grid-item item-s-4 margin-bottom-basic'>
+                { images !== undefined && images[0] !== undefined && images[0].downloadURL !== undefined ? <img src={images[0].downloadURL} className='margin-bottom-tiny' /> : '' }
+                <label htmlFor={key + '-title'}>Título</label>
+                <input id={key + '-title'} key={key + '-title'} type='text' value={title} onChange={e => this.changeValue(key, 'title', e.target.value)} className='margin-bottom-tiny' />
+                <label htmlFor={key + '-year'}>Año</label>
+                <input id={key + '-year'} key={key + '-year'} type='text' value={year} onChange={e => this.changeValue(key, 'year', e.target.value)} className='margin-bottom-tiny' />
+                <label htmlFor={key + '-dimensions'}>Dimensiones</label>
+                <input id={key + '-dimensions'} key={key + '-dimensions'} type='text' value={dimensions} onChange={e => this.changeValue(key, 'dimensions', e.target.value)} className='margin-bottom-tiny' />
+                <button type='button' onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta entrada del portafolio?', ToastrOptionsConfirm(this.removeItem, key))}>Eliminar</button>
+              </article>
+            )
+          })}
           <div className='grid-item item-s-4 margin-bottom-basic'>
 
            <Uploads
