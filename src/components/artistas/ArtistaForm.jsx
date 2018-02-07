@@ -251,7 +251,7 @@ class ArtistaForm extends Component {
 
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='gallery'>Galeria</label></h4>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='gallery'>Galería</label></h4>
             <input
               id='gallery'
               name='gallery'
@@ -265,7 +265,7 @@ class ArtistaForm extends Component {
 
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='galleryUrl'>Pagina web de Galeria</label></h4>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='galleryUrl'>Pagina web de Galería</label></h4>
             <input
               id='galleryUrl'
               name='galleryUrl'

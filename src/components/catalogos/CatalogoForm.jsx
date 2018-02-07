@@ -261,7 +261,7 @@ class CatalogoForm extends Component {
 
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='title'>Title</label></h4>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='title'>Título</label></h4>
             <input
               id='title'
               name='title'

@@ -115,7 +115,7 @@ class LoteForm extends Component {
 
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'>Price</h4>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'>Precio</h4>
             { PRICES.map( price => (
               <div key={`price-${price.toString().replace('.','-')}`} className='grid-row align-items-center margin-bottom-micro'>
                 <input
@@ -135,7 +135,7 @@ class LoteForm extends Component {
 
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='title'>Title</label></h4>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='title'>Título</label></h4>
             <input
               id='title'
               name='title'
