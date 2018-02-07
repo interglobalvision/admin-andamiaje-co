@@ -14,7 +14,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import Uploads from '../fields/Uploads';
-import ParseEditorContent from '../../utilities/editor';
+import { ParseEditorContent, emptyEditorState } from '../../utilities/editor';
 import EMOJIS from '../../utilities/emojis';
 
 import { ToastrOptionsSuccess, ToastrOptionsError } from '../../utilities/toastr.js';
@@ -28,7 +28,7 @@ class NoticiaForm extends Component {
     publishDate: '',
     title: '',
     editorState: '',
-    rawContent: '',
+    rawContent: emptyEditorState,
     images: [],
     video: {
       url: '',

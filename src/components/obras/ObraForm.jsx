@@ -15,7 +15,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import Uploads from '../fields/Uploads';
-import ParseEditorContent from '../../utilities/editor.js';
+import { ParseEditorContent, emptyEditorState } from '../../utilities/editor';
 import EMOJIS from '../../utilities/emojis.js';
 import { TECNICAS } from '../../utilities/constants.js';
 
@@ -31,7 +31,7 @@ class ObraForm extends Component {
     dimensions: '',
     tecnica: '',
     notesEditorState: '',
-    notesRawContent: '',
+    notesRawContent: emptyEditorState,
     images: [],
     error: {
       message: '',
