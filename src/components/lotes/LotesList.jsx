@@ -18,6 +18,9 @@ const LotesList = ({ lotes }) => {
             <h3>Título</h3>
           </div>
           <div className='grid-item item-s-3'>
+            <h3>Artista</h3>
+          </div>
+          <div className='grid-item item-s-1'>
             <h3>Precio</h3>
           </div>
         </header>

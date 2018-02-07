@@ -9,7 +9,7 @@ import { ToastrOptionsConfirm, ToastrOptionsSuccess } from '../../utilities/toas
 
 const LotesListItem = ({ lote, firebase }) => {
   const { key } = lote;
-  const { title, price, medium } = lote.value;
+  const { title, price, medium, artista } = lote.value;
 
   const removeLote = (key) => {
 
@@ -28,6 +28,9 @@ const LotesListItem = ({ lote, firebase }) => {
         <span><Link className="link-underline" to={'/lotes/' + key}>{title}</Link></span>
       </div>
       <div className='grid-item item-s-3'>
+        <span>{artista.name}</span>
+      </div>
+      <div className='grid-item item-s-1'>
         <span>{price}</span>
       </div>
       <div className='grid-item flex-grow grid-row no-gutter justify-end'>
