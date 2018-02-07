@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { toastr } from 'react-redux-toastr';
+
+import Uploads from '../fields/Uploads';
 import { ToastrOptionsConfirm } from '../../utilities/toastr.js';
 
 class ArtistaPortfolio extends Component {
@@ -7,7 +9,13 @@ class ArtistaPortfolio extends Component {
     title: '',
     year: '',
     dimensions: '',
+    images: [],
   }
+
+  // Uploads
+  storagePath = 'uploads'; // path in the storage
+  path = 'uploads'; // path in the db
+  multipleUploads = false;
 
   constructor(props) {
     super(props);
@@ -15,10 +23,11 @@ class ArtistaPortfolio extends Component {
     // Bind
     this.addItem = this.addItem.bind(this);
     this.removeItem = this.removeItem.bind(this);
+    this.handleUploadsChange = this.handleUploadsChange.bind(this);
   }
 
   addItem() {
-    const { title, year, dimensions } = this.state;
+    const { title, year, dimensions, images } = this.state;
 
     // Append new item
     this.props.handlePortfolioChange([
@@ -27,6 +36,7 @@ class ArtistaPortfolio extends Component {
         title,
         year,
         dimensions,
+        images,
       }
     ]);
 
@@ -35,16 +45,24 @@ class ArtistaPortfolio extends Component {
       title: '',
       year: '',
       dimensions: '',
+      images: [],
     });
   }
 
   removeItem(key) {
-    debugger;
     const { items } = this.props;
     this.props.handlePortfolioChange(
       items.slice(0, key).concat(items.slice(key + 1))
     );
   }
+
+  handleUploadsChange(images) {
+    // Append images to state
+    this.setState({
+      images: [...this.state.images, ...images]
+    });
+  }
+
 
   render() {
     return (
@@ -57,13 +75,29 @@ class ArtistaPortfolio extends Component {
 
         <div className='grid-row margin-bottom-basic'>
           {this.props.items.map( (item, key) => (
-          <div key={key} className='grid-item item-s-4 margin-bottom-basic'>
+          <article key={key} className='grid-item item-s-4 margin-bottom-basic'>
+            { item.images !== undefined && item.images[0] !== undefined && item.images[0].downloadURL !== undefined ? <img src={item.images[0].downloadURL} /> : '' }
             <h4>{item.title}, {item.year}</h4>
             <p>{item.dimensions}</p>
             <button type='button' onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta entrada del portafolio?', ToastrOptionsConfirm(this.removeItem, key))}>Eliminar</button>
-          </div>
+          </article>
           ))}
           <div className='grid-item item-s-4 margin-bottom-basic'>
+
+           <Uploads
+              title={'Imagenes'}
+              files={this.state.images}
+              onChange={this.handleUploadsChange}
+              storagePath={this.storagePath}
+              path={this.path}
+              disabled={this.state.isLoading}
+              deleteFile={this.deleteImage}
+              dropzone={{
+                accept: 'image/jpeg, image/png',
+                multiple: this.multipleUploads,
+              }}
+            />
+
             <label htmlFor='title'>
               Título
             </label>
