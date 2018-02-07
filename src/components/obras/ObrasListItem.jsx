@@ -8,7 +8,7 @@ import { ToastrOptionsConfirm, ToastrOptionsSuccess } from '../../utilities/toas
 
 const ObrasListItem = ({ obra, firebase: { remove } }) => {
   const { key } = obra;
-  const { title, year, artistaName } = obra.value;
+  const { title, year, artista } = obra.value;
 
   const removeObra = (key) => {
 
@@ -30,7 +30,7 @@ const ObrasListItem = ({ obra, firebase: { remove } }) => {
         <span>{year}</span>
       </div>
       <div className='grid-item item-s-3'>
-        <span>{artistaName}</span>
+        <span>{artista.name}</span>
       </div>
       <div className='grid-item flex-grow grid-row no-gutter justify-end'>
         <div className='grid-item'>

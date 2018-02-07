@@ -86,12 +86,12 @@ class LoteForm extends Component {
 
   }
 
-  handleArtistaChange({artista, artistaName}) {
-    if(artista !== undefined || artista !== '') {
+  handleArtistaChange({id, name}) {
+    if(id !== undefined || id !== '') {
       this.setState({
         artista: {
-          id: artista,
-          name: artistaName,
+          id,
+          name,
         },
       });
     }
