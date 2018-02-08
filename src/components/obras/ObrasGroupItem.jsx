@@ -7,7 +7,7 @@ const ObraGroupItem = ({ obra, removeObraFromGroup }) => {
   return(
     <div className='grid-item item-s-3'>
       <h3>{title}, {year}</h3>
-      <button type='button' onClick={() => removeObraFromGroup(obra.id)} className='button'>Retirar</button>
+      <button type='button' onClick={() => removeObraFromGroup(obra.id)} className='button button-small button-delete'>Retirar</button>
     </div>
   );
 }
