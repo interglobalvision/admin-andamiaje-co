@@ -9,6 +9,7 @@ import urlParser from "js-video-url-parser";
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
+import ArtistaPortfolio from './ArtistaPortfolio';
 import Uploads from '../fields/Uploads';
 
 import { ParseEditorContent, emptyEditorState } from '../../utilities/editor';
@@ -34,6 +35,7 @@ class ArtistaForm extends Component {
     video: {
       url: '',
     },
+    portfolio: [],
     error: {
       message: '',
     },
@@ -55,6 +57,7 @@ class ArtistaForm extends Component {
     this.handleBioEditorChange = this.handleBioEditorChange.bind(this);
     this.handleCvEditorChange = this.handleCvEditorChange.bind(this);
     this.handleUploadsChange = this.handleUploadsChange.bind(this);
+    this.handlePortfolioChange = this.handlePortfolioChange.bind(this);
     this.deleteImage = this.deleteImage.bind(this);
   }
 
@@ -66,7 +69,18 @@ class ArtistaForm extends Component {
   }
 
   addArtista() {
-    const { name, active, country, gallery, galleryUrl, bioRawContent, cvRawContent, images, video } = this.state;
+    const {
+      name,
+      active,
+      country,
+      gallery,
+      galleryUrl,
+      bioRawContent,
+      cvRawContent,
+      images,
+      video,
+      portfolio,
+    } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -81,6 +95,7 @@ class ArtistaForm extends Component {
         cvRawContent,
         images,
         video,
+        portfolio,
       })
       .then(() => {
         this.setState({ isLoading: false });
@@ -93,7 +108,18 @@ class ArtistaForm extends Component {
   }
 
   updateArtista() {
-    const { name, active, country, gallery, galleryUrl, bioRawContent, cvRawContent, images, video } = this.state;
+    const {
+      name,
+      active,
+      country,
+      gallery,
+      galleryUrl,
+      bioRawContent,
+      cvRawContent,
+      images,
+      video,
+      portfolio,
+    } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -108,6 +134,7 @@ class ArtistaForm extends Component {
         cvRawContent,
         images,
         video,
+        portfolio,
       })
       .then(() => {
         this.setState({ isLoading: false });
@@ -199,6 +226,14 @@ class ArtistaForm extends Component {
     // Append images to state
     this.setState({
       images: [...this.state.images, ...images]
+    });
+  }
+
+  handlePortfolioChange(portfolio) {
+
+    // Append images to state
+    this.setState({
+      portfolio,
     });
   }
 
@@ -344,6 +379,12 @@ class ArtistaForm extends Component {
             />
           </div>
         </div>
+
+        <ArtistaPortfolio
+          enabled={this.state.loading}
+          items={this.state.portfolio}
+          handlePortfolioChange={this.handlePortfolioChange}
+        />
 
         <div className='grid-row margin-bottom-basic justify-end'>
           <div className='grid-item'>

@@ -9,7 +9,7 @@ import { ToastrOptionsConfirm, ToastrOptionsSuccess } from '../../utilities/toas
 
 const CatalogosListItem = ({ catalogo, firebase }) => {
   const { key } = catalogo;
-  const { title, year, medium } = catalogo.value;
+  const { title, medium } = catalogo.value;
 
   const removeCatalogo = (key) => {
 
@@ -44,7 +44,6 @@ CatalogosListItem.propTypes = {
     key: PropTypes.string.isRequired,
     value: PropTypes.shape({
       title: PropTypes.string,
-      year: PropTypes.number,
       //TODO: medium.PropTypes.array,
     }).isRequired,
   }),

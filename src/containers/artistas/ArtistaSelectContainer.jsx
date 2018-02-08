@@ -1,7 +1,6 @@
 import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { firebaseConnect } from 'react-redux-firebase';
 
 import ArtistaSelect from '../../components/artistas/ArtistaSelect';
