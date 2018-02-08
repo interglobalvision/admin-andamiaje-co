@@ -10,10 +10,15 @@ class ArtistaSelect extends Component {
   }
 
   handleChange(event) {
-    const id = this.props.artistas[event.target.selectedIndex - 1].key;
-    const name = event.target.options[event.target.selectedIndex].text;
+    let id = '';
+    let name = '';
 
-    this.props.onChange({ id, name});
+    if (event.target.selectedIndex !== 0) {
+      id = this.props.artistas[event.target.selectedIndex - 1].key;
+      name = event.target.options[event.target.selectedIndex].text;
+    }
+
+    this.props.onChange({id, name});
   }
 
   render() {
@@ -29,7 +34,7 @@ class ArtistaSelect extends Component {
     } else {
       return (
         <select onChange={this.handleChange} value={this.props.value}>
-          <option value=''></option>
+          <option key='' value=''></option>
           { artistas.map(artista =>
             <option key={artista.key} value={artista.key}>{artista.value.name}</option>
           )}
