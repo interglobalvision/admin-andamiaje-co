@@ -386,11 +386,6 @@ class ArtistaForm extends Component {
           handlePortfolioChange={this.handlePortfolioChange}
         />
 
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
-          </div>
-        </div>
-
         <div className='grid-row margin-bottom-basic justify-end'>
           <div className='grid-item'>
             <button className='button' onClick={() => this.props.id ? this.updateArtista() : this.addArtista()}>
