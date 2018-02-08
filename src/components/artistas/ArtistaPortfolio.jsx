@@ -86,21 +86,30 @@ class ArtistaPortfolio extends Component {
           {this.props.items.map( (item, key) => {
             const { title, images, year, dimensions } = item;
             return (
-              <article key={key} className='grid-item item-s-4 margin-bottom-basic'>
-                { images !== undefined && images[0] !== undefined && images[0].downloadURL !== undefined ? <img src={images[0].downloadURL} className='margin-bottom-tiny' /> : '' }
-                <label htmlFor={key + '-title'}>Título</label>
+              <article key={key} className='grid-item item-s-12 item-m-6 margin-bottom-basic artist-portfolio-item'>
+                <div className='margin-bottom-micro'>
+                  { images !== undefined && images[0] !== undefined && images[0].downloadURL !== undefined ? <img src={images[0].downloadURL} alt={title} className='margin-bottom-tiny' /> : '' }
+                </div>
+
+                <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={key + '-title'}>Título</label></h4>
                 <input id={key + '-title'} key={key + '-title'} type='text' value={title} onChange={e => this.changeValue(key, 'title', e.target.value)} className='margin-bottom-tiny' />
-                <label htmlFor={key + '-year'}>Año</label>
+
+                <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={key + '-year'}>Año</label></h4>
                 <input id={key + '-year'} key={key + '-year'} type='text' value={year} onChange={e => this.changeValue(key, 'year', e.target.value)} className='margin-bottom-tiny' />
-                <label htmlFor={key + '-dimensions'}>Dimensiones</label>
+
+                <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={key + '-dimensions'}>Dimensiones</label></h4>
                 <input id={key + '-dimensions'} key={key + '-dimensions'} type='text' value={dimensions} onChange={e => this.changeValue(key, 'dimensions', e.target.value)} className='margin-bottom-tiny' />
-                <button type='button' onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta entrada del portafolio?', ToastrOptionsConfirm(this.removeItem, key))}>Eliminar</button>
+
+                <button type='button' className='button' onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta entrada del portafolio?', ToastrOptionsConfirm(this.removeItem, key))}>Eliminar</button>
               </article>
             )
           })}
-          <div className='grid-item item-s-4 margin-bottom-basic'>
+        </div>
+        <div className='grid-row margin-bottom-basic'>
+          <div className='grid-item item-s-12 margin-bottom-basic'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'>Agregar pieza</h4>
 
-           <Uploads
+            <Uploads
               title={'Imagenes'}
               files={this.state.images}
               onChange={this.handleUploadsChange}
@@ -114,9 +123,7 @@ class ArtistaPortfolio extends Component {
               }}
             />
 
-            <label htmlFor='title'>
-              Título
-            </label>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='title'>Título</label></h4>
             <input
               id='title'
               name='title'
@@ -124,10 +131,10 @@ class ArtistaPortfolio extends Component {
               value={this.state.title}
               disabled={this.state.isLoading}
               onChange={ event => this.setState({ title: event.target.value })}
+              className='margin-bottom-tiny'
             />
-            <label htmlFor='year'>
-              Año
-            </label>
+
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='year'>Año</label></h4>
             <input
               id='title'
               name='title'
@@ -135,10 +142,10 @@ class ArtistaPortfolio extends Component {
               value={this.state.year}
               disabled={this.state.isLoading}
               onChange={ event => this.setState({ year: event.target.value })}
+              className='margin-bottom-tiny'
             />
-            <label htmlFor='dimensions'>
-              Dimensiones
-            </label>
+
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='dimensions'>Dimensiones</label></h4>
             <input
               id='dimensions'
               name='dimensions'
@@ -146,10 +153,10 @@ class ArtistaPortfolio extends Component {
               value={this.state.dimensions}
               disabled={this.state.isLoading}
               onChange={ event => this.setState({ dimensions: event.target.value })}
+              className='margin-bottom-tiny'
             />
-            <button type='button' className='button' onClick={this.addItem}>
-              Agregar
-            </button>
+
+            <button type='button' className='button' onClick={this.addItem}>Agregar</button>
           </div>
         </div>
       </section>
