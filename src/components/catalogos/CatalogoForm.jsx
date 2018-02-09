@@ -39,7 +39,10 @@ class CatalogoForm extends Component {
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleSaleDateChange = this.handleSaleDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
+
     this.addLoteToGroup = this.addLoteToGroup.bind(this);
+    this.moveLoteUpGroup = this.moveLoteUpGroup.bind(this);
+    this.moveLoteDownGroup = this.moveLoteDownGroup.bind(this);
     this.removeLoteFromGroup = this.removeLoteFromGroup.bind(this);
 
   }
@@ -125,6 +128,14 @@ class CatalogoForm extends Component {
     this.setState({
       lotes: [...this.state.lotes, newLote]
     });
+  }
+
+  moveLoteUpGroup(id) {
+    console.log('up', id);
+  }
+
+  moveLoteDownGroup(id) {
+    console.log('down', id);
   }
 
   removeLoteFromGroup(id) {
@@ -276,7 +287,7 @@ class CatalogoForm extends Component {
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='lotes'>Lotes</label></h4>
-            <LotesGroupContainer addLoteToGroup={this.addLoteToGroup} selectedLotes={this.state.lotes} removeLoteFromGroup={this.removeLoteFromGroup} />
+            <LotesGroupContainer addLoteToGroup={this.addLoteToGroup} selectedLotes={this.state.lotes} moveLoteUpGroup={this.moveLoteUpGroup} moveLoteDownGroup={this.moveLoteDownGroup} removeLoteFromGroup={this.removeLoteFromGroup} />
           </div>
         </div>
 

@@ -6,8 +6,8 @@ import { firebaseConnect } from 'react-redux-firebase';
 
 import LotesGroup from '../../components/lotes/LotesGroup';
 
-const LotesGroupContainer = ({ addLoteToGroup, allLotes, selectedLotes, removeLoteFromGroup }) => (
-  <LotesGroup allLotes={allLotes} addLoteToGroup={addLoteToGroup} selectedLotes={selectedLotes} removeLoteFromGroup={removeLoteFromGroup}/>
+const LotesGroupContainer = ({ addLoteToGroup, allLotes, selectedLotes, moveLoteUpGroup, moveLoteDownGroup, removeLoteFromGroup }) => (
+  <LotesGroup allLotes={allLotes} addLoteToGroup={addLoteToGroup} selectedLotes={selectedLotes} moveLoteUpGroup={moveLoteUpGroup} moveLoteDownGroup={moveLoteDownGroup} removeLoteFromGroup={removeLoteFromGroup}/>
 );
 
 LotesGroupContainer.propTypes = {

@@ -26,6 +26,14 @@ class LotesGroup extends Component {
     this.props.addLoteToGroup(selectedLote);
   }
 
+  moveLoteUpGroup(id) {
+    this.props.moveLoteUpGroup(id);
+  }
+
+  moveLoteDownGroup(id) {
+    this.props.moveLoteDownGroup(id);
+  }
+
   removeLoteFromGroup(id) {
     this.props.removeLoteFromGroup(id);
   }
@@ -57,7 +65,7 @@ class LotesGroup extends Component {
   }
 
   render() {
-    const { allLotes, selectedLotes, removeLoteFromGroup } = this.props;
+    const { allLotes, selectedLotes, moveLoteUpGroup, moveLoteDownGroup, removeLoteFromGroup } = this.props;
     const filteredLotes = this.filterLotes(allLotes, selectedLotes);
 
     if (!isLoaded(allLotes)) { // If not loaded…
@@ -65,9 +73,18 @@ class LotesGroup extends Component {
     } else {
       return (
         <div>
-          <div className='grid-row padding-top-micro padding-bottom-basic align-items-center'>
+          <header className='grid-row margin-bottom-tiny font-size-small font-bold'>
+            <div className='grid-item item-s-3 item-m-5'>
+              <h3>Título</h3>
+            </div>
+            <div className='grid-item item-s-3'>
+              <h3>Artista</h3>
+            </div>
+          </header>
+
+          <div className='lote-group-list-holder'>
             { selectedLotes.map(lote =>
-              <LotesGroupItem key={lote.id} lote={lote} removeLoteFromGroup={removeLoteFromGroup} />
+              <LotesGroupItem key={lote.id} lote={lote} moveLoteUpGroup={moveLoteUpGroup} moveLoteDownGroup={moveLoteDownGroup} removeLoteFromGroup={removeLoteFromGroup} />
             )}
           </div>
           { isEmpty(filteredLotes) ? '' :
@@ -91,6 +108,8 @@ class LotesGroup extends Component {
 LotesGroup.propTypes = {
   addLoteToGroup: PropTypes.func.isRequired,
   allLotes: PropTypes.array,
+  moveLoteUpGroup: PropTypes.func.isRequired,
+  moveLoteDownGroup: PropTypes.func.isRequired,
   removeLoteFromGroup: PropTypes.func.isRequired,
   selectedLotes: PropTypes.array,
 };
