@@ -3,7 +3,12 @@
 // Button styles
 .button,
 a.button
-  padding: $margin-small
+  padding: ($margin-small*0.8) $margin-small
+  &.button-small
+    padding: ($margin-tiny*0.8) $margin-tiny
+  &.button-delete
+    background-color: $color-button-warning
+
 
 input
   padding: $margin-small

@@ -7,7 +7,7 @@ const LoteGroupItem = ({ lote, removeLoteFromGroup }) => {
   return(
     <div className='grid-item item-s-3'>
       <h3>{artista.name} - {title}</h3>
-      <button type='button' onClick={() => removeLoteFromGroup(lote.id)} className='button'>Retirar</button>
+      <button type='button' onClick={() => removeLoteFromGroup(lote.id)} className='button button-small button-delete'>Retirar</button>
     </div>
   );
 }

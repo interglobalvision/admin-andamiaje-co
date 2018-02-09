@@ -100,7 +100,7 @@ class ArtistaPortfolio extends Component {
                 <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={key + '-dimensions'}>Dimensiones</label></h4>
                 <input id={key + '-dimensions'} key={key + '-dimensions'} type='text' value={dimensions} onChange={e => this.changeValue(key, 'dimensions', e.target.value)} className='margin-bottom-tiny' />
 
-                <button type='button' className='button' onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta entrada del portafolio?', ToastrOptionsConfirm(this.removeItem, key))}>Eliminar</button>
+                <button type='button' className='button button-small button-delete' onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta entrada del portafolio?', ToastrOptionsConfirm(this.removeItem, key))}>Eliminar</button>
               </article>
             )
           })}
