@@ -177,7 +177,8 @@ class LoteForm extends Component {
 LoteForm.propTypes = {
   id: PropTypes.string,
   lote: PropTypes.shape({
-    artista: PropTypes.string, // TODO: should be object
+    artista: PropTypes.object,
+    obras: PropTypes.array,
     price: PropTypes.number,
     title: PropTypes.string,
   }),
