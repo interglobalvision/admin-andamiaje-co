@@ -29,7 +29,7 @@ class NoticiaForm extends Component {
     published: false,
     publishDate: '',
     title: '',
-    artista: '',
+    artista: {},
     editorState: '',
     rawContent: emptyEditorState,
     images: [],
@@ -220,14 +220,12 @@ class NoticiaForm extends Component {
   }
 
   handleArtistaChange({id, name}) {
-    if(id !== undefined || id !== '') {
-      this.setState({
-        artista: {
-          id,
-          name,
-        },
-      });
-    }
+    this.setState({
+      artista: {
+        id,
+        name,
+      },
+    });
   }
 
   render() {
