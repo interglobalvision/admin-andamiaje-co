@@ -131,11 +131,39 @@ class CatalogoForm extends Component {
   }
 
   moveLoteUpGroup(id) {
-    console.log('up', id);
+    // get lote to move index
+    const loteIndex = this.state.lotes.findIndex(lote => {
+      return id === lote.id;
+    });
+
+    // if first it can't go up
+    if (loteIndex === 0) {
+      return;
+    }
+
+    // set our target index
+    const targetIndex = loteIndex - 1;
+
+    // get all lotes and the lote object to move
+    const lotes = this.state.lotes;
+    const lote = lotes[loteIndex];
+
+    // remove lote to move from array
+    const lotesFiltered = lotes.filter(lote => lote.id !== id);
+
+    // splice back in lote to move
+    lotesFiltered.splice(targetIndex, 0, lote);
+
+    // return new state
+    this.setState( currentState => ({
+      lotes: lotesFiltered
+    }));
   }
 
   moveLoteDownGroup(id) {
     console.log('down', id);
+
+
   }
 
   removeLoteFromGroup(id) {
