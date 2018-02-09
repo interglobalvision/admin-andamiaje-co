@@ -10,6 +10,8 @@ import urlParser from "js-video-url-parser";
 import { convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 
+import ArtistaSelectContainer from '../../containers/artistas/ArtistaSelectContainer';
+
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
@@ -27,6 +29,7 @@ class NoticiaForm extends Component {
     published: false,
     publishDate: '',
     title: '',
+    artista: '',
     editorState: '',
     rawContent: emptyEditorState,
     images: [],
@@ -56,6 +59,7 @@ class NoticiaForm extends Component {
     this.handleVideoChange = this.handleVideoChange.bind(this);
     this.handleUploadsChange = this.handleUploadsChange.bind(this);
     this.deleteImage = this.deleteImage.bind(this);
+    this.handleArtistaChange = this.handleArtistaChange.bind(this);
   }
 
   componentWillMount() {
@@ -108,7 +112,7 @@ class NoticiaForm extends Component {
   }
 
   addNoticia() {
-    const { title, rawContent, published, publishDate, video, images } = this.state;
+    const { title, rawContent, published, publishDate, video, images, artista } = this.state;
 
     const createdDate = Date.now();
 
@@ -123,6 +127,7 @@ class NoticiaForm extends Component {
         publishDate,
         video,
         images,
+        artista,
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -135,7 +140,7 @@ class NoticiaForm extends Component {
   }
 
   updateNoticia() {
-    const { title, rawContent, published, publishDate, images, video} = this.state;
+    const { title, rawContent, published, publishDate, images, video, artista } = this.state;
 
     this.setState({ isLoading: true })
 
@@ -147,6 +152,7 @@ class NoticiaForm extends Component {
         publishDate,
         video,
         images,
+        artista,
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -211,6 +217,17 @@ class NoticiaForm extends Component {
     this.setState({
       images: [...this.state.images, ...images]
     });
+  }
+
+  handleArtistaChange({id, name}) {
+    if(id !== undefined || id !== '') {
+      this.setState({
+        artista: {
+          id,
+          name,
+        },
+      });
+    }
   }
 
   render() {
@@ -289,6 +306,13 @@ class NoticiaForm extends Component {
                 }
               }}
             />
+          </div>
+        </div>
+
+        <div className='grid-row margin-bottom-basic'>
+          <div className='grid-item item-s-12'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='artista'>Artista</label></h4>
+            <ArtistaSelectContainer value={this.state.artista.id} onChange={this.handleArtistaChange} />
           </div>
         </div>
 
