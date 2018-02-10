@@ -23,7 +23,7 @@ export const loadImageSizes = (files) => {
         resolve(file);
       };
 
-      img.onerror = () => resolve({});
+      img.onerror = () => reject('Error al cargar las dimensiones de la imagen');
 
       // Add the url as the src of hte image
       img.src = file.File.downloadURL;
