@@ -5,7 +5,8 @@ import { toastr } from 'react-redux-toastr';
 
 import Dropzone from 'react-dropzone'; // For Dropzone reference check https://github.com/react-dropzone/react-dropzone
 
-import { ToastrOptionsError } from '../../utilities/toastr.js';
+import { ToastrOptionsError } from '../../utilities/toastr';
+import { loadImageSizes } from '../../utilities/images';
 
 @withFirebase
 class UploadField extends Component {
@@ -17,7 +18,7 @@ class UploadField extends Component {
   constructor(props) {
     super(props);
 
-    this.placeholder = this.props.placeholder || 'Haz click aqurí o arrastra los archivos que quieres cargar';
+    this.placeholder = this.props.placeholder || 'Haz click aquí o arrastra los archivos que quieres cargar';
 
     // Path in the Storage where the files will get saves
     this.storagePath = this.props.storagePath;
@@ -38,16 +39,19 @@ class UploadField extends Component {
     // Upload files
     this.props.firebase
       .uploadFiles(this.storagePath, files, this.path, { progress: true })
+      .then( files => loadImageSizes(files) )
       .then(files => {
 
         // Create an array with the data we need from the uploaded files
         const uploadedFiles = files.map( file => {
-          const { key, File: { downloadURL, fullPath, name } } = file;
+          const { key, width,  height, File: { downloadURL, fullPath, name } } = file;
           return {
             key,
             name,
             downloadURL,
             fullPath,
+            width,
+            height,
           };
         });
 
@@ -59,7 +63,7 @@ class UploadField extends Component {
 
       })
       .catch( error => {
-        console.log(error) ;
+        toastr.warning('Error', error, ToastrOptionsError);
         // Unset Loading
         this.setState({ isLoading: false });
       });
