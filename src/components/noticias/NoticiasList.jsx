@@ -12,13 +12,16 @@ const NoticiasList = ({ noticias }) => {
     return (
       <section className="margin-bottom-basic">
         <header className='grid-row margin-bottom-tiny font-size-small font-bold'>
-          <div className='grid-item item-s-3 item-m-4 item-l-5'>
+          <div className='grid-item item-s-1'>
+            <h3>Imagen</h3>
+          </div>
+          <div className='grid-item item-s-3 item-m-4'>
             <h3>Título</h3>
           </div>
           <div className='grid-item item-s-2'>
             <h3>Estado</h3>
           </div>
-          <div className='grid-item item-s-3 item-l-2'>
+          <div className='grid-item item-s-2'>
             <h3>Fecha</h3>
           </div>
         </header>
