@@ -30,3 +30,22 @@ export const loadImageSizes = (files) => {
     });
   }))
 };
+
+export const getResizedImageUrl = (file, size, square) => {
+  const extension = file.name.split('.').pop();
+  const name = file.name.replace(/\.[^/.]+$/, '');
+
+  let url = 'https://storage.googleapis.com/igv-andamiaje-co.appspot.com/';
+
+  url += name;
+
+  url += '_' + size;
+
+  if (square) {
+    url += 'x' + size;
+  }
+
+  url += '_thumb.' + extension;
+
+  return url;
+};

@@ -7,11 +7,18 @@ import { toastr } from 'react-redux-toastr';
 import moment from 'moment';
 
 import { ToastrOptionsConfirm, ToastrOptionsSuccess } from '../../utilities/toastr.js';
+import { getResizedImageUrl } from '../../utilities/images.js';
 
 const NoticiasListItem = ({ noticia, firebase }) => {
   const { key } = noticia;
   const { title, published, publishDate, images } = noticia.value;
   const publishDateDisplay = moment(publishDate).format('DD-MM-YYYY');
+
+  let imageUrl;
+
+  if (images) {
+    imageUrl = getResizedImageUrl(images[0], '350', true);
+  }
 
   const removeNoticia = (key) => {
 
@@ -27,7 +34,7 @@ const NoticiasListItem = ({ noticia, firebase }) => {
   return(
     <div className='list-rows-item grid-row padding-top-micro padding-bottom-micro align-items-center'>
       <div className='grid-item item-s-1'>
-        <img src={images ? images[0].downloadURL : ''} />
+        <img src={imageUrl} />
       </div>
       <div className='grid-item item-s-3 item-m-4'>
         <span><Link className="link-underline" to={'/noticias/' + key}>{title}</Link></span>
