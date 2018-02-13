@@ -7,11 +7,18 @@ import { toastr } from 'react-redux-toastr';
 import moment from 'moment';
 
 import { ToastrOptionsConfirm, ToastrOptionsSuccess } from '../../utilities/toastr.js';
+import { getResizedImageUrl } from '../../utilities/images.js';
 
 const NoticiasListItem = ({ noticia, firebase }) => {
   const { key } = noticia;
-  const { title, published, publishDate } = noticia.value;
+  const { title, published, publishDate, images } = noticia.value;
   const publishDateDisplay = moment(publishDate).format('DD-MM-YYYY');
+
+  let imageUrl = undefined;
+
+  if(images !== undefined) {
+    imageUrl = getResizedImageUrl(images[0], '350', true);
+  }
 
   const removeNoticia = (key) => {
 
@@ -26,13 +33,16 @@ const NoticiasListItem = ({ noticia, firebase }) => {
 
   return(
     <div className='list-rows-item grid-row padding-top-micro padding-bottom-micro align-items-center'>
-      <div className='grid-item item-s-3 item-m-4 item-l-5'>
+      <div className='grid-item item-s-1'>
+        { imageUrl !== undefined ? <img src={imageUrl} /> : '' }
+      </div>
+      <div className='grid-item item-s-3 item-m-4'>
         <span><Link className="link-underline" to={'/noticias/' + key}>{title}</Link></span>
       </div>
       <div className='grid-item item-s-2'>
         <span>{published ? 'Publicado' : 'Borrador'}</span>
       </div>
-      <div className='grid-item item-s-3 item-l-2'>
+      <div className='grid-item item-s-2'>
         <span>{publishDateDisplay}</span>
       </div>
       <div className='grid-item flex-grow grid-row no-gutter justify-end'>
