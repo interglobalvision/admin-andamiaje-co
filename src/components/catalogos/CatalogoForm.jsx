@@ -40,10 +40,7 @@ class CatalogoForm extends Component {
     this.handleSaleDateChange = this.handleSaleDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
 
-    this.addLoteToGroup = this.addLoteToGroup.bind(this);
-    this.moveLoteUpGroup = this.moveLoteUpGroup.bind(this);
-    this.moveLoteDownGroup = this.moveLoteDownGroup.bind(this);
-    this.removeLoteFromGroup = this.removeLoteFromGroup.bind(this);
+    this.handleOnGroupChange = this.handleOnGroupChange.bind(this);
 
   }
 
@@ -115,85 +112,8 @@ class CatalogoForm extends Component {
 
   }
 
-  addLoteToGroup(selectedLote) {
-    const newLote = {
-      id: selectedLote.id,
-      artista: {
-        id: selectedLote.artista.id,
-        name: selectedLote.artista.name,
-      },
-      title: selectedLote.title,
-    };
-
-    this.setState({
-      lotes: [...this.state.lotes, newLote]
-    });
-  }
-
-  moveLoteUpGroup(id) {
-    // get lote to move index
-    const loteIndex = this.state.lotes.findIndex(lote => {
-      return id === lote.id;
-    });
-
-    // if first it can't go up
-    if (loteIndex === 0) {
-      return;
-    }
-
-    // set our target index
-    const targetIndex = loteIndex - 1;
-
-    // get all lotes and the lote object to move
-    const lotes = this.state.lotes;
-    const lote = lotes[loteIndex];
-
-    // remove lote to move from array
-    const lotesFiltered = lotes.filter(lote => lote.id !== id);
-
-    // splice back in lote to move
-    lotesFiltered.splice(targetIndex, 0, lote);
-
-    // return new state
-    this.setState( currentState => ({
-      lotes: lotesFiltered
-    }));
-  }
-
-  moveLoteDownGroup(id) {
-    // get lote to move index
-    const loteIndex = this.state.lotes.findIndex(lote => {
-      return id === lote.id;
-    });
-
-    // get all lotes and the lote object to move
-    const lotes = this.state.lotes;
-    const lote = lotes[loteIndex];
-
-    // if last it can't go down
-    if (loteIndex === (lotes.length - 1)) {
-      return;
-    }
-
-    // set our target index
-    const targetIndex = loteIndex + 1;
-
-    // remove lote to move from array
-    const lotesFiltered = lotes.filter(lote => lote.id !== id);
-
-    // splice back in lote to move
-    lotesFiltered.splice(targetIndex, 0, lote);
-
-    // return new state
-    this.setState( currentState => ({
-      lotes: lotesFiltered
-    }));
-  }
-
-  removeLoteFromGroup(id) {
-    this.setState( currentState => ({
-      lotes: currentState.lotes.filter( lote => lote.id !== id )
-    }));
+  handleOnGroupChange(lotes) {
+    this.setState({ lotes });
   }
 
   handleStartDateChange(date) {
@@ -339,7 +259,7 @@ class CatalogoForm extends Component {
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='lotes'>Lotes</label></h4>
-            <LotesGroupContainer addLoteToGroup={this.addLoteToGroup} selectedLotes={this.state.lotes} moveLoteUpGroup={this.moveLoteUpGroup} moveLoteDownGroup={this.moveLoteDownGroup} removeLoteFromGroup={this.removeLoteFromGroup} />
+            <LotesGroupContainer selectedLotes={this.state.lotes} onChange={this.handleOnGroupChange} />
           </div>
         </div>
 

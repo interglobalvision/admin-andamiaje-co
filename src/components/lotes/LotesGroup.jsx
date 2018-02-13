@@ -18,24 +18,61 @@ class LotesGroup extends Component {
     // Bind
     this.handleSelectChange = this.handleSelectChange.bind(this);
     this.addLoteToGroup = this.addLoteToGroup.bind(this);
+    this.moveLoteUp = this.moveLoteUp.bind(this);
+    this.moveLoteDown = this.moveLoteDown.bind(this);
+    this.removeLoteFromGroup = this.removeLoteFromGroup.bind(this);
+
   }
 
   addLoteToGroup() {
     const selectedLote = this.state.selectedLote;
 
-    this.props.addLoteToGroup(selectedLote);
-  }
+    const newLote = {
+      id: selectedLote.id,
+      artista: {
+        id: selectedLote.artista.id,
+        name: selectedLote.artista.name,
+      },
+      title: selectedLote.title,
+    };
 
-  moveLoteUpGroup(id) {
-    this.props.moveLoteUpGroup(id);
-  }
-
-  moveLoteDownGroup(id) {
-    this.props.moveLoteDownGroup(id);
+    this.props.onChange([...this.props.selectedLotes, newLote]);
   }
 
   removeLoteFromGroup(id) {
-    this.props.removeLoteFromGroup(id);
+    this.props.onChange(this.props.selectedLotes.filter( lote => lote.id !== id ));
+  }
+
+  moveLote(element, delta) {
+    const lotes = this.props.selectedLotes;
+    const index = lotes.indexOf(element);
+    const newIndex = index + delta;
+
+    // Check if lready at the top or bottom.
+    if (newIndex < 0  || newIndex === lotes.length) {
+      return lotes;
+    }
+
+    let indexes = [index, newIndex]; //Sort the indexes
+
+    return lotes.map( (item,index) => {
+      if(index === indexes[0]) {
+        return lotes[indexes[1]];
+      } else if(index === indexes[1]) {
+        return lotes[indexes[0]];
+      } else {
+        return item;
+      }
+    });
+
+  }
+
+  moveLoteUp(lote) {
+    this.props.onChange(this.moveLote(lote, -1));
+  }
+
+  moveLoteDown(lote) {
+    this.props.onChange(this.moveLote(lote, 1));
   }
 
   handleSelectChange(event) {
@@ -65,8 +102,8 @@ class LotesGroup extends Component {
   }
 
   render() {
-    const { allLotes, selectedLotes, moveLoteUpGroup, moveLoteDownGroup, removeLoteFromGroup } = this.props;
-    const filteredLotes = this.filterLotes(allLotes, selectedLotes);
+    const { allLotes, selectedLotes } = this.props;
+    const availableLotes = this.filterLotes(allLotes, selectedLotes);
 
     if (!isLoaded(allLotes)) { // If not loaded…
       return 'Loading'; // …show 'loading'
@@ -83,15 +120,15 @@ class LotesGroup extends Component {
           </header>
 
           <div className='lote-group-list-holder'>
-            { selectedLotes.map(lote =>
-              <LotesGroupItem key={lote.id} lote={lote} moveLoteUpGroup={moveLoteUpGroup} moveLoteDownGroup={moveLoteDownGroup} removeLoteFromGroup={removeLoteFromGroup} />
+            { selectedLotes.map( (lote, index) =>
+              <LotesGroupItem key={lote.id} lote={lote} moveLoteUp={this.moveLoteUp} moveLoteDown={this.moveLoteDown} removeLoteFromGroup={this.removeLoteFromGroup} upDisabled={index === 0 ? 'disabled' : ''} downDisabled={index === selectedLotes.length - 1 ? 'disabled' : ''} />
             )}
           </div>
-          { isEmpty(filteredLotes) ? '' :
+          { isEmpty(availableLotes) ? '' :
             <div className='grid-row padding-bottom-basic'>
               <select onChange={this.handleSelectChange} className='grid-item item-s-12 item-m-4'>
                 <option value=''></option>
-                { filteredLotes.map(lote =>
+                { availableLotes.map(lote =>
                   <option key={lote.key} value={lote.key}>{lote.value.artista.name} - {lote.value.title}</option>
                 ) }
               </select>
@@ -106,11 +143,8 @@ class LotesGroup extends Component {
 };
 
 LotesGroup.propTypes = {
-  addLoteToGroup: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   allLotes: PropTypes.array,
-  moveLoteUpGroup: PropTypes.func.isRequired,
-  moveLoteDownGroup: PropTypes.func.isRequired,
-  removeLoteFromGroup: PropTypes.func.isRequired,
   selectedLotes: PropTypes.array,
 };
 
