@@ -5,10 +5,17 @@ import { withFirebase } from 'react-redux-firebase';
 import { toastr } from 'react-redux-toastr';
 
 import { ToastrOptionsConfirm, ToastrOptionsSuccess } from '../../utilities/toastr.js';
+import { getResizedImageUrl } from '../../utilities/images.js';
 
 const ObrasListItem = ({ obra, firebase: { remove } }) => {
   const { key } = obra;
-  const { title, year, artista } = obra.value;
+  const { title, year, artista, images } = obra.value;
+
+  let imageUrl = undefined;
+
+  if(images !== undefined) {
+    imageUrl = getResizedImageUrl(images[0], '350', true);
+  }
 
   const removeObra = (key) => {
 
@@ -23,13 +30,16 @@ const ObrasListItem = ({ obra, firebase: { remove } }) => {
 
   return(
     <div className='list-rows-item grid-row padding-top-micro padding-bottom-micro align-items-center'>
+      <div className='grid-item item-s-1'>
+        { imageUrl !== undefined ? <img src={imageUrl} /> : '' }
+      </div>
       <div className='grid-item item-s-3 item-m-4'>
         <span><Link className="link-underline" to={'/obras/' + key}>{title}</Link></span>
       </div>
       <div className='grid-item item-s-2'>
         <span>{year}</span>
       </div>
-      <div className='grid-item item-s-3'>
+      <div className='grid-item item-s-2'>
         <span>{artista.name}</span>
       </div>
       <div className='grid-item flex-grow grid-row no-gutter justify-end'>
