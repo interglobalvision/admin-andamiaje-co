@@ -41,14 +41,14 @@ export const getResizedImageUrl = (file, size, square) => {
   const name = file.name.replace(/\.[^/.]+$/, '');
 
 
-  let thumbPrefix = '_' + size;
+  let thumbSuffixfix = '_' + size;
 
   if (square) {
-    thumbPrefix += 'x' + size;
+    thumbSuffixfix += 'x' + size;
   }
 
-  thumbPrefix += '_thumb';
+  thumbSuffixfix += '_thumb';
 
-  return file.downloadURL.replace(name, name + thumbPrefix);
+  return file.downloadURL.replace(name, name + thumbSuffixfix);
 
 };
