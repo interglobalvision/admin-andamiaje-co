@@ -5,7 +5,7 @@ import { toastr } from 'react-redux-toastr';
 
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import urlParser from "js-video-url-parser";
+import getYouTubeID from 'get-youtube-id';
 
 import { convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
@@ -186,16 +186,15 @@ class NoticiaForm extends Component {
   }
 
   handleVideoChange(url) {
-    const videoData = urlParser.parse(url);
+    const id = getYouTubeID(url);
 
-    if(videoData) {
-      const { provider, id }  = videoData;
+    if(id) {
 
       this.setState({
         video: {
           id,
           url,
-          provider,
+          provider: 'youtube',
         }
       });
     } else {

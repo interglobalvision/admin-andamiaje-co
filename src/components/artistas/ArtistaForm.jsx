@@ -5,7 +5,7 @@ import { toastr } from 'react-redux-toastr';
 
 import { convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
-import urlParser from "js-video-url-parser";
+import getYouTubeID from 'get-youtube-id';
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
@@ -201,16 +201,15 @@ class ArtistaForm extends Component {
   }
 
   handleVideoChange(url) {
-    const videoData = urlParser.parse(url);
+    const id = getYouTubeID(url);
 
-    if(videoData) {
-      const { provider, id }  = videoData;
+    if(id) {
 
       this.setState({
         video: {
           id,
           url,
-          provider,
+          provider: 'youtube',
         }
       });
     } else {
