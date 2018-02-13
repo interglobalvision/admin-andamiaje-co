@@ -39,8 +39,8 @@ class CatalogoForm extends Component {
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleSaleDateChange = this.handleSaleDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
-    this.addLoteToGroup = this.addLoteToGroup.bind(this);
-    this.removeLoteFromGroup = this.removeLoteFromGroup.bind(this);
+
+    this.handleOnGroupChange = this.handleOnGroupChange.bind(this);
 
   }
 
@@ -112,25 +112,8 @@ class CatalogoForm extends Component {
 
   }
 
-  addLoteToGroup(selectedLote) {
-    const newLote = {
-      id: selectedLote.id,
-      artista: {
-        id: selectedLote.artista.id,
-        name: selectedLote.artista.name,
-      },
-      title: selectedLote.title,
-    };
-
-    this.setState({
-      lotes: [...this.state.lotes, newLote]
-    });
-  }
-
-  removeLoteFromGroup(id) {
-    this.setState( currentState => ({
-      lotes: currentState.lotes.filter( lote => lote.id !== id )
-    }));
+  handleOnGroupChange(lotes) {
+    this.setState({ lotes });
   }
 
   handleStartDateChange(date) {
@@ -276,7 +259,7 @@ class CatalogoForm extends Component {
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='lotes'>Lotes</label></h4>
-            <LotesGroupContainer addLoteToGroup={this.addLoteToGroup} selectedLotes={this.state.lotes} removeLoteFromGroup={this.removeLoteFromGroup} />
+            <LotesGroupContainer selectedLotes={this.state.lotes} onChange={this.handleOnGroupChange} />
           </div>
         </div>
 

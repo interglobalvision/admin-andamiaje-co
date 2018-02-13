@@ -37,6 +37,9 @@ a.button
     padding: ($margin-tiny*0.8) $margin-tiny
   &.button-delete
     background-color: $color-button-warning
+  &:disabled
+    background-color: $color-button-disabled
+    cursor: default;
 
 .list-rows-holder
   > *
