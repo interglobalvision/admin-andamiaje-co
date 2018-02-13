@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { toastr } from 'react-redux-toastr';
 
 import Uploads from '../fields/Uploads';
+import { getResizedImageUrl } from '../../utilities/images.js';
+
 import { ToastrOptionsConfirm } from '../../utilities/toastr.js';
 
 class ArtistaPortfolio extends Component {
@@ -114,14 +116,20 @@ class ArtistaPortfolio extends Component {
           </div>
         </div>
 
-        <div className='grid-row margin-bottom-basic'>
+        <div className='artista-portfilio-items'>
           {this.props.items.map( (item, index) => {
             const { title, images, year, dimensions } = item;
+
+            let imageUrl = undefined;
+
+            if(images !== undefined) {
+              imageUrl = getResizedImageUrl(images[0], '750', false);
+            }
 
             return (
               <article key={index} className='grid-row padding-top-micro padding-bottom-small'>
                 <div className='grid-item item-s-2 item-m-4'>
-                    { images !== undefined && images[0] !== undefined && images[0].downloadURL !== undefined ? <img src={images[0].downloadURL} alt={title} className='margin-bottom-tiny' /> : '' }
+                  { imageUrl !== undefined ? <img src={imageUrl} /> : '' }
                 </div>
                 <div className='grid-item item-s-8 item-m-6'>
                   <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={index + '-title'}>Título</label></h4>
@@ -137,7 +145,6 @@ class ArtistaPortfolio extends Component {
                 <div className='grid-item flex-grow grid-row no-gutter justify-end'>
                   <button type='button' onClick={() => this.moveItemUp(item)} disabled={index === 0 ? 'disabled' : ''} className='button button-small'>↑</button>
                   <button type='button' onClick={() => this.moveItemDown(item)} disabled={index === this.props.items.length - 1 ? 'disabled' : ''} className='button button-small'>↓</button>
-
                   <button type='button' className='button button-small button-delete' onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta entrada del portafolio?', ToastrOptionsConfirm(this.removeItem, index))}>Eliminar</button>
                 </div>
               </article>
