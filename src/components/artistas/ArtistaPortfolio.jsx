@@ -129,7 +129,7 @@ class ArtistaPortfolio extends Component {
             return (
               <article key={index} className='grid-row padding-top-micro padding-bottom-small'>
                 <div className='grid-item item-s-2 item-m-4'>
-                  { imageUrl !== undefined ? <img src={imageUrl} /> : '' }
+                  { imageUrl !== undefined ? <img src={imageUrl} alt={title} /> : '' }
                 </div>
                 <div className='grid-item item-s-8 item-m-6'>
                   <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={index + '-title'}>Título</label></h4>
