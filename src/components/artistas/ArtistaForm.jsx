@@ -27,6 +27,7 @@ class ArtistaForm extends Component {
     country: '',
     gallery: '',
     galleryUrl: '',
+    websiteUrl: '',
     bioEditorState: '',
     bioRawContent: emptyEditorState,
     cvEditorState: '',
@@ -75,6 +76,7 @@ class ArtistaForm extends Component {
       country,
       gallery,
       galleryUrl,
+      websiteUrl,
       bioRawContent,
       cvRawContent,
       images,
@@ -91,6 +93,7 @@ class ArtistaForm extends Component {
         country,
         gallery,
         galleryUrl,
+        websiteUrl,
         bioRawContent,
         cvRawContent,
         images,
@@ -114,6 +117,7 @@ class ArtistaForm extends Component {
       country,
       gallery,
       galleryUrl,
+      websiteUrl,
       bioRawContent,
       cvRawContent,
       images,
@@ -130,6 +134,7 @@ class ArtistaForm extends Component {
         country,
         gallery,
         galleryUrl,
+        websiteUrl,
         bioRawContent,
         cvRawContent,
         images,
@@ -308,6 +313,20 @@ class ArtistaForm extends Component {
               disabled={this.state.isLoading}
               value={this.state.galleryUrl}
               onChange={ event => this.setState({ galleryUrl: event.target.value })}
+            />
+          </div>
+        </div>
+
+        <div className='grid-row margin-bottom-basic'>
+          <div className='grid-item item-s-12'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='websiteUrl'>Pagina web de artista</label></h4>
+            <input
+              id='websiteUrl'
+              name='websiteUrl'
+              type='url'
+              disabled={this.state.isLoading}
+              value={this.state.websiteUrl}
+              onChange={ event => this.setState({ websiteUrl: event.target.value })}
             />
           </div>
         </div>
