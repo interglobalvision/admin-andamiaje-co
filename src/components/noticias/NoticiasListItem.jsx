@@ -14,9 +14,9 @@ const NoticiasListItem = ({ noticia, firebase }) => {
   const { title, published, publishDate, images } = noticia.value;
   const publishDateDisplay = moment(publishDate).format('DD-MM-YYYY');
 
-  let imageUrl;
+  let imageUrl = undefined;
 
-  if (images) {
+  if(images !== undefined) {
     imageUrl = getResizedImageUrl(images[0], '350', true);
   }
 
@@ -34,7 +34,7 @@ const NoticiasListItem = ({ noticia, firebase }) => {
   return(
     <div className='list-rows-item grid-row padding-top-micro padding-bottom-micro align-items-center'>
       <div className='grid-item item-s-1'>
-        <img src={imageUrl} />
+        { imageUrl !== undefined ? <img src={imageUrl} /> : '' }
       </div>
       <div className='grid-item item-s-3 item-m-4'>
         <span><Link className="link-underline" to={'/noticias/' + key}>{title}</Link></span>

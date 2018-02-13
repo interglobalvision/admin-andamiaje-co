@@ -32,20 +32,23 @@ export const loadImageSizes = (files) => {
 };
 
 export const getResizedImageUrl = (file, size, square) => {
+
+  if(file === undefined) {
+    return;
+  }
+
   const extension = file.name.split('.').pop();
   const name = file.name.replace(/\.[^/.]+$/, '');
 
-  let url = 'https://storage.googleapis.com/igv-andamiaje-co.appspot.com/';
 
-  url += name;
-
-  url += '_' + size;
+  let thumbPrefix = '_' + size;
 
   if (square) {
-    url += 'x' + size;
+    thumbPrefix += 'x' + size;
   }
 
-  url += '_thumb.' + extension;
+  thumbPrefix += '_thumb';
 
-  return url;
+  return file.downloadURL.replace(name, name + thumbPrefix);
+
 };
