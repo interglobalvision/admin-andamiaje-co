@@ -17,7 +17,7 @@ const Catalogos = ({ catalogos }) => (
 
     <div className='grid-row margin-bottom-basic justify-end'>
       <div className='grid-item'>
-        <Link className='button' to='/catalogos/add'>Añadir Entrada</Link>
+        <Link className='button' to='/catalogos/add'>Añadir Catalogo</Link>
       </div>
     </div>
 

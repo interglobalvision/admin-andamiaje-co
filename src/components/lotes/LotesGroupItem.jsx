@@ -7,7 +7,7 @@ const LoteGroupItem = ({ lote, moveLoteUp, moveLoteDown, removeLoteFromGroup, up
   const { id, artista, title } = lote;
 
   return(
-    <div className='list-rows-item grid-row padding-top-micro padding-bottom-micro align-items-center'>
+    <div className='list-rows-item grid-row padding-top-micro padding-bottom-micro align-items-center flex-nowrap'>
       <div className='grid-item item-s-3 item-m-5'>
         <span><Link className="link-underline" to={'/lotes/' + id}>{title}</Link></span>
       </div>
@@ -17,7 +17,11 @@ const LoteGroupItem = ({ lote, moveLoteUp, moveLoteDown, removeLoteFromGroup, up
       <div className='grid-item flex-grow grid-row no-gutter justify-end'>
         <div className='grid-item'>
           <button type='button' onClick={() => moveLoteUp(lote)} disabled={upDisabled} className='button button-small'>↑</button>
+        </div>
+        <div className='grid-item'>
           <button type='button' onClick={() => moveLoteDown(lote)} disabled={downDisabled} className='button button-small'>↓</button>
+        </div>
+        <div className='grid-item'>
           <button type='button' onClick={() => removeLoteFromGroup(lote.id)} className='button button-small button-delete'>Retirar</button>
         </div>
       </div>

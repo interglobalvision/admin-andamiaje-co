@@ -259,22 +259,8 @@ class ArtistaForm extends Component {
   render() {
     return (
       <form onSubmit={event => event.preventDefault()}>
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='name'>Nombre</label></h4>
-            <input
-              id='name'
-              name='name'
-              type='text'
-              disabled={this.state.isLoading}
-              value={this.state.name}
-              onChange={ event => this.setState({ name: event.target.value })}
-            />
-          </div>
-        </div>
-
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item'>
+        <div className='grid-row'>
+          <div className='grid-item margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='active'>Activo</label></h4>
             <div className='grid-row align-items-center'>
               <input
@@ -289,8 +275,20 @@ class ArtistaForm extends Component {
           </div>
         </div>
 
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
+        <div className='grid-row'>
+          <div className='grid-item item-s-12 item-m-6 margin-bottom-basic'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='name'>Nombre</label></h4>
+            <input
+              id='name'
+              name='name'
+              type='text'
+              disabled={this.state.isLoading}
+              value={this.state.name}
+              onChange={ event => this.setState({ name: event.target.value })}
+            />
+          </div>
+
+          <div className='grid-item item-s-12 item-m-6 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='country'>País</label></h4>
             <input
               id='country'
@@ -301,10 +299,8 @@ class ArtistaForm extends Component {
               onChange={ event => this.setState({ country: event.target.value })}
             />
           </div>
-        </div>
 
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
+          <div className='grid-item item-s-12 item-m-6 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='gallery'>Galería</label></h4>
             <input
               id='gallery'
@@ -315,10 +311,8 @@ class ArtistaForm extends Component {
               onChange={ event => this.setState({ gallery: event.target.value })}
             />
           </div>
-        </div>
 
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
+          <div className='grid-item item-s-12 item-m-6 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='galleryUrl'>Pagina web de Galería</label></h4>
             <input
               id='galleryUrl'
@@ -329,10 +323,8 @@ class ArtistaForm extends Component {
               onChange={ event => this.setState({ galleryUrl: event.target.value })}
             />
           </div>
-        </div>
 
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
+          <div className='grid-item item-s-12 item-m-6 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='websiteUrl'>Pagina web de artista</label></h4>
             <input
               id='websiteUrl'

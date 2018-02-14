@@ -5,11 +5,11 @@ import ObraForm from './ObraForm.jsx';
 const AddObra = () => {
   return (
     <section>
-      <div className='grid-row'>
-        <div className='grid-item item-s-3'>
-          <h2>Entrada Nueva</h2>
+      <header className='grid-row'>
+        <div className='grid-item margin-bottom-basic'>
+          <h1 className='font-size-large'>Obra Nueva</h1>
         </div>
-      </div>
+      </header>
       <ObraForm />
     </section>
   )

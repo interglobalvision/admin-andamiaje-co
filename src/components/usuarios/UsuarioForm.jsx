@@ -255,17 +255,6 @@ class UsuarioForm extends Component {
   render() {
     return (
       <form onSubmit={event => event.preventDefault()}>
-        <div className='grid-row margin-bottom-basic justify-end'>
-          <div className='grid-item'>
-            <button
-              className='button' onClick={() => this.props.id ? this.updateUsuario() : this.addUsuario()}
-              disabled={this.state.isLoading}
-            >
-              Guardar{ this.props.id ? '' : ' Nueva'}
-            </button>
-          </div>
-        </div>
-
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'>Estado</h4>
@@ -320,8 +309,8 @@ class UsuarioForm extends Component {
           </div>
         </div>
 
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
+        <div className='grid-row'>
+          <div className='grid-item item-s-12 item-m-6 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='name'>Nombre completo</label></h4>
             <input
               id='name'
@@ -332,10 +321,8 @@ class UsuarioForm extends Component {
               onChange={ event => this.setState({ name: event.target.value })}
             />
           </div>
-        </div>
 
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
+          <div className='grid-item item-s-12 item-m-6 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='email'>Correo electrónico</label></h4>
             <input
               id='email'
@@ -346,10 +333,8 @@ class UsuarioForm extends Component {
               onChange={ event => this.setState({ email: event.target.value })}
             />
           </div>
-        </div>
 
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
+          <div className='grid-item item-s-12 item-m-6 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='displayName'>Nombre para mostrar</label></h4>
             <input
               id='displayName'
@@ -360,9 +345,21 @@ class UsuarioForm extends Component {
               onChange={ event => this.setState({ displayName: event.target.value })}
             />
           </div>
+
+          <div className='grid-item item-s-12 item-m-6 margin-bottom-basic'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='password'>Contraseña</label></h4>
+            <input
+              id='password'
+              name='password'
+              type='text'
+              disabled={this.state.isLoading}
+              value={this.state.password}
+              onChange={ event => this.setState({ password: event.target.value })}
+            />
+          </div>
         </div>
 
-       <Uploads
+        <Uploads
           title={'Foto de perfil'}
           files={this.state.images}
           onChange={this.handleUploadsChange}
@@ -376,17 +373,16 @@ class UsuarioForm extends Component {
           }}
         />
 
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='password'>Contraseña</label></h4>
-            <input
-              id='password'
-              name='password'
-              type='text'
+
+
+        <div className='grid-row margin-bottom-basic justify-end'>
+          <div className='grid-item'>
+            <button
+              className='button' onClick={() => this.props.id ? this.updateUsuario() : this.addUsuario()}
               disabled={this.state.isLoading}
-              value={this.state.password}
-              onChange={ event => this.setState({ password: event.target.value })}
-            />
+            >
+              Guardar{ this.props.id ? '' : ' Nuevo'}
+            </button>
           </div>
         </div>
 
