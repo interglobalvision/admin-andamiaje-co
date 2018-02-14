@@ -64,6 +64,8 @@ class UploadField extends Component {
       })
       .catch( error => {
         toastr.warning('Error', error, ToastrOptionsError);
+
+        console.log(error);
         // Unset Loading
         this.setState({ isLoading: false });
       });
