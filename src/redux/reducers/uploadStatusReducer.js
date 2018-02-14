@@ -1,5 +1,5 @@
 // This is a custom reducer used to change the state based on the file upload
-// actions defined by react-redux-firebase, since natevely they don't have a
+// actions defined by react-redux-firebase, since natively they don't have a
 // reducer yet.
 // For updates check: https://github.com/prescottprue/react-redux-firebase/issues/346
 
