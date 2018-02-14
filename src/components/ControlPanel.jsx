@@ -35,11 +35,11 @@ import { connect } from 'react-redux';
 
 import LoadingOverlay from './LoadingOverlay';
 
-const ControlPanel = ({ loadingStatus }) => {
+const ControlPanel = () => {
   return (
     <div>
       <Nav />
-      <LoadingOverlay loadingStatus={loadingStatus} />
+      <LoadingOverlay />
       <ReduxToastr
         position="top-right"
         transitionIn="fadeIn"
@@ -72,6 +72,4 @@ const ControlPanel = ({ loadingStatus }) => {
   )
 };
 
-export default connect((state) => {
-  return { loadingStatus: state.loadingStatus.loading }
-})(ControlPanel)
+export default ControlPanel;

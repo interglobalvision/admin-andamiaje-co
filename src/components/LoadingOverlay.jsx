@@ -1,11 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 const LoadingOverlay = ({ loadingStatus }) => {
+
+  const { loading } = loadingStatus;
+
   return (
-    <div id='loading-overlay' className={loadingStatus ? 'grid-row align-items-center justify-center loading' : 'grid-row align-items-center justify-center'}>
+    <div id='loading-overlay' className={loading ? 'grid-row align-items-center justify-center loading' : 'grid-row align-items-center justify-center'}>
       <div className='font-size-large'>Loading...</div>
     </div>
   );
 };
 
-export default LoadingOverlay;
+export default connect(({ loadingStatus }) => {
+  return { loadingStatus }
+})(LoadingOverlay)
