@@ -183,9 +183,7 @@ class LoteForm extends Component {
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='artista'>Artista</label></h4>
-            <div className='select-wrapper'>
-              <ArtistaSelectContainer value={this.state.artista.id} onChange={this.handleArtistaChange} />
-            </div>
+            <ArtistaSelectContainer value={this.state.artista.id} onChange={this.handleArtistaChange} />
           </div>
         </div>
 

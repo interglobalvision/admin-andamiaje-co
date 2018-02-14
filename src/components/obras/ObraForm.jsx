@@ -199,8 +199,8 @@ class ObraForm extends Component {
     return (
       <form onSubmit={event => event.preventDefault()}>
 
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
+        <div className='grid-row'>
+          <div className='grid-item item-s-12 item-m-8 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='title'>Título</label></h4>
             <input
               id='title'
@@ -211,10 +211,8 @@ class ObraForm extends Component {
               onChange={ event => this.setState({ title: event.target.value })}
             />
           </div>
-        </div>
 
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
+          <div className='grid-item item-s-12 item-m-4 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='year'>Año</label></h4>
             <div className='grid-row align-items-center'>
               <input
@@ -227,17 +225,13 @@ class ObraForm extends Component {
               />
             </div>
           </div>
-        </div>
 
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
+          <div className='grid-item item-s-12 item-l-4 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='artista'>Artista</label></h4>
             <ArtistaSelectContainer value={this.state.artista.id} onChange={this.handleArtistaChange} />
           </div>
-        </div>
 
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
+          <div className='grid-item item-s-12 item-l-8 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='materials'>Materiales</label></h4>
             <input
               id='materials'
@@ -248,10 +242,8 @@ class ObraForm extends Component {
               onChange={ event => this.setState({ materials: event.target.value })}
             />
           </div>
-        </div>
 
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
+          <div className='grid-item item-s-12 item-m-6 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='dimensions'>Dimensiones</label></h4>
             <input
               id='dimensions'
@@ -262,27 +254,27 @@ class ObraForm extends Component {
               onChange={ event => this.setState({ dimensions: event.target.value })}
             />
           </div>
-        </div>
 
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
+          <div className='grid-item item-s-12 item-m-6 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='tecnica'>Técnica</label></h4>
-            <select
-              id='tecnica'
-              name='tecnica'
-              disabled={this.state.isLoading}
-              onChange={(event) => this.handleTecnicaChange(event.target.options[event.target.selectedIndex].value)}
-              value={this.state.tecnica}
-            >
-              <option value=''></option>
-              { Object.keys(TECNICAS).map(tecnica =>
-                <option key={tecnica} value={tecnica}>{TECNICAS[tecnica]}</option>
-              )}
-            </select>
+            <div className='select-wrapper'>
+              <select
+                id='tecnica'
+                name='tecnica'
+                disabled={this.state.isLoading}
+                onChange={(event) => this.handleTecnicaChange(event.target.options[event.target.selectedIndex].value)}
+                value={this.state.tecnica}
+              >
+                <option value=''></option>
+                { Object.keys(TECNICAS).map(tecnica =>
+                  <option key={tecnica} value={tecnica}>{TECNICAS[tecnica]}</option>
+                )}
+              </select>
+            </div>
           </div>
         </div>
 
-       <Uploads
+        <Uploads
           title={'Imagenes'}
           files={this.state.images}
           onChange={this.handleUploadsChange}

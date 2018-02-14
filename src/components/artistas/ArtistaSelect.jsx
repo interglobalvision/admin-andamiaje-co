@@ -29,12 +29,14 @@ class ArtistaSelect extends Component {
       );
     } else {
       return (
-        <select onChange={this.handleChange} value={this.props.value}>
-          <option key='' value=''></option>
-          { artistas.map(artista =>
-            <option key={artista.key} value={artista.key}>{artista.value.name}</option>
-          )}
-        </select>
+        <div className='select-wrapper'>
+          <select onChange={this.handleChange} value={this.props.value}>
+            <option key='' value=''></option>
+            { artistas.map(artista =>
+              <option key={artista.key} value={artista.key}>{artista.value.name}</option>
+            )}
+          </select>
+        </div>
       );
     }
   }
