@@ -7,7 +7,7 @@ const LoadingOverlay = ({ loadingStatus }) => {
 
   return (
     <div id='loading-overlay' className={loading ? 'grid-row align-items-center justify-center loading' : 'grid-row align-items-center justify-center'}>
-      <div className='font-size-large'>Loading...</div>
+      <div className='font-size-large'>Cargando...</div>
     </div>
   );
 };

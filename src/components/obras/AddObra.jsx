@@ -1,9 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import ObraForm from './ObraForm.jsx';
 
-const AddObra = ({ dispatch }) => {
+const AddObra = () => {
   return (
     <section>
       <div className='grid-row'>
@@ -11,9 +10,9 @@ const AddObra = ({ dispatch }) => {
           <h2>Entrada Nueva</h2>
         </div>
       </div>
-      <ObraForm dispatch={dispatch} />
+      <ObraForm />
     </section>
   )
 };
 
-export default connect()(AddObra);
+export default AddObra;

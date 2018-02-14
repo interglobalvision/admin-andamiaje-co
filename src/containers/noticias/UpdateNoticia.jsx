@@ -5,7 +5,7 @@ import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
 import NoticiaForm  from '../../components/noticias/NoticiaForm.jsx';
 
-const UpdateNoticia = ({ firebase, noticia, id, dispatch }) => {
+const UpdateNoticia = ({ firebase, noticia, id }) => {
 
   if (!isLoaded(noticia)) { // If not loaded…
     return 'Loading'; // …show 'loading'
@@ -20,7 +20,7 @@ const UpdateNoticia = ({ firebase, noticia, id, dispatch }) => {
           </div>
         </header>
 
-        <NoticiaForm id={id} noticia={noticia} dispatch={dispatch}/>
+        <NoticiaForm id={id} noticia={noticia} />
       </section>
     );
   }

@@ -1,9 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import NoticiaForm  from './NoticiaForm.jsx';
 
-const AddNoticia = ({ dispatch }) => {
+const AddNoticia = () => {
   return (
     <section>
       <div className='grid-row'>
@@ -11,9 +10,9 @@ const AddNoticia = ({ dispatch }) => {
           <h2>Entrada Nueva</h2>
         </div>
       </div>
-      <NoticiaForm dispatch={dispatch} />
+      <NoticiaForm  />
     </section>
   )
 };
 
-export default connect()(AddNoticia);
+export default AddNoticia;

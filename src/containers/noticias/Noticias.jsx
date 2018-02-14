@@ -21,7 +21,7 @@ const Noticias = ({ noticias }) => (
       </div>
     </div>
 
-    <NoticiasList noticias={noticias}/>
+    <NoticiasList noticias={noticias} />
 
   </section>
 );

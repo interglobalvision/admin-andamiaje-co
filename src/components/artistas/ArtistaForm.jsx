@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
 import { toastr } from 'react-redux-toastr';
@@ -19,8 +20,14 @@ import { ToastrOptionsSuccess, ToastrOptionsError } from '../../utilities/toastr
 
 import { setIsLoading, setIsLoaded } from '../../redux/actions/loadingStatusActions';
 
+const mapDispatchToProps = dispatch =>  ({
+  setIsLoaded: () => dispatch(setIsLoaded()),
+  setIsLoading: () => dispatch(setIsLoading()),
+});
+
 @firebaseConnect()
 @withRouter
+@connect(null, mapDispatchToProps)
 class ArtistaForm extends Component {
 
   state = {
@@ -87,7 +94,7 @@ class ArtistaForm extends Component {
     } = this.state;
 
     this.setState({ isLoading: true })
-    this.props.dispatch(setIsLoading());
+    this.props.setIsLoading();
 
     this.props.firebase
       .push('artistas', {
@@ -105,7 +112,7 @@ class ArtistaForm extends Component {
       })
       .then(() => {
         this.setState({ isLoading: false });
-        this.props.dispatch(setIsLoaded());
+        this.props.setIsLoaded();
         this.props.history.push('/artistas');
 
         // Display success toast
@@ -130,7 +137,7 @@ class ArtistaForm extends Component {
     } = this.state;
 
     this.setState({ isLoading: true })
-    this.props.dispatch(setIsLoading());
+    this.props.setIsLoading();
 
     this.props.firebase
       .update(`artistas/${this.props.id}`, {
@@ -148,7 +155,7 @@ class ArtistaForm extends Component {
       })
       .then(() => {
         this.setState({ isLoading: false });
-        this.props.dispatch(setIsLoaded());
+        this.props.setIsLoaded();
 
         // Display success toast
         toastr.success('Éxito', 'Artista actualizado', ToastrOptionsSuccess);
@@ -160,7 +167,7 @@ class ArtistaForm extends Component {
 
     // Set Loading
     this.setState({ isLoading: true })
-    this.props.dispatch(setIsLoading());
+    this.props.setIsLoading();
 
     // deleteFile(storagePath, dbPath)
     this.props.firebase.deleteFile(image.fullPath, `${this.path}/${image.key}`)
@@ -188,7 +195,7 @@ class ArtistaForm extends Component {
       .then( () => {
         // Unset Loading
         this.setState({ isLoading: false })
-        this.props.dispatch(setIsLoaded());
+        this.props.setIsLoaded();
       });
   }
 

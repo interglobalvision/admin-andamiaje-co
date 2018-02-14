@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types'; // ES6
 import { firebaseConnect } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
@@ -14,8 +15,14 @@ import { ToastrOptionsSuccess } from '../../utilities/toastr.js';
 
 import { setIsLoading, setIsLoaded } from '../../redux/actions/loadingStatusActions';
 
+const mapDispatchToProps = dispatch =>  ({
+  setIsLoaded: () => dispatch(setIsLoaded()),
+  setIsLoading: () => dispatch(setIsLoading()),
+});
+
 @firebaseConnect()
 @withRouter
+@connect(null, mapDispatchToProps)
 class LoteForm extends Component {
 
   state = {
@@ -49,7 +56,7 @@ class LoteForm extends Component {
     const { title, price, artista, obras } = this.state;
 
     this.setState({ isLoading: true })
-    this.props.dispatch(setIsLoading());
+    this.props.setIsLoading();
 
     this.props.firebase
       .push('lotes', {
@@ -60,7 +67,7 @@ class LoteForm extends Component {
       })
       .then(() => {
         this.setState({ isLoading: false })
-        this.props.dispatch(setIsLoaded());
+        this.props.setIsLoaded();
         this.props.history.push('/lotes');
 
         // Display success toast
@@ -73,7 +80,7 @@ class LoteForm extends Component {
     const { title, price, artista, obras } = this.state;
 
     this.setState({ isLoading: true })
-    this.props.dispatch(setIsLoading());
+    this.props.setIsLoading();
 
     this.props.firebase
       .update(`lotes/${this.props.id}`, {
@@ -84,7 +91,7 @@ class LoteForm extends Component {
       })
       .then(() => {
         this.setState({ isLoading: false })
-        this.props.dispatch(setIsLoaded());
+        this.props.setIsLoaded();
 
         // Display success toast
         toastr.success('Éxito', 'Lote actualizado', ToastrOptionsSuccess);

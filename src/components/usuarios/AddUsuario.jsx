@@ -1,9 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import UsuarioForm  from './UsuarioForm.jsx';
 
-const AddUsuario = ({ dispatch }) => {
+const AddUsuario = () => {
   return (
     <section>
       <div className='grid-row'>
@@ -11,9 +10,9 @@ const AddUsuario = ({ dispatch }) => {
           <h2>Usuario Nueva</h2>
         </div>
       </div>
-      <UsuarioForm dispatch={dispatch} />
+      <UsuarioForm />
     </section>
   )
 };
 
-export default connect()(AddUsuario);
+export default AddUsuario;

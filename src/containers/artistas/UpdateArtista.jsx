@@ -1,11 +1,11 @@
 import React from 'react';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
 import ArtistaForm from '../../components/artistas/ArtistaForm.jsx';
 
-const UpdateArtista = ({ firebase, artista, id, dispatch }) => {
+const UpdateArtista = ({ firebase, artista, id }) => {
 
   if (!isLoaded(artista)) { // If not loaded…
     return 'Loading'; // …show 'loading'
@@ -20,7 +20,7 @@ const UpdateArtista = ({ firebase, artista, id, dispatch }) => {
           </div>
         </header>
 
-        <ArtistaForm id={id} artista={artista} dispatch={dispatch} />
+        <ArtistaForm id={id} artista={artista} />
       </section>
     );
   }

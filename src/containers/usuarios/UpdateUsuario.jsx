@@ -5,7 +5,7 @@ import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
 import UsuarioForm from '../../components/usuarios/UsuarioForm.jsx';
 
-const UpdateUsuario = ({ firebase, user, id, currentUID, dispatch }) => {
+const UpdateUsuario = ({ firebase, user, id, currentUID }) => {
 
   if (!isLoaded(user)) { // If not loaded…
     return 'Loading'; // …show 'loading'
@@ -20,7 +20,7 @@ const UpdateUsuario = ({ firebase, user, id, currentUID, dispatch }) => {
           </div>
         </header>
 
-        <UsuarioForm id={id} usuario={user} currentUID={currentUID} dispatch={dispatch} />
+        <UsuarioForm id={id} usuario={user} currentUID={currentUID} />
       </section>
     );
   }

@@ -5,7 +5,7 @@ import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
 import LoteForm from '../../components/lotes/LoteForm.jsx';
 
-const UpdateLote = ({ firebase, lote, id, dispatch}) => {
+const UpdateLote = ({ firebase, lote, id }) => {
 
   if (!isLoaded(lote)) { // If not loaded…
     return 'Loading'; // …show 'loading'
@@ -20,7 +20,7 @@ const UpdateLote = ({ firebase, lote, id, dispatch}) => {
           </div>
         </header>
 
-        <LoteForm id={id} lote={lote} dispatch={dispatch} />
+        <LoteForm id={id} lote={lote} />
       </section>
     );
   }
