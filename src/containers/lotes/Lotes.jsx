@@ -17,7 +17,7 @@ const Lotes = ({ lotes }) => (
 
     <div className='grid-row margin-bottom-basic justify-end'>
       <div className='grid-item'>
-        <Link className='button' to='/lotes/add'>Añadir Entrada</Link>
+        <Link className='button' to='/lotes/add'>Añadir Lote</Link>
       </div>
     </div>
 

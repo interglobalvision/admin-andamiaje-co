@@ -17,7 +17,7 @@ const Noticias = ({ noticias }) => (
 
     <div className='grid-row margin-bottom-basic justify-end'>
       <div className='grid-item'>
-        <Link className='button' to='/noticias/add'>Añadir Entrada</Link>
+        <Link className='button' to='/noticias/add'>Añadir Noticia</Link>
       </div>
     </div>
 
