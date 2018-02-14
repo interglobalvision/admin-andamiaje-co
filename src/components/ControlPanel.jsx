@@ -31,7 +31,6 @@ import UpdateCatalogo from '../containers/catalogos/UpdateCatalogo';
 import NoMatch from '../components/NoMatch';
 
 import ReduxToastr from 'react-redux-toastr';
-import { connect } from 'react-redux';
 
 import LoadingOverlay from './LoadingOverlay';
 
