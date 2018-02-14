@@ -119,21 +119,26 @@ class LotesGroup extends Component {
             </div>
           </header>
 
-          <div className='lote-group-list-holder'>
+          <div className='list-rows-holder padding-bottom-small'>
             { selectedLotes.map( (lote, index) =>
               <LotesGroupItem key={lote.id} lote={lote} moveLoteUp={this.moveLoteUp} moveLoteDown={this.moveLoteDown} removeLoteFromGroup={this.removeLoteFromGroup} upDisabled={index === 0 ? 'disabled' : ''} downDisabled={index === selectedLotes.length - 1 ? 'disabled' : ''} />
             )}
           </div>
           { isEmpty(availableLotes) ? '' :
-            <div className='grid-row padding-bottom-basic'>
-              <select onChange={this.handleSelectChange} className='grid-item item-s-12 item-m-4'>
-                <option value=''></option>
-                { availableLotes.map(lote =>
-                  <option key={lote.key} value={lote.key}>{lote.value.artista.name} - {lote.value.title}</option>
-                ) }
-              </select>
-
-              <button type='button' className='button grid-item item-s-12 item-m-2' onClick={this.addLoteToGroup}>Agregar</button>
+            <div className='grid-row padding-bottom-basic align-items-center flex-nowrap'>
+              <div className='grid-item flex-grow'>
+                <div className='select-wrapper'>
+                  <select onChange={this.handleSelectChange}>
+                    <option value=''></option>
+                    { availableLotes.map(lote =>
+                      <option key={lote.key} value={lote.key}>{lote.value.artista.name} - {lote.value.title}</option>
+                    ) }
+                  </select>
+                </div>
+              </div>
+              <div className='grid-item'>
+                <button type='button' className='button' onClick={this.addLoteToGroup}>Agregar</button>
+              </div>
             </div>
           }
         </div>
