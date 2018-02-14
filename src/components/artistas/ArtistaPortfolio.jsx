@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { toastr } from 'react-redux-toastr';
 
 import Uploads from '../fields/Uploads';
+import { getResizedImageUrl } from '../../utilities/images.js';
+
 import { ToastrOptionsConfirm } from '../../utilities/toastr.js';
 
 class ArtistaPortfolio extends Component {
@@ -49,9 +51,41 @@ class ArtistaPortfolio extends Component {
     });
   }
 
+  moveItem(element, delta) {
+    const items = this.props.items;
+    const index = items.indexOf(element);
+    const newIndex = index + delta;
+
+    // Check if lready at the top or bottom.
+    if (newIndex < 0  || newIndex === items.length) {
+      return items;
+    }
+
+    let indexes = [index, newIndex]; //Sort the indexes
+
+    return items.map( (item, index) => {
+      if(index === indexes[0]) {
+        return items[indexes[1]];
+      } else if(index === indexes[1]) {
+        return items[indexes[0]];
+      } else {
+        return item;
+      }
+    });
+  }
+
+  moveItemUp(item) {
+    this.props.handlePortfolioChange(this.moveItem(item, -1));
+  }
+
+  moveItemDown(item) {
+    this.props.handlePortfolioChange(this.moveItem(item, 1));
+  }
+
   removeItem(key) {
     const { items } = this.props;
 
+    // this doesnt delete the upload maybe doesnt matter
     this.props.handlePortfolioChange(
       items.slice(0, key).concat(items.slice(key + 1))
     );
@@ -82,25 +116,37 @@ class ArtistaPortfolio extends Component {
           </div>
         </div>
 
-        <div className='grid-row margin-bottom-basic'>
-          {this.props.items.map( (item, key) => {
+        <div className='artista-portfilio-items'>
+          {this.props.items.map( (item, index) => {
             const { title, images, year, dimensions } = item;
+
+            let imageUrl = undefined;
+
+            if(images !== undefined) {
+              imageUrl = getResizedImageUrl(images[0], '750', false);
+            }
+
             return (
-              <article key={key} className='grid-item item-s-12 item-m-6 margin-bottom-basic artist-portfolio-item'>
-                <div className='margin-bottom-micro'>
-                  { images !== undefined && images[0] !== undefined && images[0].downloadURL !== undefined ? <img src={images[0].downloadURL} alt={title} className='margin-bottom-tiny' /> : '' }
+              <article key={index} className='grid-row padding-top-micro padding-bottom-small'>
+                <div className='grid-item item-s-2 item-m-4'>
+                  { imageUrl !== undefined ? <img src={imageUrl} alt={title} /> : '' }
                 </div>
+                <div className='grid-item item-s-8 item-m-6'>
+                  <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={index + '-title'}>Título</label></h4>
+                  <input id={index + '-title'} key={index + '-title'} type='text' value={title} onChange={e => this.changeValue(index, 'title', e.target.value)} className='margin-bottom-tiny' />
 
-                <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={key + '-title'}>Título</label></h4>
-                <input id={key + '-title'} key={key + '-title'} type='text' value={title} onChange={e => this.changeValue(key, 'title', e.target.value)} className='margin-bottom-tiny' />
+                  <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={index + '-year'}>Año</label></h4>
+                  <input id={index + '-year'} key={index + '-year'} type='text' value={year} onChange={e => this.changeValue(index, 'year', e.target.value)} className='margin-bottom-tiny' />
 
-                <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={key + '-year'}>Año</label></h4>
-                <input id={key + '-year'} key={key + '-year'} type='text' value={year} onChange={e => this.changeValue(key, 'year', e.target.value)} className='margin-bottom-tiny' />
+                  <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={index + '-dimensions'}>Dimensiones</label></h4>
+                  <input id={index + '-dimensions'} key={index + '-dimensions'} type='text' value={dimensions} onChange={e => this.changeValue(index, 'dimensions', e.target.value)} className='margin-bottom-tiny' />
 
-                <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={key + '-dimensions'}>Dimensiones</label></h4>
-                <input id={key + '-dimensions'} key={key + '-dimensions'} type='text' value={dimensions} onChange={e => this.changeValue(key, 'dimensions', e.target.value)} className='margin-bottom-tiny' />
-
-                <button type='button' className='button button-small button-delete' onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta entrada del portafolio?', ToastrOptionsConfirm(this.removeItem, key))}>Eliminar</button>
+                </div>
+                <div className='grid-item flex-grow grid-row no-gutter justify-end'>
+                  <button type='button' onClick={() => this.moveItemUp(item)} disabled={index === 0 ? 'disabled' : ''} className='button button-small'>↑</button>
+                  <button type='button' onClick={() => this.moveItemDown(item)} disabled={index === this.props.items.length - 1 ? 'disabled' : ''} className='button button-small'>↓</button>
+                  <button type='button' className='button button-small button-delete' onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta entrada del portafolio?', ToastrOptionsConfirm(this.removeItem, index))}>Eliminar</button>
+                </div>
               </article>
             )
           })}
