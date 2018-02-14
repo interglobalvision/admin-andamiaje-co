@@ -31,7 +31,7 @@ class Nav extends Component {
                 <Link to='/noticias'>Noticias</Link>
               </div>
               <div className='grid-item'>
-                <Link to='/catalogos'>Catalogos</Link>
+                <Link to='/catalogos'>Catálogos</Link>
               </div>
               <div className='grid-item'>
                 <Link to='/lotes'>Lotes</Link>

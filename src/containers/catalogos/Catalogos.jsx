@@ -11,7 +11,7 @@ const Catalogos = ({ catalogos }) => (
 
     <header className='grid-row margin-bottom-basic'>
       <div className='grid-item'>
-        <h1 className='font-size-large'>Catalogos</h1>
+        <h1 className='font-size-large'>Catálogos</h1>
       </div>
     </header>
 

@@ -17,7 +17,7 @@ const CatalogosListItem = ({ catalogo, firebase }) => {
     .then(() => {
 
       // Display success toast
-      toastr.success('Éxito', 'Catalogo eliminado', ToastrOptionsSuccess);
+      toastr.success('Éxito', 'Catálogo eliminado', ToastrOptionsSuccess);
 
     });
   };

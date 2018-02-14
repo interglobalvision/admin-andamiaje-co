@@ -85,7 +85,7 @@ class CatalogoForm extends Component {
         this.props.history.push('/catalogos');
 
         // Display success toast
-        toastr.success('Éxito', 'Catalogo creado', ToastrOptionsSuccess);
+        toastr.success('Éxito', 'Catálogo creado', ToastrOptionsSuccess);
       })
 
   }
@@ -107,7 +107,7 @@ class CatalogoForm extends Component {
         this.setState({ isLoading: false })
 
         // Display success toast
-        toastr.success('Éxito', 'Catalogo actualizado', ToastrOptionsSuccess);
+        toastr.success('Éxito', 'Catálogo actualizado', ToastrOptionsSuccess);
       })
 
   }
