@@ -1,8 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import LoteForm from './LoteForm.jsx';
 
-const AddLote = () => {
+const AddLote = ({ dispatch }) => {
   return (
     <section>
       <div className='grid-row'>
@@ -10,9 +11,9 @@ const AddLote = () => {
           <h2>Entrada Nueva</h2>
         </div>
       </div>
-      <LoteForm />
+      <LoteForm dispatch={dispatch} />
     </section>
   )
 };
 
-export default AddLote;
+export default connect()(AddLote);

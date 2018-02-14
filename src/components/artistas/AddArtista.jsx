@@ -1,8 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import ArtistaForm from './ArtistaForm.jsx';
 
-const AddArtista = () => {
+const AddArtista = ({ dispatch }) => {
   return (
     <section>
       <div className='grid-row'>
@@ -10,9 +11,9 @@ const AddArtista = () => {
           <h2>Entrada Nueva</h2>
         </div>
       </div>
-      <ArtistaForm />
+      <ArtistaForm dispatch={dispatch} />
     </section>
   )
 };
 
-export default AddArtista;
+export default connect()(AddArtista);
