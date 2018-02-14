@@ -18,16 +18,51 @@ class ObrasGroup extends Component {
     // Bind
     this.handleSelectChange = this.handleSelectChange.bind(this);
     this.addObraToGroup = this.addObraToGroup.bind(this);
+    this.moveObraUp = this.moveObraUp.bind(this);
+    this.moveObraDown = this.moveObraDown.bind(this);
+    this.removeObraFromGroup = this.removeObraFromGroup.bind(this);
   }
 
   addObraToGroup() {
     const selectedObra = this.state.selectedObra;
 
-    this.props.addObraToGroup(selectedObra);
+    this.props.onChange([...this.props.selectedObras, selectedObra]);
+  }
+
+  moveObra(element, delta) {
+    const obras = this.props.selectedObras;
+    const index = obras.indexOf(element);
+    const newIndex = index + delta;
+
+    // Check if lready at the top or bottom.
+    if (newIndex < 0  || newIndex === obras.length) {
+      return obras;
+    }
+
+    let indexes = [index, newIndex]; //Sort the indexes
+
+    return obras.map( (item,index) => {
+      if(index === indexes[0]) {
+        return obras[indexes[1]];
+      } else if(index === indexes[1]) {
+        return obras[indexes[0]];
+      } else {
+        return item;
+      }
+    });
+
+  }
+
+  moveObraUp(obra) {
+    this.props.onChange(this.moveObra(obra, -1));
+  }
+
+  moveObraDown(obra) {
+    this.props.onChange(this.moveObra(obra, 1));
   }
 
   removeObraFromGroup(id) {
-    this.props.removeObraFromGroup(id);
+    this.props.onChange(this.props.selectedObras.filter( obra => obra.id !== id ));
   }
 
   handleSelectChange(event) {
@@ -57,7 +92,7 @@ class ObrasGroup extends Component {
   }
 
   render() {
-    const { allObras, selectedObras, removeObraFromGroup } = this.props;
+    const { allObras, selectedObras } = this.props;
     const filteredObras = this.filterObras(allObras, selectedObras);
 
     if (!isLoaded(allObras)) { // If not loaded…
@@ -66,8 +101,8 @@ class ObrasGroup extends Component {
       return (
         <div>
           <div className='grid-row padding-top-micro padding-bottom-basic align-items-center'>
-            { selectedObras.map(obra =>
-              <ObrasGroupItem key={obra.id} obra={obra} removeObraFromGroup={removeObraFromGroup} />
+            { selectedObras.map( (obra, index) =>
+              <ObrasGroupItem key={obra.id} obra={obra} moveObraUp={this.moveObraUp} moveObraDown={this.moveObraDown} removeObraFromGroup={this.removeObraFromGroup} upDisabled={index === 0 ? 'disabled' : ''} downDisabled={index === selectedObras.length - 1 ? 'disabled' : ''} />
             )}
           </div>
           { isEmpty(filteredObras) ? '' :
@@ -89,10 +124,9 @@ class ObrasGroup extends Component {
 };
 
 ObrasGroup.propTypes = {
-  addObraToGroup: PropTypes.func.isRequired,
   allObras: PropTypes.array,
-  removeObraFromGroup: PropTypes.func.isRequired,
   selectedObras: PropTypes.array,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default ObrasGroup;

@@ -47,9 +47,8 @@ class LoteForm extends Component {
 
     // Bind
     this.handleArtistaChange = this.handleArtistaChange.bind(this);
-    this.addObraToGroup = this.addObraToGroup.bind(this);
-    this.removeObraFromGroup = this.removeObraFromGroup.bind(this);
 
+    this.handleOnGroupChange = this.handleOnGroupChange.bind(this);
   }
 
   addLote() {
@@ -116,16 +115,8 @@ class LoteForm extends Component {
     }
   }
 
-  addObraToGroup(selectedObra) {
-    this.setState({
-      obras: [...this.state.obras, selectedObra]
-    });
-  }
-
-  removeObraFromGroup(id) {
-    this.setState( currentState => ({
-      obras: currentState.obras.filter( obra => obra.id !== id )
-    }));
+  handleOnGroupChange(obras) {
+    this.setState({ obras });
   }
 
   getTecnicas(obras) {
@@ -190,7 +181,7 @@ class LoteForm extends Component {
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='obras'>Obras</label></h4>
-              <ObrasGroupContainer addObraToGroup={this.addObraToGroup} selectedObras={this.state.obras} removeObraFromGroup={this.removeObraFromGroup} />
+              <ObrasGroupContainer onChange={this.handleOnGroupChange} selectedObras={this.state.obras} />
           </div>
         </div>
 
