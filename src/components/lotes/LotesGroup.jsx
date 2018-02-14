@@ -125,7 +125,7 @@ class LotesGroup extends Component {
             )}
           </div>
           { isEmpty(availableLotes) ? '' :
-            <div className='grid-row padding-bottom-basic align-items-center flex-nowrap'>
+            <div className='grid-row align-items-center flex-nowrap'>
               <div className='grid-item flex-grow'>
                 <div className='select-wrapper'>
                   <select onChange={this.handleSelectChange}>
