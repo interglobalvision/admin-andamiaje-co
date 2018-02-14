@@ -1,5 +1,4 @@
 import React from 'react';
-import { withFirebase } from 'react-redux-firebase';
 
 const LoadingOverlay = ({ loadingStatus }) => {
   return (
