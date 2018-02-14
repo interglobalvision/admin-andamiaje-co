@@ -6,7 +6,7 @@ import { firebaseConnect } from 'react-redux-firebase';
 
 import NoticiasList from '../../components/noticias/NoticiasList';
 
-const Noticias = ({ noticias, dispatch }) => (
+const Noticias = ({ noticias }) => (
   <section>
 
     <header className='grid-row margin-bottom-basic'>
@@ -21,7 +21,7 @@ const Noticias = ({ noticias, dispatch }) => (
       </div>
     </div>
 
-    <NoticiasList noticias={noticias} dispatch={dispatch}/>
+    <NoticiasList noticias={noticias}/>
 
   </section>
 );
