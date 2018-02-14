@@ -30,8 +30,42 @@ class ImageUploads extends Component {
   constructor(props) {
     super(props);
 
+    this.moveImageUp = this.moveImageUp.bind(this);
+    this.moveImageDown = this.moveImageDown.bind(this);
     this.deleteImage = this.deleteImage.bind(this);
     this.handleUploadsChange = this.handleUploadsChange.bind(this);
+  }
+
+  moveImage(element, delta) {
+    const images = this.props.images;
+    const index = images.indexOf(element);
+    const newIndex = index + delta;
+
+    // Check if lready at the top or bottom.
+    if (newIndex < 0  || newIndex === images.length) {
+      return images;
+    }
+
+    let indexes = [index, newIndex]; //Sort the indexes
+
+    return images.map( (item,index) => {
+      if(index === indexes[0]) {
+        return images[indexes[1]];
+      } else if(index === indexes[1]) {
+        return images[indexes[0]];
+      } else {
+        return item;
+      }
+    });
+
+  }
+
+  moveImageUp(image) {
+    this.props.updateImages(this.moveImage(image, -1));
+  }
+
+  moveImageDown(image) {
+    this.props.updateImages(this.moveImage(image, 1));
   }
 
   // Delete image and remove from images array
@@ -77,8 +111,8 @@ class ImageUploads extends Component {
           </div>
         </div>
         <div className='image-upload-images'>
-          {this.props.images.map( image => (
-            <ImageUploadsImage key={image.key} image={image} delete={this.deleteImage} />
+          {this.props.images.map( (image, index) => (
+            <ImageUploadsImage key={image.key} image={image} moveUp={this.moveImageUp} moveDown={this.moveImageDown} delete={this.deleteImage} upDisabled={index === 0 ? 'disabled' : ''} downDisabled={index === this.props.images.length - 1 ? 'disabled' : ''} />
           ))}
           { // Depending on the number of images and if mutiple uploads are enabled, show/hide the upload field
             this.props.dropzone.multiple || (!this.props.dropzone.multiple && this.props.images.length === 0)  ?
