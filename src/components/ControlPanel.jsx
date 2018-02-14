@@ -31,11 +31,15 @@ import UpdateCatalogo from '../containers/catalogos/UpdateCatalogo';
 import NoMatch from '../components/NoMatch';
 
 import ReduxToastr from 'react-redux-toastr';
+import { connect } from 'react-redux';
 
-const ControlPanel = () => {
+import LoadingOverlay from './LoadingOverlay';
+
+const ControlPanel = ({ loadingStatus }) => {
   return (
     <div>
       <Nav />
+      <LoadingOverlay loadingStatus={loadingStatus} />
       <ReduxToastr
         position="top-right"
         transitionIn="fadeIn"
@@ -68,4 +72,6 @@ const ControlPanel = () => {
   )
 };
 
-export default ControlPanel;
+export default connect((state) => {
+  return { loadingStatus: state.loadingStatus.loading }
+})(ControlPanel)
