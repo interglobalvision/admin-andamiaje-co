@@ -69,13 +69,25 @@ a.button
 
 // FORM
 
-input
+input, select
+  appearance: none
   background-color: $color-white
   color: $color-black
   border: 1px solid $color-form-border
   border-radius: 5px
   padding: $margin-small
   width: 100%
+
+.select-wrapper
+  position: relative
+  display: block
+  width: 100%
+  pointer-events: all
+  &:after
+    content: '▼'
+    position: absolute
+    top: $margin-small
+    right: $margin-small
 
 // Datepicker Fixes
 // This is a temporary fix while it gets fixed
@@ -112,7 +124,8 @@ input
 // Checkbox & Radio
 input[type='checkbox'], input[type='radio']
   margin: 0 $margin-tiny $margin-micro 0
-  width: auto
+  width: $margin-small
+  height: $margin-small
 
 // Editor (wysiwyg) styles
 .DraftEditor-editorContainer
