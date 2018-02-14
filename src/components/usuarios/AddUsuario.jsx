@@ -5,11 +5,11 @@ import UsuarioForm  from './UsuarioForm.jsx';
 const AddUsuario = () => {
   return (
     <section>
-      <div className='grid-row'>
-        <div className='grid-item item-s-3'>
-          <h2>Usuario Nueva</h2>
+      <header className='grid-row'>
+        <div className='grid-item margin-bottom-basic'>
+          <h1 className='font-size-large'>Usuario Nuevo</h1>
         </div>
-      </div>
+      </header>
       <UsuarioForm />
     </section>
   )

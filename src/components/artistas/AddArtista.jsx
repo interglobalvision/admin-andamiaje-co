@@ -5,11 +5,11 @@ import ArtistaForm from './ArtistaForm.jsx';
 const AddArtista = () => {
   return (
     <section>
-      <div className='grid-row'>
-        <div className='grid-item item-s-3 margin-bottom-basic'>
-          <h2>Entrada Nueva</h2>
+      <header className='grid-row'>
+        <div className='grid-item margin-bottom-basic'>
+          <h1 className='font-size-large'>Artista Nuevo</h1>
         </div>
-      </div>
+      </header>
       <ArtistaForm />
     </section>
   )

@@ -5,11 +5,11 @@ import LoteForm from './CatalogoForm.jsx';
 const AddCatalogo = () => {
   return (
     <section>
-      <div className='grid-row'>
-        <div className='grid-item item-s-3'>
-          <h2>Entrada Nueva</h2>
+      <header className='grid-row'>
+        <div className='grid-item margin-bottom-basic'>
+          <h1 className='font-size-large'>Catalogo Nuevo</h1>
         </div>
-      </div>
+      </header>
       <LoteForm />
     </section>
   )
