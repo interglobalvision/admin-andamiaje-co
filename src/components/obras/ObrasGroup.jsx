@@ -65,21 +65,26 @@ class ObrasGroup extends Component {
     } else {
       return (
         <div>
-          <div className='grid-row padding-top-micro padding-bottom-basic align-items-center'>
+          <div className='grid-row padding-bottom-small'>
             { selectedObras.map(obra =>
               <ObrasGroupItem key={obra.id} obra={obra} removeObraFromGroup={removeObraFromGroup} />
             )}
           </div>
           { isEmpty(filteredObras) ? '' :
-            <div className='grid-row padding-bottom-basic'>
-              <select onChange={this.handleSelectChange} className='grid-item item-s-12 item-m-4'>
-                <option value=''></option>
-                { filteredObras.map(obra =>
-                  <option key={obra.key} value={obra.key}>{obra.value.title}</option>
-                ) }
-              </select>
-
-              <button type='button' className='button grid-item item-s-12 item-m-2' onClick={this.addObraToGroup}>Agregar</button>
+            <div className='grid-row padding-bottom-basic align-items-center flex-nowrap'>
+              <div className='grid-item flex-grow'>
+                <div className='select-wrapper'>
+                  <select onChange={this.handleSelectChange}>
+                    <option value=''></option>
+                    { filteredObras.map(obra =>
+                      <option key={obra.key} value={obra.key}>{obra.value.title}</option>
+                    ) }
+                  </select>
+                </div>
+              </div>
+              <div className='grid-item item-m-auto'>
+                <button className='button' type='button' onClick={this.addObraToGroup}>Agregar</button>
+              </div>
             </div>
           }
         </div>
