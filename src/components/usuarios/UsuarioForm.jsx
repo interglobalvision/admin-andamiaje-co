@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
 import { toastr } from 'react-redux-toastr';
@@ -11,10 +12,18 @@ import { CloudFunctionsUrl } from '../../utilities/constants.js';
 
 import { ToastrOptionsError, ToastrOptionsSuccess } from '../../utilities/toastr.js';
 
+import { setIsLoading, setIsLoaded } from '../../redux/actions/loadingStatusActions'
+
 import Uploads from '../fields/Uploads';
+
+const mapDispatchToProps = dispatch =>  ({
+  setIsLoaded: () => dispatch(setIsLoaded()),
+  setIsLoading: () => dispatch(setIsLoading()),
+});
 
 @firebaseConnect()
 @withRouter
+@connect(null, mapDispatchToProps)
 class UsuarioForm extends Component {
 
   state = {
@@ -99,6 +108,7 @@ class UsuarioForm extends Component {
 
     // Loading. disables inputs
     this.setState({ isLoading: true });
+    this.props.setIsLoading();
 
     // Get current user auth token and make a req to create a new user
     firebase.auth().currentUser.getIdToken(true /* Force refresh */)
@@ -145,6 +155,7 @@ class UsuarioForm extends Component {
 
         // Unset loading
         _this.setState({ isLoading: false });
+        this.props.setIsLoaded();
 
         // Error handling
         if (error.response) {
@@ -176,6 +187,7 @@ class UsuarioForm extends Component {
 
     // Set loading
     this.setState({ isLoading: true })
+    this.props.setIsLoading();
 
     firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
       .then(idToken => (
@@ -211,6 +223,7 @@ class UsuarioForm extends Component {
 
         // Unset loading
         _this.setState({ isLoading: false });
+        this.props.setIsLoaded();
 
         // Display success toast
         toastr.success('Éxito', 'Usuario actualizado', ToastrOptionsSuccess);

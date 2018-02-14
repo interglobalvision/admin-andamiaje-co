@@ -9,7 +9,7 @@ import ControlPanel from '../components/ControlPanel.jsx';
 import NoMatch from '../components/NoMatch.jsx';
 
 const App = (props) => {
-  const { auth } = props;
+  const { auth, loadingStatus } = props;
 
   if (!isLoaded(auth)) {
     return (
@@ -34,7 +34,7 @@ const App = (props) => {
   return (
     <div>
       <Switch>
-        <Route path='/' component={ControlPanel} />
+        <Route path='/' render={(loadingStatus) => ( <ControlPanel loadingStatus={loadingStatus}/> )} />
         <Route component={NoMatch}/>
       </Switch>
     </div>
@@ -46,9 +46,10 @@ const firebaseWrapped = firebaseConnect()(App);
 
 export default compose(
   withRouter,
-  connect(({firebase}) => ({
+  connect(({firebase, loadingStatus }) => ({
     authError: getVal(firebase, 'authError'),
     auth: getVal(firebase, 'auth'),
-    profile: getVal(firebase, 'profile')
+    profile: getVal(firebase, 'profile'),
+    loadingStatus,
   }))
 )(firebaseWrapped);

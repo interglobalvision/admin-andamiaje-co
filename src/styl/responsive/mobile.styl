@@ -3,6 +3,22 @@
 .black-logo
   height: 1.4em
 
+// LOADING
+
+#loading-overlay
+  z-index: 1000
+  position: fixed
+  top: 0
+  left: 0
+  width: 100vw
+  height: 100vh
+  background-color: rgba(255, 255, 255, 0.8)
+  opacity: 0
+  pointer-events: none
+  &.loading
+    opacity: 1
+    pointer-events: all
+
 // HEADER
 
 #header

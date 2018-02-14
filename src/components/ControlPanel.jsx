@@ -32,10 +32,13 @@ import NoMatch from '../components/NoMatch';
 
 import ReduxToastr from 'react-redux-toastr';
 
+import LoadingOverlay from './LoadingOverlay';
+
 const ControlPanel = () => {
   return (
     <div>
       <Nav />
+      <LoadingOverlay />
       <ReduxToastr
         position="top-right"
         transitionIn="fadeIn"

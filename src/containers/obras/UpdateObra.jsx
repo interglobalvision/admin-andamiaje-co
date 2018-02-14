@@ -5,7 +5,7 @@ import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
 import ObraForm from '../../components/obras/ObraForm.jsx';
 
-const UpdateObra = ({ firebase, obra, id }) => {
+const UpdateObra = ({ firebase, obra, id, dispatch }) => {
 
   if (!isLoaded(obra)) { // If not loaded…
     return 'Loading'; // …show 'loading'
@@ -20,7 +20,7 @@ const UpdateObra = ({ firebase, obra, id }) => {
           </div>
         </header>
 
-        <ObraForm id={id} obra={obra} />
+        <ObraForm id={id} obra={obra} dispatch={dispatch} />
       </section>
     );
   }

@@ -10,7 +10,7 @@ const AddNoticia = () => {
           <h2>Entrada Nueva</h2>
         </div>
       </div>
-      <NoticiaForm />
+      <NoticiaForm  />
     </section>
   )
 };

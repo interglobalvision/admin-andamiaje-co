@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
 import { toastr } from 'react-redux-toastr';
@@ -21,8 +22,16 @@ import EMOJIS from '../../utilities/emojis';
 
 import { ToastrOptionsSuccess, ToastrOptionsError } from '../../utilities/toastr.js';
 
+import { setIsLoading, setIsLoaded } from '../../redux/actions/loadingStatusActions'
+
+const mapDispatchToProps = dispatch =>  ({
+  setIsLoaded: () => dispatch(setIsLoaded()),
+  setIsLoading: () => dispatch(setIsLoading()),
+});
+
 @firebaseConnect()
 @withRouter
+@connect(null, mapDispatchToProps)
 class NoticiaForm extends Component {
 
   state = {
@@ -117,6 +126,7 @@ class NoticiaForm extends Component {
     const createdDate = Date.now();
 
     this.setState({ isLoading: true })
+    this.props.setIsLoading();
 
     this.props.firebase
       .push('noticias', {
@@ -131,6 +141,7 @@ class NoticiaForm extends Component {
       })
       .then(() => {
         this.setState({ isLoading: false })
+        this.props.setIsLoaded();
         this.props.history.push('/noticias');
 
         // Display success toast
@@ -143,6 +154,7 @@ class NoticiaForm extends Component {
     const { title, rawContent, published, publishDate, images, video, artista } = this.state;
 
     this.setState({ isLoading: true })
+    this.props.setIsLoading();
 
     this.props.firebase
       .update(`noticias/${this.props.id}`, {
@@ -156,6 +168,7 @@ class NoticiaForm extends Component {
       })
       .then(() => {
         this.setState({ isLoading: false })
+        this.props.setIsLoaded();
 
         // Display success toast
         toastr.success('Éxito', 'Noticia actualizada', ToastrOptionsSuccess);
