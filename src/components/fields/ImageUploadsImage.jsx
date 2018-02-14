@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { toastr } from 'react-redux-toastr';
 
-import { ToastrOptionsConfirm, ToastrOptionsSuccess } from '../../utilities/toastr.js';
+import { ToastrOptionsConfirm } from '../../utilities/toastr.js';
 import { getResizedImageUrl } from '../../utilities/images.js';
 
 class ImageUploadsImage extends Component {

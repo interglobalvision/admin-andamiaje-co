@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { toastr } from 'react-redux-toastr';
 
 import ImageUploadsImage from './ImageUploadsImage';
 import UploadField from './UploadField';
-
-import { ToastrOptionsConfirm } from '../../utilities/toastr.js';
 
 import { setIsLoading, setIsLoaded } from '../../redux/actions/loadingStatusActions'
 
