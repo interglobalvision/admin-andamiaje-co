@@ -83,7 +83,6 @@ class NoticiaForm extends Component {
 
     // Set Loading
     this.setState({ isLoading: true })
-    this.props.dispatch(setIsLoading());
 
     // deleteFile(storagePath, dbPath)
     this.props.firebase.deleteFile(image.fullPath, `${this.path}/${image.key}`)
@@ -111,7 +110,6 @@ class NoticiaForm extends Component {
       .then( () => {
         // Unset Loading
         this.setState({ isLoading: false })
-        this.props.dispatch(setIsLoaded());
       });
   }
 
