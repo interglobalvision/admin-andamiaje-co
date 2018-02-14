@@ -11,6 +11,8 @@ import { CloudFunctionsUrl } from '../../utilities/constants.js';
 
 import { ToastrOptionsError, ToastrOptionsSuccess } from '../../utilities/toastr.js';
 
+import { setIsLoading, setIsLoaded } from '../../redux/actions/loadingStatusActions'
+
 import Uploads from '../fields/Uploads';
 
 @firebaseConnect()
@@ -99,6 +101,7 @@ class UsuarioForm extends Component {
 
     // Loading. disables inputs
     this.setState({ isLoading: true });
+    this.props.dispatch(setIsLoading());
 
     // Get current user auth token and make a req to create a new user
     firebase.auth().currentUser.getIdToken(true /* Force refresh */)
@@ -145,6 +148,7 @@ class UsuarioForm extends Component {
 
         // Unset loading
         _this.setState({ isLoading: false });
+        this.props.dispatch(setIsLoaded());
 
         // Error handling
         if (error.response) {
@@ -176,6 +180,7 @@ class UsuarioForm extends Component {
 
     // Set loading
     this.setState({ isLoading: true })
+    this.props.dispatch(setIsLoading());
 
     firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
       .then(idToken => (
@@ -211,6 +216,7 @@ class UsuarioForm extends Component {
 
         // Unset loading
         _this.setState({ isLoading: false });
+        this.props.dispatch(setIsLoaded());
 
         // Display success toast
         toastr.success('Éxito', 'Usuario actualizado', ToastrOptionsSuccess);
