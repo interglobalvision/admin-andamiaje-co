@@ -19,6 +19,8 @@ import { ParseEditorContent, emptyEditorState } from '../../utilities/editor';
 import EMOJIS from '../../utilities/emojis.js';
 import { TECNICAS } from '../../utilities/constants.js';
 
+import { setIsLoading, setIsLoaded } from '../../redux/actions/loadingStatusActions'
+
 @firebaseConnect()
 @withRouter
 class ObraForm extends Component {
@@ -103,6 +105,7 @@ class ObraForm extends Component {
     const { title, year, artista, materials, dimensions, tecnica, notesRawContent, images } = this.state;
 
     this.setState({ isLoading: true })
+    this.props.dispatch(setIsLoading());
 
     this.props.firebase
       .push('obras', {
@@ -117,6 +120,7 @@ class ObraForm extends Component {
       })
       .then(() => {
         this.setState({ isLoading: false })
+        this.props.dispatch(setIsLoaded());
         this.props.history.push('/obras');
 
         // Display success toast
@@ -129,6 +133,7 @@ class ObraForm extends Component {
     const { title, year, artista, materials, dimensions, tecnica, notesRawContent, images } = this.state;
 
     this.setState({ isLoading: true })
+    this.props.dispatch(setIsLoading());
 
     this.props.firebase
       .update(`obras/${this.props.id}`, {
@@ -143,6 +148,7 @@ class ObraForm extends Component {
       })
       .then(() => {
         this.setState({ isLoading: false })
+        this.props.dispatch(setIsLoaded());
 
         // Display success toast
         toastr.success('Éxito', 'Obra actualizada');
