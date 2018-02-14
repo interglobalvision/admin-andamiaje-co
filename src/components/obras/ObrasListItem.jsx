@@ -31,7 +31,7 @@ const ObrasListItem = ({ obra, firebase: { remove } }) => {
   return(
     <div className='list-rows-item grid-row padding-top-micro padding-bottom-micro align-items-center'>
       <div className='grid-item item-s-1'>
-        { imageUrl !== undefined ? <img src={imageUrl} /> : '' }
+        { imageUrl !== undefined ? <img src={imageUrl} alt={title} /> : '' }
       </div>
       <div className='grid-item item-s-3 item-m-4'>
         <span><Link className="link-underline" to={'/obras/' + key}>{title}</Link></span>

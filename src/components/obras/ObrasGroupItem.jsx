@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'; // ES6
 
 const ObraGroupItem = ({ obra, removeObraFromGroup }) => {
-  const { title, year, medium } = obra;
+  const { title, year } = obra;
 
   return(
     <div className='grid-item item-s-6 item-m-3'>

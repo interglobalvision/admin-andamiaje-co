@@ -33,7 +33,7 @@ class ObrasGroup extends Component {
   handleSelectChange(event) {
     const id = event.target.options[event.target.selectedIndex].value;
 
-    const { value: { artista, medium, title, year, materials, tecnica } } = this.props.allObras.find( obra => obra.key === id );
+    const { value: { artista, title, year, materials, tecnica } } = this.props.allObras.find( obra => obra.key === id );
 
     this.setState({
       selectedObra: {

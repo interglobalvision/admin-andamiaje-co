@@ -9,7 +9,7 @@ import { ToastrOptionsConfirm, ToastrOptionsSuccess } from '../../utilities/toas
 
 const CatalogosListItem = ({ catalogo, firebase }) => {
   const { key } = catalogo;
-  const { title, medium } = catalogo.value;
+  const { title } = catalogo.value;
 
   const removeCatalogo = (key) => {
 
