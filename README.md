@@ -36,4 +36,11 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.
 By default, it also [includes a service worker](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app) so that your app loads from local cache on future visits.
 
+This would use the variables in `.env.production` for the build.
+
 Your app is ready to be deployed.
+
+## Deploy
+- `npm install -g firebase-tools`
+- `firebase use [alias]`. Alias available are `default` used for dev and `production`.
+- `yarn builDeploy`
