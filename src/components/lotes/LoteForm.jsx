@@ -52,12 +52,10 @@ class LoteForm extends Component {
   }
 
   addLote() {
-    const { title, price, artista, obras } = this.state;
+    const { title, price, artista, obras, tecnica } = this.state;
 
     this.setState({ isLoading: true })
     this.props.setIsLoading();
-
-    const tecnica = this.getTecnicas(obras);
 
     this.props.firebase
       .push('lotes', {
@@ -79,12 +77,10 @@ class LoteForm extends Component {
   }
 
   updateLote() {
-    const { title, price, artista, obras } = this.state;
+    const { title, price, artista, obras, tecnica } = this.state;
 
     this.setState({ isLoading: true })
     this.props.setIsLoading();
-
-    const tecnica = this.getTecnicas(obras);
 
     this.props.firebase
       .update(`lotes/${this.props.id}`, {
@@ -116,7 +112,12 @@ class LoteForm extends Component {
   }
 
   handleOnGroupChange(obras) {
-    this.setState({ obras });
+    const tecnica = this.getTecnicas(obras);
+
+    this.setState({
+      obras,
+      tecnica
+    });
   }
 
   getTecnicas(obras) {
