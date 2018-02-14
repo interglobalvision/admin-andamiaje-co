@@ -48,12 +48,15 @@ class LoteForm extends Component {
 
     this.setState({ isLoading: true })
 
+    const tecnica = this.updateTecnica(obras);
+
     this.props.firebase
       .push('lotes', {
         title,
         price,
         artista,
         obras,
+        tecnica,
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -70,12 +73,15 @@ class LoteForm extends Component {
 
     this.setState({ isLoading: true })
 
+    const tecnica = this.updateTecnica(obras);
+
     this.props.firebase
       .update(`lotes/${this.props.id}`, {
         title,
         price,
         artista,
         obras,
+        tecnica,
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -107,6 +113,15 @@ class LoteForm extends Component {
     this.setState( currentState => ({
       obras: currentState.obras.filter( obra => obra.id !== id )
     }));
+  }
+
+  updateTecnica(obras) {
+    const tecnicas = obras.map((obra) => {
+      console.log(obra)
+      return obra.tecnica
+    });
+
+    return tecnicas;
   }
 
   render() {
