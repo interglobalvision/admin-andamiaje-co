@@ -5,7 +5,7 @@ import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
 import ArtistaForm from '../../components/artistas/ArtistaForm.jsx';
 
-const UpdateArtista = ({ firebase, artista, id }) => {
+const UpdateArtista = ({ firebase, artista, id, dispatch }) => {
 
   if (!isLoaded(artista)) { // If not loaded…
     return 'Loading'; // …show 'loading'
@@ -20,7 +20,7 @@ const UpdateArtista = ({ firebase, artista, id }) => {
           </div>
         </header>
 
-        <ArtistaForm id={id} artista={artista} />
+        <ArtistaForm id={id} artista={artista} dispatch={dispatch} />
       </section>
     );
   }

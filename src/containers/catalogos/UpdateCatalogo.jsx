@@ -5,7 +5,7 @@ import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 
 import CatalogoForm from '../../components/catalogos/CatalogoForm.jsx';
 
-const UpdateCatalogo = ({ firebase, catalogo, id }) => {
+const UpdateCatalogo = ({ firebase, catalogo, id, dispatch }) => {
 
   if (!isLoaded(catalogo)) { // If not loaded…
     return 'Loading'; // …show 'loading'
@@ -20,7 +20,7 @@ const UpdateCatalogo = ({ firebase, catalogo, id }) => {
           </div>
         </header>
 
-        <CatalogoForm id={id} catalogo={catalogo} />
+        <CatalogoForm id={id} catalogo={catalogo} dispatch={dispatch} />
       </section>
     );
   }

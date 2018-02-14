@@ -11,6 +11,8 @@ import LotesGroupContainer from '../../containers/lotes/LotesGroupContainer';
 
 import { ToastrOptionsSuccess } from '../../utilities/toastr.js';
 
+import { setIsLoading, setIsLoaded } from '../../redux/actions/loadingStatusActions'
+
 import 'react-datepicker/dist/react-datepicker.css';
 
 @firebaseConnect()
@@ -71,6 +73,7 @@ class CatalogoForm extends Component {
     const { title, lotes, startDate, saleDate, endDate } = this.state;
 
     this.setState({ isLoading: true })
+    this.props.dispatch(setIsLoading());
 
     this.props.firebase
       .push('catalogos', {
@@ -82,6 +85,7 @@ class CatalogoForm extends Component {
       })
       .then(() => {
         this.setState({ isLoading: false })
+        this.props.dispatch(setIsLoaded());
         this.props.history.push('/catalogos');
 
         // Display success toast
@@ -94,6 +98,7 @@ class CatalogoForm extends Component {
     const { title, lotes, startDate, saleDate, endDate } = this.state;
 
     this.setState({ isLoading: true })
+    this.props.dispatch(setIsLoading());
 
     this.props.firebase
       .update(`catalogos/${this.props.id}`, {
@@ -105,6 +110,7 @@ class CatalogoForm extends Component {
       })
       .then(() => {
         this.setState({ isLoading: false })
+        this.props.dispatch(setIsLoaded());
 
         // Display success toast
         toastr.success('Éxito', 'Catalogo actualizado', ToastrOptionsSuccess);

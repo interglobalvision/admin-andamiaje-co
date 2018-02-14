@@ -12,6 +12,8 @@ import ObrasGroupContainer from '../../containers/obras/ObrasGroupContainer';
 import { PRICES } from '../../utilities/constants.js';
 import { ToastrOptionsSuccess } from '../../utilities/toastr.js';
 
+import { setIsLoading, setIsLoaded } from '../../redux/actions/loadingStatusActions';
+
 @firebaseConnect()
 @withRouter
 class LoteForm extends Component {
@@ -47,6 +49,7 @@ class LoteForm extends Component {
     const { title, price, artista, obras } = this.state;
 
     this.setState({ isLoading: true })
+    this.props.dispatch(setIsLoading());
 
     this.props.firebase
       .push('lotes', {
@@ -57,6 +60,7 @@ class LoteForm extends Component {
       })
       .then(() => {
         this.setState({ isLoading: false })
+        this.props.dispatch(setIsLoaded());
         this.props.history.push('/lotes');
 
         // Display success toast
@@ -69,6 +73,7 @@ class LoteForm extends Component {
     const { title, price, artista, obras } = this.state;
 
     this.setState({ isLoading: true })
+    this.props.dispatch(setIsLoading());
 
     this.props.firebase
       .update(`lotes/${this.props.id}`, {
@@ -79,6 +84,7 @@ class LoteForm extends Component {
       })
       .then(() => {
         this.setState({ isLoading: false })
+        this.props.dispatch(setIsLoaded());
 
         // Display success toast
         toastr.success('Éxito', 'Lote actualizado', ToastrOptionsSuccess);

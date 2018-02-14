@@ -17,6 +17,8 @@ import EMOJIS from '../../utilities/emojis.js';
 
 import { ToastrOptionsSuccess, ToastrOptionsError } from '../../utilities/toastr.js';
 
+import { setIsLoading, setIsLoaded } from '../../redux/actions/loadingStatusActions';
+
 @firebaseConnect()
 @withRouter
 class ArtistaForm extends Component {
@@ -85,6 +87,7 @@ class ArtistaForm extends Component {
     } = this.state;
 
     this.setState({ isLoading: true })
+    this.props.dispatch(setIsLoading());
 
     this.props.firebase
       .push('artistas', {
@@ -102,6 +105,7 @@ class ArtistaForm extends Component {
       })
       .then(() => {
         this.setState({ isLoading: false });
+        this.props.dispatch(setIsLoaded());
         this.props.history.push('/artistas');
 
         // Display success toast
@@ -126,6 +130,7 @@ class ArtistaForm extends Component {
     } = this.state;
 
     this.setState({ isLoading: true })
+    this.props.dispatch(setIsLoading());
 
     this.props.firebase
       .update(`artistas/${this.props.id}`, {
@@ -143,6 +148,7 @@ class ArtistaForm extends Component {
       })
       .then(() => {
         this.setState({ isLoading: false });
+        this.props.dispatch(setIsLoaded());
 
         // Display success toast
         toastr.success('Éxito', 'Artista actualizado', ToastrOptionsSuccess);
@@ -154,6 +160,7 @@ class ArtistaForm extends Component {
 
     // Set Loading
     this.setState({ isLoading: true })
+    this.props.dispatch(setIsLoading());
 
     // deleteFile(storagePath, dbPath)
     this.props.firebase.deleteFile(image.fullPath, `${this.path}/${image.key}`)
@@ -181,6 +188,7 @@ class ArtistaForm extends Component {
       .then( () => {
         // Unset Loading
         this.setState({ isLoading: false })
+        this.props.dispatch(setIsLoaded());
       });
   }
 
