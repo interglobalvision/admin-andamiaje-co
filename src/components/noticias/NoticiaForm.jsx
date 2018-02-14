@@ -21,6 +21,8 @@ import EMOJIS from '../../utilities/emojis';
 
 import { ToastrOptionsSuccess, ToastrOptionsError } from '../../utilities/toastr.js';
 
+import { setIsLoading, setIsLoaded } from '../../redux/actions/loadingStatusActions'
+
 @firebaseConnect()
 @withRouter
 class NoticiaForm extends Component {
@@ -81,7 +83,7 @@ class NoticiaForm extends Component {
 
     // Set Loading
     this.setState({ isLoading: true })
-    this.props.setIsLoading();
+    this.props.dispatch(setIsLoading());
 
     // deleteFile(storagePath, dbPath)
     this.props.firebase.deleteFile(image.fullPath, `${this.path}/${image.key}`)
@@ -109,7 +111,7 @@ class NoticiaForm extends Component {
       .then( () => {
         // Unset Loading
         this.setState({ isLoading: false })
-        this.props.setIsLoaded();
+        this.props.dispatch(setIsLoaded());
       });
   }
 
@@ -119,6 +121,7 @@ class NoticiaForm extends Component {
     const createdDate = Date.now();
 
     this.setState({ isLoading: true })
+    this.props.dispatch(setIsLoading());
 
     this.props.firebase
       .push('noticias', {
@@ -133,6 +136,7 @@ class NoticiaForm extends Component {
       })
       .then(() => {
         this.setState({ isLoading: false })
+        this.props.dispatch(setIsLoaded());
         this.props.history.push('/noticias');
 
         // Display success toast
@@ -145,7 +149,7 @@ class NoticiaForm extends Component {
     const { title, rawContent, published, publishDate, images, video, artista } = this.state;
 
     this.setState({ isLoading: true })
-    this.props.setIsLoading();
+    this.props.dispatch(setIsLoading());
 
     this.props.firebase
       .update(`noticias/${this.props.id}`, {
@@ -159,7 +163,7 @@ class NoticiaForm extends Component {
       })
       .then(() => {
         this.setState({ isLoading: false })
-        this.props.setIsLoaded();
+        this.props.dispatch(setIsLoaded());
 
         // Display success toast
         toastr.success('Éxito', 'Noticia actualizada', ToastrOptionsSuccess);
