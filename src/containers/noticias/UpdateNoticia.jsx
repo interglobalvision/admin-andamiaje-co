@@ -2,10 +2,11 @@ import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
+import { setIsLoading, setIsLoaded } from '../../redux/actions/loadingStatusActions'
 
 import NoticiaForm  from '../../components/noticias/NoticiaForm.jsx';
 
-const UpdateNoticia = ({ firebase, noticia, id }) => {
+const UpdateNoticia = ({ firebase, noticia, id, setIsLoading, setIsLoaded }) => {
 
   if (!isLoaded(noticia)) { // If not loaded…
     return 'Loading'; // …show 'loading'
@@ -20,7 +21,7 @@ const UpdateNoticia = ({ firebase, noticia, id }) => {
           </div>
         </header>
 
-        <NoticiaForm id={id} noticia={noticia} />
+        <NoticiaForm id={id} noticia={noticia} setIsLoading={setIsLoading} setIsLoaded={setIsLoaded}/>
       </section>
     );
   }
@@ -38,5 +39,9 @@ export default compose(
       noticia,
       id: match.params.key,
     })
-  })
+  }),
+  {
+    setIsLoading,
+    setIsLoaded,
+  }
 )(UpdateNoticia);

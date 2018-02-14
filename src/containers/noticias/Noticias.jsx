@@ -3,10 +3,11 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { firebaseConnect } from 'react-redux-firebase';
+import { setIsLoading, setIsLoaded } from '../../redux/actions/loadingStatusActions'
 
 import NoticiasList from '../../components/noticias/NoticiasList';
 
-const Noticias = ({ noticias }) => (
+const Noticias = ({ noticias, setIsLoading, setIsLoaded }) => (
   <section>
 
     <header className='grid-row margin-bottom-basic'>
@@ -21,7 +22,7 @@ const Noticias = ({ noticias }) => (
       </div>
     </div>
 
-    <NoticiasList noticias={noticias} />
+    <NoticiasList noticias={noticias} setIsLoading={setIsLoading} setIsLoaded={setIsLoaded}/>
 
   </section>
 );
@@ -38,5 +39,9 @@ export default compose(
     return ({
       noticias: ordered.noticias,
     })
-  })
+  }),
+  {
+    setIsLoading,
+    setIsLoaded,
+  }
 )(Noticias);

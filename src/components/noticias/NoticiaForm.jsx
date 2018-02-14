@@ -81,6 +81,7 @@ class NoticiaForm extends Component {
 
     // Set Loading
     this.setState({ isLoading: true })
+    this.props.setIsLoading();
 
     // deleteFile(storagePath, dbPath)
     this.props.firebase.deleteFile(image.fullPath, `${this.path}/${image.key}`)
@@ -108,6 +109,7 @@ class NoticiaForm extends Component {
       .then( () => {
         // Unset Loading
         this.setState({ isLoading: false })
+        this.props.setIsLoaded();
       });
   }
 
@@ -143,6 +145,7 @@ class NoticiaForm extends Component {
     const { title, rawContent, published, publishDate, images, video, artista } = this.state;
 
     this.setState({ isLoading: true })
+    this.props.setIsLoading();
 
     this.props.firebase
       .update(`noticias/${this.props.id}`, {
@@ -156,6 +159,7 @@ class NoticiaForm extends Component {
       })
       .then(() => {
         this.setState({ isLoading: false })
+        this.props.setIsLoaded();
 
         // Display success toast
         toastr.success('Éxito', 'Noticia actualizada', ToastrOptionsSuccess);
