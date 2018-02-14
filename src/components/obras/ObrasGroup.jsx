@@ -68,7 +68,7 @@ class ObrasGroup extends Component {
   handleSelectChange(event) {
     const id = event.target.options[event.target.selectedIndex].value;
 
-    const { value: { artista, medium, title, year, materials, tecnica } } = this.props.allObras.find( obra => obra.key === id );
+    const { value: { artista, medium, title, year, materials, tecnica, images } } = this.props.allObras.find( obra => obra.key === id );
 
     this.setState({
       selectedObra: {
@@ -78,6 +78,7 @@ class ObrasGroup extends Component {
         year,
         materials,
         tecnica,
+        images
       },
     });
   }
@@ -100,7 +101,7 @@ class ObrasGroup extends Component {
     } else {
       return (
         <div>
-          <div className='grid-row padding-top-micro padding-bottom-basic align-items-center'>
+          <div className='obra-group-list-holder'>
             { selectedObras.map( (obra, index) =>
               <ObrasGroupItem key={obra.id} obra={obra} moveObraUp={this.moveObraUp} moveObraDown={this.moveObraDown} removeObraFromGroup={this.removeObraFromGroup} upDisabled={index === 0 ? 'disabled' : ''} downDisabled={index === selectedObras.length - 1 ? 'disabled' : ''} />
             )}
