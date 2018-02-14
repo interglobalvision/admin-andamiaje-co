@@ -1,4 +1,4 @@
-export const CloudFunctionsUrl = 'https://us-central1-igv-andamiaje-co.cloudfunctions.net';
+export const CloudFunctionsUrl = process.env.REACT_APP_FUNCTIONS_URL;
 
 // Price Values
 export const PRICES = [
