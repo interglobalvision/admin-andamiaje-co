@@ -69,6 +69,10 @@ a.button
 
 // FORM
 
+.button-row
+  .grid-item
+    padding-left: 0 !important
+
 .card
   padding: $margin-small
   border: 1px solid $color-form-border
@@ -95,7 +99,7 @@ a.button
   align-items: center
   cursor: pointer
 
-input, select
+input, select, textarea
   appearance: none
   background-color: $color-white
   color: $color-black
@@ -103,6 +107,9 @@ input, select
   border-radius: 5px
   padding: $margin-small
   width: 100%
+
+textarea
+  resize: vertical
 
 .select-wrapper
   position: relative
