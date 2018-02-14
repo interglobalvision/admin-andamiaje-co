@@ -1,11 +1,11 @@
-export function setIsLoading(dispatch) {
-  dispatch({
+export function setIsLoading() {
+  return {
     type: 'IS_LOADING'
-  })
+  }
 }
 
-export function setIsLoaded(dispatch) {
-  dispatch({
+export function setIsLoaded() {
+  return {
     type: 'IS_LOADED'
-  })
+  }
 }
