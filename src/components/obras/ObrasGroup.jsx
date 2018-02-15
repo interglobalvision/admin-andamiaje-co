@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'; // ES6
 import { isLoaded, isEmpty } from 'react-redux-firebase';
+import { omitBy, isNil } from 'lodash';
 
 import ObrasGroupItem from '../../components/obras/ObrasGroupItem';
 
@@ -70,17 +71,18 @@ class ObrasGroup extends Component {
 
     const { value: { artista, medium, title, year, materials, tecnica, images } } = this.props.allObras.find( obra => obra.key === id );
 
-    this.setState({
-      selectedObra: {
-        id,
-        artista,
-        title,
-        year,
-        materials,
-        tecnica,
-        images
-      },
-    });
+    // Clean selectedObra from undefined values
+    const selectedObra = omitBy({
+      id,
+      artista,
+      title,
+      year,
+      materials,
+      tecnica,
+      images
+    }, isNil);
+
+    this.setState({selectedObra});
   }
 
   // Filter out addedObras from availableObras comparing
