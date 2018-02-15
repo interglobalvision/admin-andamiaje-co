@@ -24,6 +24,10 @@ class ObrasGroup extends Component {
     const selectedObra = this.state.selectedObra;
 
     this.props.addObraToGroup(selectedObra);
+
+    this.setState({
+      selectedObra: {}
+    });
   }
 
   removeObraFromGroup(id) {

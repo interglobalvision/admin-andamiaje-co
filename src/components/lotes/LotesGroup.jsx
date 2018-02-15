@@ -37,6 +37,10 @@ class LotesGroup extends Component {
     };
 
     this.props.onChange([...this.props.selectedLotes, newLote]);
+
+    this.setState({
+      selectedLote: {}
+    });
   }
 
   removeLoteFromGroup(id) {
