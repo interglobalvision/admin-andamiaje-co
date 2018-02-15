@@ -80,6 +80,14 @@ class LotesGroup extends Component {
   }
 
   handleSelectChange(event) {
+    if (event.target.options[event.target.selectedIndex].value === '') {
+      this.setState({
+        selectedLote: {},
+      });
+
+      return;
+    }
+
     const id = event.target.options[event.target.selectedIndex].value;
 
     const { value: { artista, title } } = this.props.allLotes.find( lote => lote.key === id );
@@ -108,6 +116,8 @@ class LotesGroup extends Component {
   render() {
     const { allLotes, selectedLotes } = this.props;
     const availableLotes = this.filterLotes(allLotes, selectedLotes);
+
+    console.log(this.state.selectedLote);
 
     if (!isLoaded(allLotes)) { // If not loaded…
       return 'Loading'; // …show 'loading'
@@ -141,7 +151,7 @@ class LotesGroup extends Component {
                 </div>
               </div>
               <div className='grid-item'>
-                <button type='button' className='button' onClick={this.addLoteToGroup}>Agregar</button>
+                <button type='button' className='button' disabled={!Object.keys(this.state.selectedLote).length ? 'disabled' : ''} onClick={this.addLoteToGroup}>Agregar</button>
               </div>
             </div>
           }
