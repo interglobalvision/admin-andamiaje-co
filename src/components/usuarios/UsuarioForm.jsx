@@ -14,7 +14,7 @@ import { ToastrOptionsError, ToastrOptionsSuccess } from '../../utilities/toastr
 
 import { setIsLoading, setIsLoaded } from '../../redux/actions/loadingStatusActions'
 
-import Uploads from '../fields/Uploads';
+import ImageUploads from '../fields/ImageUploads';
 
 const mapDispatchToProps = dispatch =>  ({
   setIsLoaded: () => dispatch(setIsLoaded()),
@@ -248,10 +248,7 @@ class UsuarioForm extends Component {
 
 
   handleUploadsChange(images) {
-    // Append images to state
-    this.setState({
-      images: [...this.state.images, ...images]
-    });
+    this.setState({images});
   }
 
   render() {
@@ -361,14 +358,15 @@ class UsuarioForm extends Component {
           </div>
         </div>
 
-        <Uploads
+        <ImageUploads
           title={'Foto de perfil'}
-          files={this.state.images}
-          onChange={this.handleUploadsChange}
+          images={this.state.images}
+          updateImages={this.handleUploadsChange}
           storagePath={this.storagePath}
           path={this.path}
           disabled={this.state.isLoading}
           deleteFile={this.deleteImage}
+          firebase={this.props.firebase}
           dropzone={{
             accept: 'image/jpeg, image/png',
             multiple: this.multipleUploads,

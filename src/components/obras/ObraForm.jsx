@@ -16,6 +16,8 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import Uploads from '../fields/Uploads';
+import ImageUploads from '../fields/ImageUploads';
+
 import { ParseEditorContent, emptyEditorState } from '../../utilities/editor';
 import EMOJIS from '../../utilities/emojis.js';
 import { TECNICAS } from '../../utilities/constants.js';
@@ -189,10 +191,7 @@ class ObraForm extends Component {
   }
 
   handleUploadsChange(images) {
-    // Append images to state
-    this.setState({
-      images: [...this.state.images, ...images]
-    });
+    this.setState({images});
   }
 
   render() {
@@ -274,14 +273,15 @@ class ObraForm extends Component {
           </div>
         </div>
 
-        <Uploads
+        <ImageUploads
           title={'Imagenes'}
-          files={this.state.images}
-          onChange={this.handleUploadsChange}
+          images={this.state.images}
+          updateImages={this.handleUploadsChange}
           storagePath={this.storagePath}
           path={this.path}
           disabled={this.state.isLoading}
           deleteFile={this.deleteImage}
+          firebase={this.props.firebase}
           dropzone={{
             accept: 'image/jpeg, image/png',
             multiple: this.multipleUploads,

@@ -11,7 +11,7 @@ import getYouTubeID from 'get-youtube-id';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import ArtistaPortfolio from './ArtistaPortfolio';
-import Uploads from '../fields/Uploads';
+import ImageUploads from '../fields/ImageUploads';
 
 import { ParseEditorContent, emptyEditorState } from '../../utilities/editor';
 import EMOJIS from '../../utilities/emojis.js';
@@ -241,11 +241,7 @@ class ArtistaForm extends Component {
   }
 
   handleUploadsChange(images) {
-
-    // Append images to state
-    this.setState({
-      images: [...this.state.images, ...images]
-    });
+    this.setState({images});
   }
 
   handlePortfolioChange(portfolio) {
@@ -337,14 +333,15 @@ class ArtistaForm extends Component {
           </div>
         </div>
 
-       <Uploads
+       <ImageUploads
           title={'Foto de perfil'}
-          files={this.state.images}
-          onChange={this.handleUploadsChange}
+          images={this.state.images}
+          updateImages={this.handleUploadsChange}
           storagePath={this.storagePath}
           path={this.path}
           disabled={this.state.isLoading}
           deleteFile={this.deleteImage}
+          firebase={this.props.firebase}
           dropzone={{
             accept: 'image/jpeg, image/png',
             multiple: this.multipleUploads,
