@@ -124,7 +124,7 @@ class ArtistaPortfolio extends Component {
 
             let imageUrl = undefined;
 
-            if(images !== undefined) {
+            if(images !== undefined && images.length) {
               imageUrl = images[0].downloadURL;
             }
 
