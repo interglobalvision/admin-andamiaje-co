@@ -9,7 +9,7 @@ import ControlPanel from '../components/ControlPanel.jsx';
 import NoMatch from '../components/NoMatch.jsx';
 
 const App = (props) => {
-  const { auth, loadingStatus } = props;
+  const { auth } = props;
 
   if (!isLoaded(auth)) {
     return (

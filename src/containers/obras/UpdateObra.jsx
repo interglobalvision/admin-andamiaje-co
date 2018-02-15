@@ -16,7 +16,7 @@ const UpdateObra = ({ firebase, obra, id, dispatch }) => {
       <section>
         <header className='grid-row margin-bottom-basic'>
           <div className='grid-item'>
-            <h1 className='font-size-large'>Editar Entrada</h1>
+            <h1 className='font-size-large'>Editar Obra</h1>
           </div>
         </header>
 

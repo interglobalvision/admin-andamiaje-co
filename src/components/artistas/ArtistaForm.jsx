@@ -11,7 +11,7 @@ import getYouTubeID from 'get-youtube-id';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import ArtistaPortfolio from './ArtistaPortfolio';
-import Uploads from '../fields/Uploads';
+import ImageUploads from '../fields/ImageUploads';
 
 import { ParseEditorContent, emptyEditorState } from '../../utilities/editor';
 import EMOJIS from '../../utilities/emojis.js';
@@ -241,11 +241,7 @@ class ArtistaForm extends Component {
   }
 
   handleUploadsChange(images) {
-
-    // Append images to state
-    this.setState({
-      images: [...this.state.images, ...images]
-    });
+    this.setState({images});
   }
 
   handlePortfolioChange(portfolio) {
@@ -259,22 +255,8 @@ class ArtistaForm extends Component {
   render() {
     return (
       <form onSubmit={event => event.preventDefault()}>
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='name'>Nombre</label></h4>
-            <input
-              id='name'
-              name='name'
-              type='text'
-              disabled={this.state.isLoading}
-              value={this.state.name}
-              onChange={ event => this.setState({ name: event.target.value })}
-            />
-          </div>
-        </div>
-
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item'>
+        <div className='grid-row'>
+          <div className='grid-item margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='active'>Activo</label></h4>
             <div className='grid-row align-items-center'>
               <input
@@ -289,8 +271,20 @@ class ArtistaForm extends Component {
           </div>
         </div>
 
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
+        <div className='grid-row'>
+          <div className='grid-item item-s-12 item-m-6 margin-bottom-basic'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='name'>Nombre</label></h4>
+            <input
+              id='name'
+              name='name'
+              type='text'
+              disabled={this.state.isLoading}
+              value={this.state.name}
+              onChange={ event => this.setState({ name: event.target.value })}
+            />
+          </div>
+
+          <div className='grid-item item-s-12 item-m-6 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='country'>País</label></h4>
             <input
               id='country'
@@ -301,10 +295,8 @@ class ArtistaForm extends Component {
               onChange={ event => this.setState({ country: event.target.value })}
             />
           </div>
-        </div>
 
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
+          <div className='grid-item item-s-12 item-m-6 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='gallery'>Galería</label></h4>
             <input
               id='gallery'
@@ -315,10 +307,8 @@ class ArtistaForm extends Component {
               onChange={ event => this.setState({ gallery: event.target.value })}
             />
           </div>
-        </div>
 
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
+          <div className='grid-item item-s-12 item-m-6 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='galleryUrl'>Pagina web de Galería</label></h4>
             <input
               id='galleryUrl'
@@ -329,10 +319,8 @@ class ArtistaForm extends Component {
               onChange={ event => this.setState({ galleryUrl: event.target.value })}
             />
           </div>
-        </div>
 
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
+          <div className='grid-item item-s-12 item-m-6 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='websiteUrl'>Pagina web de artista</label></h4>
             <input
               id='websiteUrl'
@@ -345,14 +333,15 @@ class ArtistaForm extends Component {
           </div>
         </div>
 
-       <Uploads
+       <ImageUploads
           title={'Foto de perfil'}
-          files={this.state.images}
-          onChange={this.handleUploadsChange}
+          images={this.state.images}
+          updateImages={this.handleUploadsChange}
           storagePath={this.storagePath}
           path={this.path}
           disabled={this.state.isLoading}
           deleteFile={this.deleteImage}
+          firebase={this.props.firebase}
           dropzone={{
             accept: 'image/jpeg, image/png',
             multiple: this.multipleUploads,

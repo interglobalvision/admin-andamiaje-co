@@ -16,7 +16,7 @@ const UpdateArtista = ({ firebase, artista, id }) => {
       <section>
         <header className='grid-row margin-bottom-basic'>
           <div className='grid-item'>
-            <h1 className='font-size-large'>Editar Entrada</h1>
+            <h1 className='font-size-large'>Editar Artista</h1>
           </div>
         </header>
 

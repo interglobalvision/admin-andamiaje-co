@@ -28,6 +28,10 @@ class ObrasGroup extends Component {
     const selectedObra = this.state.selectedObra;
 
     this.props.onChange([...this.props.selectedObras, selectedObra]);
+
+    this.setState({
+      selectedObra: {}
+    });
   }
 
   moveObra(element, delta) {
@@ -67,6 +71,14 @@ class ObrasGroup extends Component {
   }
 
   handleSelectChange(event) {
+    if (event.target.options[event.target.selectedIndex].value === '') {
+      this.setState({
+        selectedObra: {},
+      });
+
+      return;
+    }
+
     const id = event.target.options[event.target.selectedIndex].value;
 
     const { value: { artista, medium, title, year, materials, tecnica, images } } = this.props.allObras.find( obra => obra.key === id );
@@ -103,21 +115,26 @@ class ObrasGroup extends Component {
     } else {
       return (
         <div>
-          <div className='obra-group-list-holder'>
+          <div className='grid-row'>
             { selectedObras.map( (obra, index) =>
               <ObrasGroupItem key={obra.id} obra={obra} moveObraUp={this.moveObraUp} moveObraDown={this.moveObraDown} removeObraFromGroup={this.removeObraFromGroup} upDisabled={index === 0 ? 'disabled' : ''} downDisabled={index === selectedObras.length - 1 ? 'disabled' : ''} />
             )}
           </div>
           { isEmpty(filteredObras) ? '' :
-            <div className='grid-row padding-bottom-basic'>
-              <select onChange={this.handleSelectChange} className='grid-item item-s-12 item-m-4'>
-                <option value=''></option>
-                { filteredObras.map(obra =>
-                  <option key={obra.key} value={obra.key}>{obra.value.title}</option>
-                ) }
-              </select>
-
-              <button type='button' className='button grid-item item-s-12 item-m-2' onClick={this.addObraToGroup}>Agregar</button>
+            <div className='grid-row padding-bottom-basic align-items-center flex-nowrap'>
+              <div className='grid-item flex-grow'>
+                <div className='select-wrapper'>
+                  <select onChange={this.handleSelectChange}>
+                    <option value=''></option>
+                    { filteredObras.map(obra =>
+                      <option key={obra.key} value={obra.key}>{obra.value.title}</option>
+                    ) }
+                  </select>
+                </div>
+              </div>
+              <div className='grid-item'>
+                <button className='button' type='button' disabled={!Object.keys(this.state.selectedObra).length ? 'disabled' : ''} onClick={this.addObraToGroup}>Agregar</button>
+              </div>
             </div>
           }
         </div>

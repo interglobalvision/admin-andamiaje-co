@@ -14,7 +14,7 @@ import { ToastrOptionsError, ToastrOptionsSuccess } from '../../utilities/toastr
 
 import { setIsLoading, setIsLoaded } from '../../redux/actions/loadingStatusActions'
 
-import Uploads from '../fields/Uploads';
+import ImageUploads from '../fields/ImageUploads';
 
 const mapDispatchToProps = dispatch =>  ({
   setIsLoaded: () => dispatch(setIsLoaded()),
@@ -144,6 +144,7 @@ class UsuarioForm extends Component {
 
         // Unset loading
         _this.setState({ isLoading: false });
+        this.props.setIsLoaded();
 
         // Display success toast
         toastr.success('Éxito', 'Usuario creado', ToastrOptionsSuccess);
@@ -232,6 +233,7 @@ class UsuarioForm extends Component {
 
         // Unset loading
         _this.setState({ isLoading: false });
+        this.props.setIsLoaded();
 
         if (error.response) {
           // Error updating user profile
@@ -246,26 +248,12 @@ class UsuarioForm extends Component {
 
 
   handleUploadsChange(images) {
-    // Append images to state
-    this.setState({
-      images: [...this.state.images, ...images]
-    });
+    this.setState({images});
   }
 
   render() {
     return (
       <form onSubmit={event => event.preventDefault()}>
-        <div className='grid-row margin-bottom-basic justify-end'>
-          <div className='grid-item'>
-            <button
-              className='button' onClick={() => this.props.id ? this.updateUsuario() : this.addUsuario()}
-              disabled={this.state.isLoading}
-            >
-              Guardar{ this.props.id ? '' : ' Nueva'}
-            </button>
-          </div>
-        </div>
-
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'>Estado</h4>
@@ -320,8 +308,8 @@ class UsuarioForm extends Component {
           </div>
         </div>
 
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
+        <div className='grid-row'>
+          <div className='grid-item item-s-12 item-m-6 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='name'>Nombre completo</label></h4>
             <input
               id='name'
@@ -332,10 +320,8 @@ class UsuarioForm extends Component {
               onChange={ event => this.setState({ name: event.target.value })}
             />
           </div>
-        </div>
 
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
+          <div className='grid-item item-s-12 item-m-6 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='email'>Correo electrónico</label></h4>
             <input
               id='email'
@@ -346,10 +332,8 @@ class UsuarioForm extends Component {
               onChange={ event => this.setState({ email: event.target.value })}
             />
           </div>
-        </div>
 
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
+          <div className='grid-item item-s-12 item-m-6 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='displayName'>Nombre para mostrar</label></h4>
             <input
               id='displayName'
@@ -360,24 +344,8 @@ class UsuarioForm extends Component {
               onChange={ event => this.setState({ displayName: event.target.value })}
             />
           </div>
-        </div>
 
-       <Uploads
-          title={'Foto de perfil'}
-          files={this.state.images}
-          onChange={this.handleUploadsChange}
-          storagePath={this.storagePath}
-          path={this.path}
-          disabled={this.state.isLoading}
-          deleteFile={this.deleteImage}
-          dropzone={{
-            accept: 'image/jpeg, image/png',
-            multiple: this.multipleUploads,
-          }}
-        />
-
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
+          <div className='grid-item item-s-12 item-m-6 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='password'>Contraseña</label></h4>
             <input
               id='password'
@@ -387,6 +355,34 @@ class UsuarioForm extends Component {
               value={this.state.password}
               onChange={ event => this.setState({ password: event.target.value })}
             />
+          </div>
+        </div>
+
+        <ImageUploads
+          title={'Foto de perfil'}
+          images={this.state.images}
+          updateImages={this.handleUploadsChange}
+          storagePath={this.storagePath}
+          path={this.path}
+          disabled={this.state.isLoading}
+          deleteFile={this.deleteImage}
+          firebase={this.props.firebase}
+          dropzone={{
+            accept: 'image/jpeg, image/png',
+            multiple: this.multipleUploads,
+          }}
+        />
+
+
+
+        <div className='grid-row margin-bottom-basic justify-end'>
+          <div className='grid-item'>
+            <button
+              className='button' onClick={() => this.props.id ? this.updateUsuario() : this.addUsuario()}
+              disabled={this.state.isLoading}
+            >
+              Guardar{ this.props.id ? '' : ' Nuevo'}
+            </button>
           </div>
         </div>
 

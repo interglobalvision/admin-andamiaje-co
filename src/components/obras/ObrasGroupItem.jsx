@@ -13,18 +13,22 @@ const ObraGroupItem = ({ obra, moveObraUp, moveObraDown, removeObraFromGroup, up
   }
 
   return(
-    <div className='list-rows-item grid-row padding-top-micro padding-bottom-micro align-items-center'>
-      <div className='grid-item item-s-2'>
-        { imageUrl !== undefined ? <img src={imageUrl} alt='{title}' /> : '' }
-      </div>
-      <div className='grid-item item-s-3 item-m-5'>
-        <h3>{title}, {year}</h3>
-      </div>
-      <div className='grid-item flex-grow grid-row no-gutter justify-end'>
-        <div className='grid-item'>
-          <button type='button' onClick={() => moveObraUp(obra)} disabled={upDisabled} className='button button-small'>↑</button>
-          <button type='button' onClick={() => moveObraDown(obra)} disabled={downDisabled} className='button button-small'>↓</button>
-          <button type='button' onClick={() => removeObraFromGroup(obra.id)} className='button button-small button-delete'>Retirar</button>
+    <div className='grid-item item-s-6 item-m-3 margin-bottom-small'>
+      <div className='card grid-column'>
+        <div className='card-body margin-bottom-tiny'>
+          { imageUrl !== undefined ? <img src={imageUrl} alt='{title}' className='margin-bottom-tiny'/> : '' }
+          <h3>{title}, {year}</h3>
+        </div>
+        <div className='card-actions button-row grid-row'>
+          <div className='grid-item'>
+            <button type='button' onClick={() => moveObraUp(obra)} disabled={upDisabled} className='button button-small'>↑</button>
+          </div>
+          <div className='grid-item'>
+            <button type='button' onClick={() => moveObraDown(obra)} disabled={downDisabled} className='button button-small'>↓</button>
+          </div>
+          <div className='grid-item'>
+            <button type='button' onClick={() => removeObraFromGroup(obra.id)} className='button button-small button-delete'>Retirar</button>
+          </div>
         </div>
       </div>
     </div>

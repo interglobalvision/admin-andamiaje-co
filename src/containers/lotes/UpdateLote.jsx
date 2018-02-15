@@ -16,7 +16,7 @@ const UpdateLote = ({ firebase, lote, id }) => {
       <section>
         <header className='grid-row margin-bottom-basic'>
           <div className='grid-item'>
-            <h1 className='font-size-large'>Editar Entrada</h1>
+            <h1 className='font-size-large'>Editar Lote</h1>
           </div>
         </header>
 
@@ -29,8 +29,8 @@ const UpdateLote = ({ firebase, lote, id }) => {
 export default compose(
   // Get noticia path from firebase based on params prop (route params from react-router)
   firebaseConnect( ({ match: { params } }) => ([{
-    path: `lotes/${params.key}`, // connect with '/noticias/:key'
-    storeAs: 'lote' // Store this data in `noticia` so it doesn't conflict with `noticias`
+    path: `lotes/${params.key}`, // connect with '/lotes/:key'
+    storeAs: 'lote' // Store this data in `lote` so it doesn't conflict with `lotes`
   }])),
   // Map state to props
   connect(({ firebase: { data: { lote } }}, { match }) => {

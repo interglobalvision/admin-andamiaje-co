@@ -69,13 +69,58 @@ a.button
 
 // FORM
 
-input
+.button-row
+  .grid-item
+    padding-left: 0 !important
+
+.card
+  padding: $margin-small
+  border: 1px solid $color-form-border
+  border-radius: 5px
+  height: 100%
+  display: flex
+  flex-direction: column
+
+.card-body
+  flex-grow: 1
+
+.card-actions
+  padding-top: $margin-small
+  flex-shrink: 0
+  text-align: right
+
+.dropzone
+  padding: $margin-small
+  border: 1px dashed $color-form-border
+  border-radius: 5px
+  height: 100%
+  display: flex
+  justify-content: center
+  align-items: center
+  cursor: pointer
+
+input, select, textarea
+  appearance: none
   background-color: $color-white
   color: $color-black
   border: 1px solid $color-form-border
   border-radius: 5px
   padding: $margin-small
   width: 100%
+
+textarea
+  resize: vertical
+
+.select-wrapper
+  position: relative
+  display: block
+  width: 100%
+  pointer-events: all
+  &:after
+    content: '▼'
+    position: absolute
+    top: $margin-small
+    right: $margin-small
 
 // Datepicker Fixes
 // This is a temporary fix while it gets fixed
@@ -112,7 +157,10 @@ input
 // Checkbox & Radio
 input[type='checkbox'], input[type='radio']
   margin: 0 $margin-tiny $margin-micro 0
-  width: auto
+  width: $margin-small
+  height: $margin-small
+  &:checked
+    background-color: $color-button-default
 
 // Editor (wysiwyg) styles
 .DraftEditor-editorContainer

@@ -9,7 +9,7 @@ import { ToastrOptionsConfirm, ToastrOptionsSuccess } from '../../utilities/toas
 
 const LotesListItem = ({ lote, firebase }) => {
   const { key } = lote;
-  const { title, price, medium, artista } = lote.value;
+  const { title, price, artista } = lote.value;
 
   const removeLote = (key) => {
 

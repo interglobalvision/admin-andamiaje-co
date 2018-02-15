@@ -64,6 +64,8 @@ class UploadField extends Component {
       })
       .catch( error => {
         toastr.warning('Error', error, ToastrOptionsError);
+
+        console.log(error);
         // Unset Loading
         this.setState({ isLoading: false });
       });
@@ -81,8 +83,8 @@ class UploadField extends Component {
     const { uploadStatus } = this.props;
 
     return(
-      <Dropzone onDropAccepted={this.onDropAccepted} disabled={this.state.isLoading || this.props.disabled} {...this.props.dropzone} onDropRejected={this.onDropRejected}>
-        <p>{ uploadStatus.uploading  ? `Cargando ${uploadStatus.percent}% ` : this.placeholder }</p>
+      <Dropzone className='dropzone' onDropAccepted={this.onDropAccepted} disabled={this.state.isLoading || this.props.disabled} {...this.props.dropzone} onDropRejected={this.onDropRejected}>
+        <div className='font-size-small text-align-center'>{ uploadStatus.uploading  ? `Cargando ${uploadStatus.percent}% ` : this.placeholder }</div>
       </Dropzone>
     );
 

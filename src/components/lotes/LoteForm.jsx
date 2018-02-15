@@ -178,7 +178,9 @@ class LoteForm extends Component {
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='obras'>Obras</label></h4>
-              <ObrasGroupContainer onChange={this.handleOnGroupChange} selectedObras={this.state.obras} />
+          </div>
+          <div className='grid-item item-s-12 no-gutter'>
+            <ObrasGroupContainer onChange={this.handleOnGroupChange} selectedObras={this.state.obras} />
           </div>
         </div>
 

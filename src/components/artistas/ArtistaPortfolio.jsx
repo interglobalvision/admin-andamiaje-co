@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { toastr } from 'react-redux-toastr';
 
 import Uploads from '../fields/Uploads';
+import ImageUploads from '../fields/ImageUploads';
 import { getResizedImageUrl } from '../../utilities/images.js';
 
 import { ToastrOptionsConfirm } from '../../utilities/toastr.js';
@@ -10,7 +11,9 @@ class ArtistaPortfolio extends Component {
   state = {
     title: '',
     year: '',
+    materials: '',
     dimensions: '',
+    notes: '',
     images: [],
   }
 
@@ -29,7 +32,7 @@ class ArtistaPortfolio extends Component {
   }
 
   addItem() {
-    const { title, year, dimensions, images } = this.state;
+    const { title, year, materials, dimensions, notes, images } = this.state;
 
     // Append new item
     this.props.handlePortfolioChange([
@@ -37,7 +40,9 @@ class ArtistaPortfolio extends Component {
       {
         title,
         year,
+        materials,
         dimensions,
+        notes,
         images,
       }
     ]);
@@ -46,7 +51,9 @@ class ArtistaPortfolio extends Component {
     this.setState({
       title: '',
       year: '',
+      materials: '',
       dimensions: '',
+      notes: '',
       images: [],
     });
   }
@@ -92,10 +99,7 @@ class ArtistaPortfolio extends Component {
   }
 
   handleUploadsChange(images) {
-    // Append images to state
-    this.setState({
-      images: [...this.state.images, ...images]
-    });
+    this.setState({images});
   }
 
   changeValue(index, param, value) {
@@ -112,63 +116,82 @@ class ArtistaPortfolio extends Component {
       <section>
         <div className='grid-row margin-bottom-tiny'>
           <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'>Portafolio</h4>
+            <h4 className='font-size-basic font-bold margin-bottom-tiny'>Portafolio</h4>
           </div>
         </div>
 
-        <div className='artista-portfilio-items'>
+        <div className='list-rows-holder margin-bottom-small'>
           {this.props.items.map( (item, index) => {
-            const { title, images, year, dimensions } = item;
+            const { title, images, year, materials, dimensions, notesRawContent } = item;
 
             let imageUrl = undefined;
 
             if(images !== undefined) {
-              imageUrl = getResizedImageUrl(images[0], '750', false);
+              imageUrl = images[0].downloadURL;
             }
 
             return (
-              <article key={index} className='grid-row padding-top-micro padding-bottom-small'>
-                <div className='grid-item item-s-2 item-m-4'>
+              <article key={index} className='grid-row list-rows-item padding-top-small padding-bottom-small align-items-center'>
+                <div className='grid-item item-s-12 item-m-3'>
                   { imageUrl !== undefined ? <img src={imageUrl} alt={title} /> : '' }
                 </div>
-                <div className='grid-item item-s-8 item-m-6'>
-                  <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={index + '-title'}>Título</label></h4>
-                  <input id={index + '-title'} key={index + '-title'} type='text' value={title} onChange={e => this.changeValue(index, 'title', e.target.value)} className='margin-bottom-tiny' />
-
-                  <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={index + '-year'}>Año</label></h4>
-                  <input id={index + '-year'} key={index + '-year'} type='text' value={year} onChange={e => this.changeValue(index, 'year', e.target.value)} className='margin-bottom-tiny' />
-
-                  <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={index + '-dimensions'}>Dimensiones</label></h4>
-                  <input id={index + '-dimensions'} key={index + '-dimensions'} type='text' value={dimensions} onChange={e => this.changeValue(index, 'dimensions', e.target.value)} className='margin-bottom-tiny' />
-
+                <div className='grid-item item-s-12 item-l-6 grid-row no-gutter'>
+                  <div className='grid-item item-s-12 item-m-8'>
+                    <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={index + '-title'}>Título</label></h4>
+                    <input id={index + '-title'} key={index + '-title'} type='text' value={title} onChange={e => this.changeValue(index, 'title', e.target.value)} className='margin-bottom-tiny' />
+                  </div>
+                  <div className='grid-item item-s-12 item-m-4'>
+                    <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={index + '-year'}>Año</label></h4>
+                    <input id={index + '-year'} key={index + '-year'} type='text' value={year} onChange={e => this.changeValue(index, 'year', e.target.value)} className='margin-bottom-tiny' />
+                  </div>
+                  <div className='grid-item item-s-12 item-m-8'>
+                    <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={index + '-materiales'}>Materiales</label></h4>
+                    <input id={index + '-materiales'} key={index + '-materiales'} type='text' value={title} onChange={e => this.changeValue(index, 'materiales', e.target.value)} className='margin-bottom-tiny' />
+                  </div>
+                  <div className='grid-item item-s-12 item-m-4'>
+                    <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={index + '-dimensions'}>Dimensiones</label></h4>
+                    <input id={index + '-dimensions'} key={index + '-dimensions'} type='text' value={dimensions} onChange={e => this.changeValue(index, 'dimensions', e.target.value)} className='margin-bottom-tiny' />
+                  </div>
+                  <div className='grid-item item-s-12'>
+                    <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={index + '-notes'}>Información adicional</label></h4>
+                    <textarea id={index + '-notes'} key={index + '-notes'} type='text' value={dimensions} onChange={e => this.changeValue(index, 'notes', e.target.value)} />
+                  </div>
                 </div>
-                <div className='grid-item flex-grow grid-row no-gutter justify-end'>
-                  <button type='button' onClick={() => this.moveItemUp(item)} disabled={index === 0 ? 'disabled' : ''} className='button button-small'>↑</button>
-                  <button type='button' onClick={() => this.moveItemDown(item)} disabled={index === this.props.items.length - 1 ? 'disabled' : ''} className='button button-small'>↓</button>
-                  <button type='button' className='button button-small button-delete' onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta entrada del portafolio?', ToastrOptionsConfirm(this.removeItem, index))}>Eliminar</button>
+
+                <div className='grid-item item-s-12 item-l-3 grid-row button-row no-gutter align-items-center justify-end'>
+                  <div className='grid-item'>
+                    <button type='button' onClick={() => this.moveItemUp(item)} disabled={index === 0 ? 'disabled' : ''} className='button button-small'>↑</button>
+                  </div>
+                  <div className='grid-item'>
+                    <button type='button' onClick={() => this.moveItemDown(item)} disabled={index === this.props.items.length - 1 ? 'disabled' : ''} className='button button-small'>↓</button>
+                  </div>
+                  <div className='grid-item'>
+                    <button type='button' className='button button-small button-delete' onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta entrada del portafolio?', ToastrOptionsConfirm(this.removeItem, index))}>Eliminar</button>
+                  </div>
                 </div>
               </article>
             )
           })}
         </div>
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12 margin-bottom-basic'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'>Agregar pieza</h4>
-
-            <Uploads
-              title={'Imagenes'}
-              files={this.state.images}
-              onChange={this.handleUploadsChange}
+        <div className='grid-row'>
+          <div className='grid-item item-s-12 no-gutter'>
+            <ImageUploads
+              title={'Imagen'}
+              images={this.state.images}
+              updateImages={this.handleUploadsChange}
               storagePath={this.storagePath}
               path={this.path}
               disabled={this.state.isLoading}
               deleteFile={this.deleteImage}
+              firebase={this.props.firebase}
               dropzone={{
                 accept: 'image/jpeg, image/png',
                 multiple: this.multipleUploads,
               }}
             />
+          </div>
 
+          <div className='grid-item item-s-12 item-m-8 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='title'>Título</label></h4>
             <input
               id='title'
@@ -177,9 +200,10 @@ class ArtistaPortfolio extends Component {
               value={this.state.title}
               disabled={this.state.isLoading}
               onChange={ event => this.setState({ title: event.target.value })}
-              className='margin-bottom-tiny'
             />
+          </div>
 
+          <div className='grid-item item-s-12 item-m-4 margin-bottom-tiny'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='year'>Año</label></h4>
             <input
               id='title'
@@ -188,9 +212,22 @@ class ArtistaPortfolio extends Component {
               value={this.state.year}
               disabled={this.state.isLoading}
               onChange={ event => this.setState({ year: event.target.value })}
-              className='margin-bottom-tiny'
             />
+          </div>
 
+          <div className='grid-item item-s-12 item-m-8 margin-bottom-basic'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='materials'>Materiales</label></h4>
+            <input
+              id='materials'
+              name='materials'
+              type='text'
+              value={this.state.materials}
+              disabled={this.state.isLoading}
+              onChange={ event => this.setState({ materials: event.target.value })}
+            />
+          </div>
+
+          <div className='grid-item item-s-12 item-m-4 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='dimensions'>Dimensiones</label></h4>
             <input
               id='dimensions'
@@ -199,9 +236,22 @@ class ArtistaPortfolio extends Component {
               value={this.state.dimensions}
               disabled={this.state.isLoading}
               onChange={ event => this.setState({ dimensions: event.target.value })}
-              className='margin-bottom-tiny'
             />
+          </div>
 
+          <div className='grid-item item-s-12 margin-bottom-basic'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='notes'>Información adicional</label></h4>
+            <textarea
+              id='notes'
+              name='notes'
+              type='text'
+              value={this.state.notes}
+              disabled={this.state.isLoading}
+              onChange={ event => this.setState({ notes: event.target.value })}
+            />
+          </div>
+
+          <div className='grid-item item-s-12 margin-bottom-basic'>
             <button type='button' className='button' onClick={this.addItem}>Agregar</button>
           </div>
         </div>
