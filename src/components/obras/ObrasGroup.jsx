@@ -77,7 +77,7 @@ class ObrasGroup extends Component {
     } else {
       return (
         <div>
-          <div className='grid-row padding-bottom-small'>
+          <div className='grid-row'>
             { selectedObras.map(obra =>
               <ObrasGroupItem key={obra.id} obra={obra} removeObraFromGroup={removeObraFromGroup} />
             )}
