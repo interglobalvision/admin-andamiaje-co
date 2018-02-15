@@ -17,7 +17,7 @@ const Lotes = ({ obras, lotes }) => (
 
     <div className='grid-row margin-bottom-basic justify-end'>
       <div className='grid-item'>
-      {obras !== undefined ? (
+      {obras !== undefined && obras !== null ? (
         <Link className='button' to='/lotes/add'>Añadir Lote</Link>
       ) : (
         <div>Es necesario crear Obras</div>
