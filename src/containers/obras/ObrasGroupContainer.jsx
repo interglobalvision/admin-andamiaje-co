@@ -6,15 +6,14 @@ import { firebaseConnect } from 'react-redux-firebase';
 
 import ObrasGroup from '../../components/obras/ObrasGroup';
 
-const ObrasGroupContainer = ({ addObraToGroup, allObras, selectedObras, removeObraFromGroup }) => (
-  <ObrasGroup allObras={allObras} addObraToGroup={addObraToGroup} selectedObras={selectedObras} removeObraFromGroup={removeObraFromGroup}/>
+const ObrasGroupContainer = ({ allObras, selectedObras, onChange }) => (
+  <ObrasGroup allObras={allObras} selectedObras={selectedObras} onChange={onChange}/>
 );
 
 ObrasGroupContainer.propTypes = {
-  addObraToGroup: PropTypes.func.isRequired,
   allObras: PropTypes.array,
-  removeObraFromGroup: PropTypes.func.isRequired,
   selectedObras: PropTypes.array,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default compose(

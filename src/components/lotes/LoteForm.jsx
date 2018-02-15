@@ -47,18 +47,15 @@ class LoteForm extends Component {
 
     // Bind
     this.handleArtistaChange = this.handleArtistaChange.bind(this);
-    this.addObraToGroup = this.addObraToGroup.bind(this);
-    this.removeObraFromGroup = this.removeObraFromGroup.bind(this);
 
+    this.handleOnGroupChange = this.handleOnGroupChange.bind(this);
   }
 
   addLote() {
-    const { title, price, artista, obras } = this.state;
+    const { title, price, artista, obras, tecnica } = this.state;
 
     this.setState({ isLoading: true })
     this.props.setIsLoading();
-
-    const tecnica = this.getTecnicas(obras);
 
     this.props.firebase
       .push('lotes', {
@@ -80,12 +77,10 @@ class LoteForm extends Component {
   }
 
   updateLote() {
-    const { title, price, artista, obras } = this.state;
+    const { title, price, artista, obras, tecnica } = this.state;
 
     this.setState({ isLoading: true })
     this.props.setIsLoading();
-
-    const tecnica = this.getTecnicas(obras);
 
     this.props.firebase
       .update(`lotes/${this.props.id}`, {
@@ -116,27 +111,20 @@ class LoteForm extends Component {
     }
   }
 
-  addObraToGroup(selectedObra) {
-    this.setState({
-      obras: [...this.state.obras, selectedObra]
-    });
-  }
+  handleOnGroupChange(obras) {
+    const tecnica = this.getTecnicas(obras);
 
-  removeObraFromGroup(id) {
-    this.setState( currentState => ({
-      obras: currentState.obras.filter( obra => obra.id !== id )
-    }));
+    this.setState({
+      obras,
+      tecnica
+    });
   }
 
   getTecnicas(obras) {
     const tecnicas = obras.map((obra) => {
-      let tecnica = '';
-
       if (obra.tecnica !== '' || obra.tecnica !== undefined) {
-        tecnica = obra.tecnica
+        return obra.tecnica
       }
-
-      return tecnica
     });
 
     return tecnicas;
@@ -188,9 +176,11 @@ class LoteForm extends Component {
         </div>
 
         <div className='grid-row margin-bottom-basic'>
+          <div className='grid-item item-s-12'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='obras'>Obras</label></h4>
+          </div>
           <div className='grid-item item-s-12 no-gutter'>
-            <h4 className='grid-item font-size-small font-bold margin-bottom-tiny'><label htmlFor='obras'>Obras</label></h4>
-            <ObrasGroupContainer addObraToGroup={this.addObraToGroup} selectedObras={this.state.obras} removeObraFromGroup={this.removeObraFromGroup} />
+            <ObrasGroupContainer onChange={this.handleOnGroupChange} selectedObras={this.state.obras} />
           </div>
         </div>
 
