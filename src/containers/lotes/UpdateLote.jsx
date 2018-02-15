@@ -29,8 +29,8 @@ const UpdateLote = ({ firebase, lote, id }) => {
 export default compose(
   // Get noticia path from firebase based on params prop (route params from react-router)
   firebaseConnect( ({ match: { params } }) => ([{
-    path: `lotes/${params.key}`, // connect with '/noticias/:key'
-    storeAs: 'lote' // Store this data in `noticia` so it doesn't conflict with `noticias`
+    path: `lotes/${params.key}`, // connect with '/lotes/:key'
+    storeAs: 'lote' // Store this data in `lote` so it doesn't conflict with `lotes`
   }])),
   // Map state to props
   connect(({ firebase: { data: { lote } }}, { match }) => {

@@ -5,7 +5,7 @@ const ObraGroupItem = ({ obra, removeObraFromGroup }) => {
   const { title, year } = obra;
 
   return(
-    <div className='grid-item item-s-6 item-m-3'>
+    <div className='grid-item item-s-6 item-m-3 margin-bottom-small'>
       <div className='card grid-column'>
         <div className='card-body'>
           <h3 className='margin-bottom-tiny'>{title}, {year}</h3>

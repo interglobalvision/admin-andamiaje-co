@@ -144,6 +144,7 @@ class UsuarioForm extends Component {
 
         // Unset loading
         _this.setState({ isLoading: false });
+        this.props.setIsLoaded();
 
         // Display success toast
         toastr.success('Éxito', 'Usuario creado', ToastrOptionsSuccess);
@@ -232,6 +233,7 @@ class UsuarioForm extends Component {
 
         // Unset loading
         _this.setState({ isLoading: false });
+        this.props.setIsLoaded();
 
         if (error.response) {
           // Error updating user profile

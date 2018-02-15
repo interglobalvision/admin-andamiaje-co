@@ -24,6 +24,10 @@ class ObrasGroup extends Component {
     const selectedObra = this.state.selectedObra;
 
     this.props.addObraToGroup(selectedObra);
+
+    this.setState({
+      selectedObra: {}
+    });
   }
 
   removeObraFromGroup(id) {
@@ -31,6 +35,14 @@ class ObrasGroup extends Component {
   }
 
   handleSelectChange(event) {
+    if (event.target.options[event.target.selectedIndex].value === '') {
+      this.setState({
+        selectedObra: {},
+      });
+
+      return;
+    }
+
     const id = event.target.options[event.target.selectedIndex].value;
 
     const { value: { artista, title, year, materials, tecnica } } = this.props.allObras.find( obra => obra.key === id );
@@ -65,7 +77,7 @@ class ObrasGroup extends Component {
     } else {
       return (
         <div>
-          <div className='grid-row padding-bottom-small'>
+          <div className='grid-row'>
             { selectedObras.map(obra =>
               <ObrasGroupItem key={obra.id} obra={obra} removeObraFromGroup={removeObraFromGroup} />
             )}
@@ -83,7 +95,7 @@ class ObrasGroup extends Component {
                 </div>
               </div>
               <div className='grid-item'>
-                <button className='button' type='button' onClick={this.addObraToGroup}>Agregar</button>
+                <button className='button' type='button' disabled={!Object.keys(this.state.selectedObra).length ? 'disabled' : ''} onClick={this.addObraToGroup}>Agregar</button>
               </div>
             </div>
           }
