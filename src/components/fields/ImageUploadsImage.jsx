@@ -19,18 +19,20 @@ class ImageUploadsImage extends Component {
 
   render() {
     return(
-      <div key={this.props.image.key} className='list-rows-item grid-row padding-top-micro padding-bottom-micro align-items-center'>
-        <div className='grid-item item-s-6'>
-          <img src={this.imageUrl} alt='' />
+      <div key={this.props.image.key} className='grid-item item-s-6 item-m-4 item-l-3 margin-bottom-small'>
+        <div className='card'>
+          <div className='card-body'>
+            <img src={this.imageUrl} alt='' />
+          </div>
+
+          <div className='card-actions grid-row button-row'>
+            { this.props.upDisabled && this.props.downDisabled ? '' : <div className='grid-item'><button type='button' onClick={() => this.props.moveUp(this.props.image)} disabled={this.props.upDisabled} className='button button-small'>↑</button></div> }
+
+            { this.props.upDisabled && this.props.downDisabled ? '' : <div className='grid-item'><button type='button' onClick={() => this.props.moveDown(this.props.image)} disabled={this.props.downDisabled} className='button button-small'>↓</button></div> }
+
+            <div className='grid-item'><button type='button' className='button button-small button-delete' onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta imagen?', ToastrOptionsConfirm(this.props.delete, this.props.image))}>Eliminar</button></div>
+          </div>
         </div>
-
-        <div className='grid-item flex-grow grid-row justify-end'>
-          { this.props.upDisabled && this.props.downDisabled ? '' : <button type='button' onClick={() => this.props.moveUp(this.props.image)} disabled={this.props.upDisabled} className='button button-small'>↑</button> }
-          { this.props.upDisabled && this.props.downDisabled ? '' : <button type='button' onClick={() => this.props.moveDown(this.props.image)} disabled={this.props.downDisabled} className='button button-small'>↓</button> }
-
-          <button type='button' className='button button-small button-delete' onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta imagen?', ToastrOptionsConfirm(this.props.delete, this.props.image))}>Eliminar</button>
-        </div>
-
       </div>
     );
   }

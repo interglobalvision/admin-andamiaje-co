@@ -107,13 +107,13 @@ class ImageUploads extends Component {
             <h4 className='font-size-small font-bold'>{this.props.title}</h4>
           </div>
         </div>
-        <div className='image-upload-images margin-bottom-basic'>
+        <div className='grid-row margin-bottom-basic'>
           {this.props.images.map( (image, index) => (
             <ImageUploadsImage key={image.key} image={image} moveUp={this.moveImageUp} moveDown={this.moveImageDown} delete={this.deleteImage} upDisabled={index === 0 ? 'disabled' : ''} downDisabled={index === this.props.images.length - 1 ? 'disabled' : ''} />
           ))}
           { // Depending on the number of images and if mutiple uploads are enabled, show/hide the upload field
             this.props.dropzone.multiple || (!this.props.dropzone.multiple && this.props.images.length === 0)  ?
-              <div className='grid-item item-s-6 item-m-3'>
+              <div className='grid-item item-s-6 item-m-4 item-l-3 margin-bottom-small'>
                 <UploadField placeholder={this.props.placeholder} storagePath={this.storagePath} path={this.path} disabled={this.props.disabled} dropzone={this.props.dropzone} onChange={this.handleUploadsChange} />
               </div>
               : ''
