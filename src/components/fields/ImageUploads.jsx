@@ -107,7 +107,7 @@ class ImageUploads extends Component {
             <h4 className='font-size-small font-bold'>{this.props.title}</h4>
           </div>
         </div>
-        <div className='image-upload-images'>
+        <div className='image-upload-images margin-bottom-basic'>
           {this.props.images.map( (image, index) => (
             <ImageUploadsImage key={image.key} image={image} moveUp={this.moveImageUp} moveDown={this.moveImageDown} delete={this.deleteImage} upDisabled={index === 0 ? 'disabled' : ''} downDisabled={index === this.props.images.length - 1 ? 'disabled' : ''} />
           ))}

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { toastr } from 'react-redux-toastr';
 
 import Uploads from '../fields/Uploads';
+import ImageUploads from '../fields/ImageUploads';
 import { getResizedImageUrl } from '../../utilities/images.js';
 
 import { ToastrOptionsConfirm } from '../../utilities/toastr.js';
@@ -98,10 +99,7 @@ class ArtistaPortfolio extends Component {
   }
 
   handleUploadsChange(images) {
-    // Append images to state
-    this.setState({
-      images: [...this.state.images, ...images]
-    });
+    this.setState({images});
   }
 
   changeValue(index, param, value) {
@@ -177,14 +175,15 @@ class ArtistaPortfolio extends Component {
         </div>
         <div className='grid-row'>
           <div className='grid-item item-s-12 no-gutter'>
-            <Uploads
+            <ImageUploads
               title={'Imagen'}
-              files={this.state.images}
-              onChange={this.handleUploadsChange}
+              images={this.state.images}
+              updateImages={this.handleUploadsChange}
               storagePath={this.storagePath}
               path={this.path}
               disabled={this.state.isLoading}
               deleteFile={this.deleteImage}
+              firebase={this.props.firebase}
               dropzone={{
                 accept: 'image/jpeg, image/png',
                 multiple: this.multipleUploads,

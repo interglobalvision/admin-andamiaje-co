@@ -12,10 +12,10 @@ class ImageUploadsImage extends Component {
     this.imageUrl = undefined;
 
     if(this.props.image !== undefined) {
-      this.imageUrl = getResizedImageUrl(this.props.image, '350', false);
+      this.imageUrl = this.props.image.downloadURL;
     }
-  }
 
+  }
 
   render() {
     return(
