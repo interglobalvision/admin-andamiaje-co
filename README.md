@@ -43,4 +43,4 @@ Your app is ready to be deployed.
 ## Deploy
 - `npm install -g firebase-tools`
 - `firebase use [alias]`. Alias available are `default` used for dev and `production`.
-- `yarn builDeploy`
+- `yarn buildDeploy`
