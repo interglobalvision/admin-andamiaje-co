@@ -6,7 +6,7 @@ import { firebaseConnect } from 'react-redux-firebase';
 
 import CatalogosList from '../../components/catalogos/CatalogosList';
 
-const Catalogos = ({ catalogos }) => (
+const Catalogos = ({ catalogos, lotes }) => (
   <section>
 
     <header className='grid-row margin-bottom-basic'>
@@ -17,7 +17,11 @@ const Catalogos = ({ catalogos }) => (
 
     <div className='grid-row margin-bottom-basic justify-end'>
       <div className='grid-item'>
-        <Link className='button' to='/catalogos/add'>Añadir Catalogo</Link>
+        {lotes !== undefined ? (
+          <Link className='button' to='/catalogos/add'>Añadir Catalogo</Link>
+        ) : (
+          <div>Es necesario crear Lotes</div>
+        )}
       </div>
     </div>
 
@@ -29,7 +33,7 @@ const Catalogos = ({ catalogos }) => (
 export default compose(
   // Get catalogo path from firebase based on params prop (route params from react-router)
   firebaseConnect([
-    'catalogos',
+    'catalogos', 'lotes',
   ]),
   // Map state to props
   // firebase = state.firebase
@@ -37,6 +41,7 @@ export default compose(
   connect(({ firebase: { ordered } }) => {
     return ({
       catalogos: ordered.catalogos,
+      lotes: ordered.lotes,
     })
   })
 )(Catalogos);
