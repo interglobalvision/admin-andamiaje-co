@@ -120,11 +120,11 @@ class ArtistaPortfolio extends Component {
 
         <div className='list-rows-holder margin-bottom-small'>
           {this.props.items.map( (item, index) => {
-            const { title, images, year, materials, dimensions, notesRawContent } = item;
+            const { title, images, year, materiales, dimensions, notes } = item;
 
             let imageUrl = undefined;
 
-            if(images !== undefined) {
+            if(images !== undefined && images.length) {
               imageUrl = images[0].downloadURL;
             }
 
@@ -144,7 +144,7 @@ class ArtistaPortfolio extends Component {
                   </div>
                   <div className='grid-item item-s-12 item-m-8'>
                     <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={index + '-materiales'}>Materiales</label></h4>
-                    <input id={index + '-materiales'} key={index + '-materiales'} type='text' value={materials} onChange={e => this.changeValue(index, 'materiales', e.target.value)} className='margin-bottom-tiny' />
+                    <input id={index + '-materiales'} key={index + '-materiales'} type='text' value={materiales} onChange={e => this.changeValue(index, 'materiales', e.target.value)} className='margin-bottom-tiny' />
                   </div>
                   <div className='grid-item item-s-12 item-m-4'>
                     <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={index + '-dimensions'}>Dimensiones</label></h4>
@@ -152,7 +152,7 @@ class ArtistaPortfolio extends Component {
                   </div>
                   <div className='grid-item item-s-12'>
                     <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={index + '-notes'}>Información adicional</label></h4>
-                    <textarea id={index + '-notes'} key={index + '-notes'} type='text' value={notesRawContent} onChange={e => this.changeValue(index, 'notes', e.target.value)} />
+                    <textarea id={index + '-notes'} key={index + '-notes'} type='text' value={notes} onChange={e => this.changeValue(index, 'notes', e.target.value)} />
                   </div>
                 </div>
 
