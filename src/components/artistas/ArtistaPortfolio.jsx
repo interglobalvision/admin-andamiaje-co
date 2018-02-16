@@ -120,7 +120,7 @@ class ArtistaPortfolio extends Component {
 
         <div className='list-rows-holder margin-bottom-small'>
           {this.props.items.map( (item, index) => {
-            const { title, images, year, materiales, dimensions, notes } = item;
+            const { title, images, year, materials, dimensions, notes } = item;
 
             let imageUrl = undefined;
 
@@ -143,8 +143,8 @@ class ArtistaPortfolio extends Component {
                     <input id={index + '-year'} key={index + '-year'} type='text' value={year} onChange={e => this.changeValue(index, 'year', e.target.value)} className='margin-bottom-tiny' />
                   </div>
                   <div className='grid-item item-s-12 item-m-8'>
-                    <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={index + '-materiales'}>Materiales</label></h4>
-                    <input id={index + '-materiales'} key={index + '-materiales'} type='text' value={materiales} onChange={e => this.changeValue(index, 'materiales', e.target.value)} className='margin-bottom-tiny' />
+                    <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={index + '-materials'}>Materiales</label></h4>
+                    <input id={index + '-materials'} key={index + '-materials'} type='text' value={materials} onChange={e => this.changeValue(index, 'materials', e.target.value)} className='margin-bottom-tiny' />
                   </div>
                   <div className='grid-item item-s-12 item-m-4'>
                     <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor={index + '-dimensions'}>Dimensiones</label></h4>
