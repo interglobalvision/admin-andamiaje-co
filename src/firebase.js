@@ -3,12 +3,14 @@ import firebase from 'firebase';
 import { reactReduxFirebase } from 'react-redux-firebase';
 import LogRocket from 'logrocket';
 
-// Logrocket
-LogRocket.init('2xmblo/andamiaje');
-
-let middlewares = [];
 // Set middlewares
+let middlewares = [];
+
 if(process.env.NODE_ENV === 'production') {
+  // Logrocket
+  LogRocket.init('2xmblo/andamiaje');
+
+  // Add LogRocket to middlewares
   middlewares = [LogRocket.reduxMiddleware()];
 }
 
