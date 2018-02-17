@@ -11,6 +11,7 @@
     "globie-styl-library": "^1.0.1",
     "kouto-swiss": "^1.1.0",
     "lodash": "^4.17.5",
+    "logrocket": "^0.6.5",
     "moment": "^2.20.1",
     "random-string": "^0.2.0",
     "react": "^16.2.0",
