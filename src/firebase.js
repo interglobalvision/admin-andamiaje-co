@@ -3,7 +3,6 @@ import firebase from 'firebase';
 import { reactReduxFirebase } from 'react-redux-firebase';
 import LogRocket from 'logrocket';
 
-
 // Logrocket
 LogRocket.init('2xmblo/andamiaje');
 
@@ -31,8 +30,6 @@ const reduxFirebaseConfig = {
   userProfile: 'users',
   //enableLogging: true, // enable/disable Firebase's database logging
 };
-
-console.log(process.env);
 
 // Add redux Firebase to compose
 export const createStoreWithFirebase = compose(
