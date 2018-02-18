@@ -8,7 +8,7 @@ const ObraGroupItem = ({ obra, moveObraUp, moveObraDown, removeObraFromGroup, up
 
   let imageUrl = undefined;
 
-  if(images !== undefined) {
+  if(images !== undefined && images.length) {
     imageUrl = getResizedImageUrl(images[0], '350', true);
   }
 

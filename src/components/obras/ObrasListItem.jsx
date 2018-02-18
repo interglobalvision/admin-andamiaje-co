@@ -13,7 +13,7 @@ const ObrasListItem = ({ obra, firebase: { remove } }) => {
 
   let imageUrl = undefined;
 
-  if(images !== undefined) {
+  if(images !== undefined && images.length) {
     imageUrl = getResizedImageUrl(images[0], '350', true);
   }
 
