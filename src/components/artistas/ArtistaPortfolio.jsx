@@ -108,7 +108,6 @@ class ArtistaPortfolio extends Component {
     this.props.handlePortfolioChange(items);
   }
 
-
   render() {
     return (
       <section>
@@ -131,7 +130,26 @@ class ArtistaPortfolio extends Component {
             return (
               <article key={index} className='grid-row list-rows-item padding-top-small padding-bottom-small align-items-center'>
                 <div className='grid-item item-s-12 item-m-3'>
-                  { imageUrl !== undefined ? <img src={imageUrl} alt={title} /> : '' }
+                  { imageUrl !== undefined ?
+                      <span>
+                        <img src={imageUrl} alt={title} className='margin-bottom-tiny' />
+                        <button type='button' className='button button-small button-delete' onClick={() => toastr.confirm('¿Seguro que deseas eliminar esta imágen del portafolio?', ToastrOptionsConfirm(this.changeValue.bind(this), index, 'images', [] ))}>Eliminar Imagen</button>
+                      </span> :
+                      <ImageUploads
+                        title={'Imagen'}
+                        images={this.state.images}
+                        updateImages={ image => this.changeValue(index, 'images', image)}
+                        storagePath={this.storagePath}
+                        path={this.path}
+                        disabled={this.state.isLoading}
+                        deleteFile={this.deleteImage}
+                        firebase={this.props.firebase}
+                        dropzone={{
+                          accept: 'image/jpeg, image/png',
+                          multiple: this.multipleUploads,
+                        }}
+                      />
+                  }
                 </div>
                 <div className='grid-item item-s-12 item-l-6 grid-row no-gutter'>
                   <div className='grid-item item-s-12 item-m-8'>

@@ -83,6 +83,7 @@ class ImageUploads extends Component {
 
         // Update images array
         this.props.updateImages(images);
+
       })
       .catch( error => {
         console.log(error);
@@ -113,7 +114,7 @@ class ImageUploads extends Component {
           ))}
           { // Depending on the number of images and if mutiple uploads are enabled, show/hide the upload field
             this.props.dropzone.multiple || (!this.props.dropzone.multiple && this.props.images.length === 0)  ?
-              <div className='grid-item item-s-6 item-m-4 item-l-3 margin-bottom-small'>
+              <div className='grid-item item-s-12 margin-bottom-small'>
                 <UploadField placeholder={this.props.placeholder} storagePath={this.storagePath} path={this.path} disabled={this.props.disabled} dropzone={this.props.dropzone} onChange={this.handleUploadsChange} />
               </div>
               : ''
