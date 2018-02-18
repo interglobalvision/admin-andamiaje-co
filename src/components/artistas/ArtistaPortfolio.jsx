@@ -27,7 +27,6 @@ class ArtistaPortfolio extends Component {
     this.addItem = this.addItem.bind(this);
     this.removeItem = this.removeItem.bind(this);
     this.handleUploadsChange = this.handleUploadsChange.bind(this);
-    this.handleUploadsChange = this.handleUploadsChange.bind(this);
   }
 
   addItem() {
