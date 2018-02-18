@@ -7,9 +7,9 @@ export const ToastrOptionsSuccess = {
   showCloseButton: false
 };
 
-export const ToastrOptionsConfirm = (onOkFunc, arg) => {
+export const ToastrOptionsConfirm = (onOkFunc, ...arg) => {
   return {
-    onOk: () => onOkFunc(arg),
+    onOk: () => onOkFunc(...arg),
     onCancel: null,
     okText: 'Confirmar',
     cancelText: 'Cancelar'

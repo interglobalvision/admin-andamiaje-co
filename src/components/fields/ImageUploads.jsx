@@ -83,6 +83,7 @@ class ImageUploads extends Component {
 
         // Update images array
         this.props.updateImages(images);
+
       })
       .catch( error => {
         console.log(error);
