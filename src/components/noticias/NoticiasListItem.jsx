@@ -16,7 +16,7 @@ const NoticiasListItem = ({ noticia, firebase }) => {
 
   let imageUrl = undefined;
 
-  if(images !== undefined) {
+  if(images !== undefined && images.length) {
     imageUrl = getResizedImageUrl(images[0], '350', true);
   }
 
