@@ -15,6 +15,14 @@ class UploadField extends Component {
     files: [],
   }
 
+  uploadOptions = {
+    progress: false,
+    name: (file) => {
+      return Date.now() + '-' + file.name;
+    }
+  }
+
+
   constructor(props) {
     super(props);
 
@@ -25,13 +33,6 @@ class UploadField extends Component {
 
     // Path in the db where the files references will get saved, like an index of files
     this.path = this.props.path;
-
-    this.uploadOptions = {
-      progress: true,
-      name: (file) => {
-        return Date.now() + '-' + file.name;
-      }
-    }
 
     // Bind
     this.onDropAccepted = this.onDropAccepted.bind(this);
