@@ -13,6 +13,7 @@ export const TECNICAS = {
   foto: 'Foto',
   instalacion: 'Instalación',
   pintura: 'Pintura',
+  dibujo: 'Dibujo',
   video: 'Video',
   otros: 'Otros',
 };
