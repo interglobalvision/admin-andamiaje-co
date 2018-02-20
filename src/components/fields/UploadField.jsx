@@ -26,6 +26,13 @@ class UploadField extends Component {
     // Path in the db where the files references will get saved, like an index of files
     this.path = this.props.path;
 
+    this.uploadOptions = {
+      progress: true,
+      name: (file) => {
+        return Date.now() + '-' + file.name;
+      }
+    }
+
     // Bind
     this.onDropAccepted = this.onDropAccepted.bind(this);
     this.onDropRejected = this.onDropRejected.bind(this);
@@ -38,8 +45,8 @@ class UploadField extends Component {
 
     // Upload files
     this.props.firebase
-      .uploadFiles(this.storagePath, files, this.path, { progress: true })
-      .then( files => loadImageSizes(files) )
+      .uploadFiles(this.storagePath, files, this.path, this.uploadOptions)
+      .then(files => loadImageSizes(files) )
       .then(files => {
 
         // Create an array with the data we need from the uploaded files
