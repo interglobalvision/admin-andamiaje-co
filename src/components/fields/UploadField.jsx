@@ -20,7 +20,13 @@ class UploadField extends Component {
   uploadOptions = {
     progress: false, // disabled until the renaming bug is fixed in react-redux-firebase
     name: (file) => {
-      let filename = sanitize(file.name);
+      let filename = file.name;
+      // replace spaces with underscores
+      filename = filename.replace(/ /g,'_');
+      // make lowercase
+      filename = filename.toLowerCase();
+      // sanitize
+      filename = sanitize(filename);
 
       return Date.now() + '-' + filename;
     }
