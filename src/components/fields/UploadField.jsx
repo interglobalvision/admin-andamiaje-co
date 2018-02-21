@@ -15,6 +15,14 @@ class UploadField extends Component {
     files: [],
   }
 
+  uploadOptions = {
+    progress: false, // disabled until the renaming bug is fixed in react-redux-firebase
+    name: (file) => {
+      return Date.now() + '-' + file.name;
+    }
+  }
+
+
   constructor(props) {
     super(props);
 
@@ -38,8 +46,8 @@ class UploadField extends Component {
 
     // Upload files
     this.props.firebase
-      .uploadFiles(this.storagePath, files, this.path, { progress: true })
-      .then( files => loadImageSizes(files) )
+      .uploadFiles(this.storagePath, files, this.path, this.uploadOptions)
+      .then(files => loadImageSizes(files) )
       .then(files => {
 
         // Create an array with the data we need from the uploaded files
@@ -79,12 +87,22 @@ class UploadField extends Component {
 
   }
 
-  render() {
+  dropzoneText() {
     const { uploadStatus } = this.props;
 
+    if (uploadStatus.uploading) {
+      return `Cargando ${uploadStatus.percent}%`
+    } else if (this.state.isLoading) {
+      return 'Cargando...'
+    } else {
+      return this.placeholder
+    }
+  }
+
+  render() {
     return(
       <Dropzone className='dropzone' onDropAccepted={this.onDropAccepted} disabled={this.state.isLoading || this.props.disabled} {...this.props.dropzone} onDropRejected={this.onDropRejected}>
-        <div className='font-size-small text-align-center'>{ uploadStatus.uploading  ? `Cargando ${uploadStatus.percent}% ` : this.placeholder }</div>
+        <div className='font-size-small text-align-center'>{this.dropzoneText()}</div>
       </Dropzone>
     );
 
