@@ -15,7 +15,6 @@ import { Editor } from 'react-draft-wysiwyg';
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
-import Uploads from '../fields/Uploads';
 import ImageUploads from '../fields/ImageUploads';
 
 import { ParseEditorContent, emptyEditorState } from '../../utilities/editor';

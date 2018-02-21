@@ -37,9 +37,7 @@ export const getResizedImageUrl = (file, size, square) => {
     return;
   }
 
-  const extension = file.name.split('.').pop();
   const name = file.name.replace(/\.[^/.]+$/, '');
-
 
   let thumbSuffixfix = '_' + size;
 

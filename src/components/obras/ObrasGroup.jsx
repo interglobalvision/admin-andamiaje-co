@@ -81,7 +81,7 @@ class ObrasGroup extends Component {
 
     const id = event.target.options[event.target.selectedIndex].value;
 
-    const { value: { artista, medium, title, year, materials, tecnica, images } } = this.props.allObras.find( obra => obra.key === id );
+    const { value: { artista, title, year, materials, tecnica, images } } = this.props.allObras.find( obra => obra.key === id );
 
     // Clean selectedObra from undefined values
     const selectedObra = omitBy({
