@@ -123,7 +123,7 @@ class LoteForm extends Component {
   getTecnicas(obras) {
     const tecnicas = obras.map((obra) => {
       if (obra.tecnica !== '' || obra.tecnica !== undefined) {
-        return obra.tecnica
+        return obra.tecnica;
       }
     });
 
