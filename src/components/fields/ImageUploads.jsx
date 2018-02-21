@@ -87,6 +87,18 @@ class ImageUploads extends Component {
       })
       .catch( error => {
         console.log(error);
+
+        // Check if error is 'storage/object-not-found'
+        if (error.code === 'storage/object-not-found') {
+          // Filter out the deleted image from the current state
+          const images = this.props.images.filter( currentImages => {
+            return currentImages.fullPath !== image.fullPath;
+          });
+
+          // Update images array
+          this.props.updateImages(images);
+        }
+
       })
       .then( () => {
         // Unset Loading
