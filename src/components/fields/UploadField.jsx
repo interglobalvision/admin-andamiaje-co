@@ -5,6 +5,8 @@ import { toastr } from 'react-redux-toastr';
 
 import Dropzone from 'react-dropzone'; // For Dropzone reference check https://github.com/react-dropzone/react-dropzone
 
+import sanitize from 'sanitize-filename';
+
 import { ToastrOptionsError } from '../../utilities/toastr';
 import { loadImageSizes } from '../../utilities/images';
 
@@ -18,7 +20,15 @@ class UploadField extends Component {
   uploadOptions = {
     progress: false, // disabled until the renaming bug is fixed in react-redux-firebase
     name: (file) => {
-      return Date.now() + '-' + file.name;
+      let filename = file.name;
+      // replace spaces with underscores
+      filename = filename.replace(/ /g,'_');
+      // make lowercase
+      filename = filename.toLowerCase();
+      // sanitize
+      filename = sanitize(filename);
+
+      return Date.now() + '-' + filename;
     }
   }
 
