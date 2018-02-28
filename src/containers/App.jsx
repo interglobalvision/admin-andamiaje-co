@@ -9,7 +9,7 @@ import ControlPanel from '../components/ControlPanel.jsx';
 import NoMatch from '../components/NoMatch.jsx';
 
 const App = (props) => {
-  const { auth } = props;
+  const { auth, profile } = props;
 
   if (!isLoaded(auth)) {
     return (
@@ -19,7 +19,7 @@ const App = (props) => {
     )
   }
 
-  if (isEmpty(auth)) {
+  if (isEmpty(auth) || profile.role !== 'admin') {
     return (
       <div>
         <Switch>
