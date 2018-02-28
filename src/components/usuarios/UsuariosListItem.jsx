@@ -26,7 +26,7 @@ const UsuariosListItem = ({ usuario, firebase, currentUID }) => {
     case 'member':
       displayRole = 'Miembro';
       break;
-    case 'observador':
+    case 'observer':
       displayRole = 'Observador';
       break;
     default:

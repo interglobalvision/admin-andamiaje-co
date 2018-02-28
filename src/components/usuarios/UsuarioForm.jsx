@@ -307,14 +307,14 @@ class UsuarioForm extends Component {
             </div>
             <div className='grid-row align-items-center margin-bottom-micro'>
               <input
-                id='observador'
+                id='observer'
                 name='role'
                 type='radio'
                 disabled={this.state.isLoading}
-                checked={this.state.role === 'observador'}
+                checked={this.state.role === 'observer'}
                 onChange={ event => this.setState({ role: event.target.id }) }
               />
-              <label htmlFor='observador' className='font-size-small'>Observador</label>
+              <label htmlFor='observer' className='font-size-small'>Observador</label>
             </div>
           </div>
         </div>
