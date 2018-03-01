@@ -5,6 +5,8 @@ import { firebaseConnect } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
 import { toastr } from 'react-redux-toastr';
 
+import _findKey from 'lodash/findKey';
+
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import ArtistaSelectContainer from '../../containers/artistas/ArtistaSelectContainer';
@@ -77,13 +79,14 @@ class LoteForm extends Component {
   }
 
   updateLote() {
+    const { id, firebase } = this.props;
     const { title, price, artista, obras, tecnica } = this.state;
 
     this.setState({ isLoading: true })
     this.props.setIsLoading();
 
-    this.props.firebase
-      .update(`lotes/${this.props.id}`, {
+    firebase
+      .update(`lotes/${id}`, {
         title,
         price,
         artista,
@@ -91,6 +94,37 @@ class LoteForm extends Component {
         tecnica,
       })
       .then(() => {
+        return firebase.ref(`catalogos`).once('value');
+      })
+      .then((dataSnapshot) => {
+        const data = dataSnapshot.val();
+
+        let target = {};
+
+        target.catalogo = _findKey(data, (catalogo) => {
+
+          target.loteIndex = _findKey(catalogo.lotes, (lote) => {
+
+            if (lote.id === id) {
+              return true;
+            }
+
+          });
+
+          if (target.loteIndex !== undefined) {
+            return true;
+          }
+
+        });
+
+        if (target.catalogo === undefined) {
+          return;
+        }
+
+        return firebase.ref(`catalogos/${target.catalogo}/lotes/${target.loteIndex}`).update({title});
+      })
+      .then(() => {
+
         this.setState({ isLoading: false })
         this.props.setIsLoaded();
 
