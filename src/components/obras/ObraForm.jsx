@@ -4,6 +4,8 @@ import { firebaseConnect } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
 import { toastr } from 'react-redux-toastr';
 
+import _findKey from 'lodash/findKey';
+
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import ArtistaSelectContainer from '../../containers/artistas/ArtistaSelectContainer';
@@ -138,13 +140,14 @@ class ObraForm extends Component {
   }
 
   updateObra() {
+    const { id, firebase } = this.props;
     const { title, year, artista, materials, dimensions, tecnica, notesRawContent, images } = this.state;
 
     this.setState({ isLoading: true })
     this.props.setIsLoading();
 
     this.props.firebase
-      .update(`obras/${this.props.id}`, {
+      .update(`obras/${id}`, {
         title,
         year,
         artista,
@@ -153,6 +156,45 @@ class ObraForm extends Component {
         tecnica,
         notesRawContent,
         images,
+      })
+      .then(() => {
+        return firebase.ref(`lotes`).once('value');
+      })
+      .then((dataSnapshot) => {
+        const data = dataSnapshot.val();
+
+        let target = {};
+
+        target.lote = _findKey(data, (lote) => {
+
+          target.obraIndex = _findKey(lote.obras, (obra) => {
+
+            if (obra.id === id) {
+              return true;
+            }
+
+          });
+
+          if (target.obraIndex !== undefined) {
+            return true;
+          }
+
+        });
+
+        if (target.obraIndex === undefined) {
+          return;
+        }
+
+        return firebase.ref(`lotes/${target.lote}/obras/${target.obraIndex}`).update({
+          title,
+          year,
+          artista,
+          materials,
+          dimensions,
+          tecnica,
+          notesRawContent,
+          images,
+        });
       })
       .then(() => {
         this.setState({ isLoading: false })
