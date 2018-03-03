@@ -86,6 +86,7 @@ class LoteForm extends Component {
     this.props.setIsLoading();
 
     firebase
+    // Update Lote
       .update(`lotes/${id}`, {
         title,
         price,
@@ -93,44 +94,51 @@ class LoteForm extends Component {
         obras,
         tecnica,
       })
+    // Fetch all Catalogos
       .then(() => {
         return firebase.ref(`catalogos`).once('value');
       })
+    // Find the Catalogo that contains the Lote we just updated
       .then((dataSnapshot) => {
-        const data = dataSnapshot.val();
+        const catalogos = dataSnapshot.val();
 
         let target = {};
 
-        target.catalogo = _findKey(data, (catalogo) => {
 
+        // Find the key of the Catalogo that matches the condition
+        target.catalogo = _findKey(catalogos, (catalogo) => {
+          // Find the key of the Lote (inside the Catalogo) that matches the condition
           target.loteIndex = _findKey(catalogo.lotes, (lote) => {
-
+            // Match the id of the Lote that we are updating
             if (lote.id === id) {
               return true;
             }
-
           });
 
+          // Return (the key of this Catalogo) after finding the Lote (above)
           if (target.loteIndex !== undefined) {
             return true;
           }
-
         });
 
+        // If not found just return
         if (target.catalogo === undefined) {
           return;
         }
 
+        // If we found a Catalog containing the Lote, update it with new data
         return firebase.ref(`catalogos/${target.catalogo}/lotes/${target.loteIndex}`).update({title});
       })
+      .catch( error => {
+        console.log(error);
+      })
       .then(() => {
-
         this.setState({ isLoading: false })
         this.props.setIsLoaded();
 
         // Display success toast
         toastr.success('Éxito', 'Lote actualizado', ToastrOptionsSuccess);
-      })
+      });
 
   }
 
