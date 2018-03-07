@@ -35,7 +35,7 @@ class UsuarioForm extends Component {
     images: [],
     password: '',
     tokens: 0,
-    editarTokena: false,
+    editarTokens: false,
     error: {
       message: '',
     },
@@ -195,6 +195,8 @@ class UsuarioForm extends Component {
       this.setState({ tokens: 0 })
     }
 
+    this.setState({ editarTokens: false })
+
     // Create user function url
     const updateUserFunction = CloudFunctionsUrl + '/updateUser';
 
@@ -339,7 +341,7 @@ class UsuarioForm extends Component {
               min='0'
               step='.5'
               max='15'
-              disabled={this.state.isLoading || this.state.role !== 'member' || !this.state.editarTokens}
+              disabled={this.state.isLoading || this.state.role !== 'member' || !this.state.editarTokens }
               value={this.state.tokens}
               onChange={ event => this.setState({ tokens: event.target.value })}
             />
@@ -351,8 +353,8 @@ class UsuarioForm extends Component {
               name='editarTokens'
               type='checkbox'
               disabled={this.state.isLoading || this.state.role !== 'member'}
-              value={this.state.editarTokens}
-              onChange={ event => this.setState({ editarTokens: event.target.value })}
+              checked={this.state.editarTokens}
+              onChange={ event => this.setState({ editarTokens: event.target.checked })}
             />
           </div>
         </div>
