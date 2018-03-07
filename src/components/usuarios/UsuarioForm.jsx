@@ -335,8 +335,8 @@ class UsuarioForm extends Component {
               name='tokens'
               type='number'
               min='0'
+              step='.5'
               max='15'
-              step='2.5'
               disabled={this.state.isLoading || this.state.role !== 'member'}
               value={this.state.tokens}
               onChange={ event => this.setState({ tokens: event.target.value })}
