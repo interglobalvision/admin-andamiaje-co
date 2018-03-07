@@ -35,6 +35,7 @@ class UsuarioForm extends Component {
     images: [],
     password: '',
     tokens: 0,
+    editarTokena: false,
     error: {
       message: '',
     },
@@ -191,6 +192,7 @@ class UsuarioForm extends Component {
 
     if (role !== 'member') {
       tokens = 0;
+      this.setState({ tokens: 0 })
     }
 
     // Create user function url
@@ -337,9 +339,20 @@ class UsuarioForm extends Component {
               min='0'
               step='.5'
               max='15'
-              disabled={this.state.isLoading || this.state.role !== 'member'}
+              disabled={this.state.isLoading || this.state.role !== 'member' || !this.state.editarTokens}
               value={this.state.tokens}
               onChange={ event => this.setState({ tokens: event.target.value })}
+            />
+          </div>
+          <div className='grid-item'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='name'>Editar Tokens</label></h4>
+            <input
+              id='editarTokens'
+              name='editarTokens'
+              type='checkbox'
+              disabled={this.state.isLoading || this.state.role !== 'member'}
+              value={this.state.editarTokens}
+              onChange={ event => this.setState({ editarTokens: event.target.value })}
             />
           </div>
         </div>
