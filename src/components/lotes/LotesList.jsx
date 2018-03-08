@@ -24,7 +24,7 @@ const LotesList = ({ lotes, users }) => {
             <h3>Precio</h3>
           </div>
           <div className='grid-item item-s-1'>
-            <h3>Deseo</h3>
+            <h3>Deseado</h3>
           </div>
         </header>
 
