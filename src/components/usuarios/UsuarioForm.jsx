@@ -16,6 +16,8 @@ import { setIsLoading, setIsLoaded } from '../../redux/actions/loadingStatusActi
 
 import ImageUploads from '../fields/ImageUploads';
 
+import UsuarioWishlist from './UsuarioWishlist';
+
 const mapDispatchToProps = dispatch =>  ({
   setIsLoaded: () => dispatch(setIsLoaded()),
   setIsLoading: () => dispatch(setIsLoading()),
@@ -36,6 +38,7 @@ class UsuarioForm extends Component {
     password: '',
     tokens: 0,
     editarTokens: false,
+    wishlist: {},
     error: {
       message: '',
     },
@@ -423,8 +426,8 @@ class UsuarioForm extends Component {
             multiple: this.multipleUploads,
           }}
         />
-
-
+        
+        <UsuarioWishlist wishlist={this.state.wishlist} />
 
         <div className='grid-row margin-bottom-basic justify-end'>
           <div className='grid-item'>
