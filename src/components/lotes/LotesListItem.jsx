@@ -7,7 +7,7 @@ import { toastr } from 'react-redux-toastr';
 
 import { ToastrOptionsConfirm, ToastrOptionsSuccess } from '../../utilities/toastr.js';
 
-const LotesListItem = ({ lote, firebase, wishlists }) => {
+const LotesListItem = ({ lote, firebase, wishlisters }) => {
   const { key } = lote;
   const { title, price, artista } = lote.value;
 
@@ -34,7 +34,7 @@ const LotesListItem = ({ lote, firebase, wishlists }) => {
         <span>{price}</span>
       </div>
       <div className='grid-item item-s-1'>
-        <span>{wishlists}</span>
+        <span>{wishlisters}</span>
       </div>
       <div className='grid-item flex-grow grid-row no-gutter justify-end'>
         <div className='grid-item'>
@@ -57,7 +57,7 @@ LotesListItem.propTypes = {
       //TODO: medium.PropTypes.array,
     }).isRequired,
   }),
-  wishlists: PropTypes.number.isRequired,
+  wishlisters: PropTypes.number.isRequired,
 };
 
 export default withFirebase(LotesListItem);

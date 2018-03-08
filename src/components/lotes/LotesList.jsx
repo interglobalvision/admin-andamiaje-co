@@ -31,17 +31,17 @@ const LotesList = ({ lotes, users }) => {
         <div className="list-rows-holder">
           { Object.keys(lotes).map( // …else map thru noticias
             (key, id) => {
-              let wishlists = 0;
+              let wishlisters = 0;
 
               for(let i = 0; i <= (users.length - 1); i++) {
                 if (users[i].value.role === 'member') {
                   if (Object.values(users[i].value.wishlist).find(item => item.id === lotes[id].key)) {
-                    wishlists++;
+                    wishlisters++;
                   }
                 }
               }
 
-              return (<LotesListItem key={key} id={id} lote={lotes[key]} wishlists={wishlists}/>)
+              return (<LotesListItem key={key} id={id} lote={lotes[key]} wishlisters={wishlisters}/>)
             }
           ) }
         </div>
