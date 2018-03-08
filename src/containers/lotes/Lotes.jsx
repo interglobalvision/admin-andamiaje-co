@@ -6,7 +6,7 @@ import { firebaseConnect } from 'react-redux-firebase';
 
 import LotesList from '../../components/lotes/LotesList';
 
-const Lotes = ({ obras, lotes }) => (
+const Lotes = ({ obras, lotes, users }) => (
   <section>
 
     <header className='grid-row margin-bottom-basic'>
@@ -25,7 +25,7 @@ const Lotes = ({ obras, lotes }) => (
       </div>
     </div>
 
-    <LotesList lotes={lotes} />
+    <LotesList lotes={lotes} users={users}  />
 
   </section>
 );
@@ -33,7 +33,7 @@ const Lotes = ({ obras, lotes }) => (
 export default compose(
   // Get lote path from firebase based on params prop (route params from react-router)
   firebaseConnect([
-    'lotes', 'obras',
+    'lotes', 'obras', 'users',
   ]),
   // Map state to props
   // firebase = state.firebase
@@ -42,6 +42,7 @@ export default compose(
     return ({
       obras: ordered.obras,
       lotes: ordered.lotes,
+      users: ordered.users,
     })
   })
 )(Lotes);
