@@ -11,7 +11,7 @@ const UsuarioWishlist = ({ wishlist }) => {
           <h5>Artista</h5>
         </div>
         <div className='grid-item item-s-6'>
-          <h5>Titulo</h5>
+          <h5>Título</h5>
         </div>
       </header>
 
