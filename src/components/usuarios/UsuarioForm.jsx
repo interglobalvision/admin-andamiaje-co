@@ -36,6 +36,8 @@ class UsuarioForm extends Component {
     displayName: '',
     images: [],
     password: '',
+    tokens: 0,
+    editarTokens: false,
     wishlist: {},
     error: {
       message: '',
@@ -95,7 +97,7 @@ class UsuarioForm extends Component {
 
   addUsuario() {
     const { active, role, name, email, displayName, images } = this.state;
-    let { password } = this.state;
+    let { password, tokens } = this.state;
 
     // Create context references for callback
     const _this = this;
@@ -104,6 +106,10 @@ class UsuarioForm extends Component {
     // Generate random password if empty
     if (password === '' || password === undefined) {
       password = randomString({length: 10});
+    }
+
+    if (role !== 'member') {
+      tokens = 0;
     }
 
     // Create user function url
@@ -140,7 +146,8 @@ class UsuarioForm extends Component {
           email,
           displayName,
           images,
-          password
+          password,
+          tokens
         })
 
       )).then(() => {
@@ -174,7 +181,7 @@ class UsuarioForm extends Component {
 
   updateUsuario() {
     const { active, role, name, email, displayName, images } = this.state;
-    let { password } = this.state;
+    let { password, tokens } = this.state;
 
     // Create context references for callback
     const _this = this;
@@ -185,6 +192,13 @@ class UsuarioForm extends Component {
     if (password === '' || password === undefined) {
       password = randomString({length: 10});
     }
+
+    if (role !== 'member') {
+      tokens = 0;
+      this.setState({ tokens: 0 })
+    }
+
+    this.setState({ editarTokens: false })
 
     // Create user function url
     const updateUserFunction = CloudFunctionsUrl + '/updateUser';
@@ -220,7 +234,8 @@ class UsuarioForm extends Component {
           email,
           displayName,
           images,
-          password
+          password,
+          tokens
         })
 
       )).then(() => {
@@ -319,6 +334,31 @@ class UsuarioForm extends Component {
               />
               <label htmlFor='observer' className='font-size-small'>Observador</label>
             </div>
+          </div>
+          <div className='grid-item'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='name'>Tokens</label></h4>
+            <input
+              id='tokens'
+              name='tokens'
+              type='number'
+              min='0'
+              step='.5'
+              max='15'
+              disabled={this.state.isLoading || this.state.role !== 'member' || !this.state.editarTokens }
+              value={this.state.tokens}
+              onChange={ event => this.setState({ tokens: event.target.value })}
+            />
+          </div>
+          <div className='grid-item'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='name'>Editar Tokens</label></h4>
+            <input
+              id='editarTokens'
+              name='editarTokens'
+              type='checkbox'
+              disabled={this.state.isLoading || this.state.role !== 'member'}
+              checked={this.state.editarTokens}
+              onChange={ event => this.setState({ editarTokens: event.target.checked })}
+            />
           </div>
         </div>
 
