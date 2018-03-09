@@ -46,6 +46,7 @@ class ArtistaForm extends Component {
       url: '',
     },
     portfolio: [],
+    vimeoId: '',
     error: {
       message: '',
     },
@@ -91,6 +92,7 @@ class ArtistaForm extends Component {
       images,
       video,
       portfolio,
+      vimeoId,
     } = this.state;
 
     this.setState({ isLoading: true })
@@ -109,6 +111,7 @@ class ArtistaForm extends Component {
         images,
         video,
         portfolio,
+        vimeoId,
       })
       .then(() => {
         this.setState({ isLoading: false });
@@ -134,6 +137,7 @@ class ArtistaForm extends Component {
       images,
       video,
       portfolio,
+      vimeoId,
     } = this.state;
 
     this.setState({ isLoading: true })
@@ -152,6 +156,7 @@ class ArtistaForm extends Component {
         images,
         video,
         portfolio,
+        vimeoId,
       })
       .then(() => {
         this.setState({ isLoading: false });
@@ -348,6 +353,32 @@ class ArtistaForm extends Component {
           }}
         />
 
+        <div className='grid-row'>
+          <div className='grid-item item-s-12 item-m-8 margin-bottom-basic'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='video'>Video</label></h4>
+            <input
+              id='video'
+              name='video'
+              type='text'
+              disabled={this.state.isLoading}
+              value={this.state.video.url}
+              onChange={ event => this.handleVideoChange(event.target.value)}
+            />
+          </div>
+
+          <div className='grid-item item-s-12 item-m-4 margin-bottom-basic'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='video'>Vimeo ID</label></h4>
+            <input
+              id='vimeoId'
+              name='vimeoId'
+              type='text'
+              disabled={this.state.isLoading}
+              value={this.state.vimeoId}
+              onChange={ event => this.setState({ vimeoId: event.target.value })}
+            />
+          </div>
+        </div>
+
         <div className='grid-row margin-bottom-basic'>
           <div className='grid-item item-s-12'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='editor'>Bio</label></h4>
@@ -384,20 +415,6 @@ class ArtistaForm extends Component {
                   emojis: EMOJIS,
                 }
               }}
-            />
-          </div>
-        </div>
-
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
-            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='video'>Video</label></h4>
-            <input
-              id='video'
-              name='video'
-              type='text'
-              disabled={this.state.isLoading}
-              value={this.state.video.url}
-              onChange={ event => this.handleVideoChange(event.target.value)}
             />
           </div>
         </div>

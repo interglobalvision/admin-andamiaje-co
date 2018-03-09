@@ -45,6 +45,7 @@ class NoticiaForm extends Component {
     video: {
       url: '',
     },
+    vimeoId: '',
     error: {
       message: '',
     },
@@ -119,7 +120,16 @@ class NoticiaForm extends Component {
   }
 
   addNoticia() {
-    const { title, rawContent, published, publishDate, video, images, artista } = this.state;
+    const {
+      title,
+      rawContent,
+      published,
+      publishDate,
+      video,
+      images,
+      artista,
+      vimeoId,
+    } = this.state;
 
     const createdDate = Date.now();
 
@@ -136,6 +146,7 @@ class NoticiaForm extends Component {
         video,
         images,
         artista,
+        vimeoId,
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -149,7 +160,16 @@ class NoticiaForm extends Component {
   }
 
   updateNoticia() {
-    const { title, rawContent, published, publishDate, images, video, artista } = this.state;
+    const {
+      title,
+      rawContent,
+      published,
+      publishDate,
+      images,
+      video,
+      artista,
+      vimeoId,
+    } = this.state;
 
     this.setState({ isLoading: true })
     this.props.setIsLoading();
@@ -163,6 +183,7 @@ class NoticiaForm extends Component {
         video,
         images,
         artista,
+        vimeoId,
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -320,8 +341,8 @@ class NoticiaForm extends Component {
           </div>
         </div>
 
-        <div className='grid-row margin-bottom-basic'>
-          <div className='grid-item item-s-12'>
+        <div className='grid-row'>
+          <div className='grid-item item-s-12 item-m-8 margin-bottom-basic'>
             <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='video'>Video</label></h4>
             <input
               id='video'
@@ -330,6 +351,18 @@ class NoticiaForm extends Component {
               disabled={this.state.isLoading}
               value={this.state.video.url}
               onChange={ event => this.handleVideoChange(event.target.value)}
+            />
+          </div>
+
+          <div className='grid-item item-s-12 item-m-4 margin-bottom-basic'>
+            <h4 className='font-size-small font-bold margin-bottom-tiny'><label htmlFor='video'>Vimeo ID</label></h4>
+            <input
+              id='vimeoId'
+              name='vimeoId'
+              type='text'
+              disabled={this.state.isLoading}
+              value={this.state.vimeoId}
+              onChange={ event => this.setState({ vimeoId: event.target.value })}
             />
           </div>
         </div>
