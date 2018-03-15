@@ -100,7 +100,7 @@ class LoteForm extends Component {
       })
     // Find the Catalogo that contains the Lote we just updated
       .then((dataSnapshot) => {
-        const catalogos = dataSnapshot.val();
+        const catalogos = dataSnapshot.val() || {};
 
         let target = {};
 
