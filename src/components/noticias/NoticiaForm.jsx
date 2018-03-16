@@ -21,6 +21,7 @@ import { ParseEditorContent, emptyEditorState } from '../../utilities/editor';
 import EMOJIS from '../../utilities/emojis';
 
 import { ToastrOptionsSuccess, ToastrOptionsError } from '../../utilities/toastr.js';
+import { getVimeoData } from '../../utilities/vimeo.js';
 
 import { setIsLoading, setIsLoaded } from '../../redux/actions/loadingStatusActions'
 
@@ -45,7 +46,9 @@ class NoticiaForm extends Component {
     video: {
       url: '',
     },
-    vimeoId: '',
+    vimeo: {
+      id: '',
+    },
     error: {
       message: '',
     },
@@ -65,6 +68,7 @@ class NoticiaForm extends Component {
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
     this.handleVideoChange = this.handleVideoChange.bind(this);
+    this.handleVimeoChange = this.handleVimeoChange.bind(this);
     this.handleUploadsChange = this.handleUploadsChange.bind(this);
     this.deleteImage = this.deleteImage.bind(this);
     this.handleArtistaChange = this.handleArtistaChange.bind(this);
@@ -128,7 +132,7 @@ class NoticiaForm extends Component {
       video,
       images,
       artista,
-      vimeoId,
+      vimeo,
     } = this.state;
 
     const createdDate = Date.now();
@@ -146,7 +150,7 @@ class NoticiaForm extends Component {
         video,
         images,
         artista,
-        vimeoId,
+        vimeo,
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -168,7 +172,7 @@ class NoticiaForm extends Component {
       images,
       video,
       artista,
-      vimeoId,
+      vimeo,
     } = this.state;
 
     this.setState({ isLoading: true })
@@ -183,7 +187,7 @@ class NoticiaForm extends Component {
         video,
         images,
         artista,
-        vimeoId,
+        vimeo,
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -240,6 +244,58 @@ class NoticiaForm extends Component {
 
       toastr.warning('Error', 'El link del video no es correcto', ToastrOptionsError);
     }
+  }
+
+  handleVimeoChange(id) {
+
+    if(id !== undefined && id !== null && id !== '') { // If id has a value
+
+      // Call to get the video data
+      const videoData = getVimeoData(id, response => {
+
+        // Inital empty sources
+        let sources = {};
+
+        if (response.error) { // Something wetn wrong :(
+          toastr.warning('Error', 'El ID de Vimeo no es correcto', ToastrOptionsError);
+        }
+
+        if(response.body) { // We got the video data
+
+          toastr.success('Éxito', `Agregado el video "${response.body.name}"`, ToastrOptionsSuccess);
+
+          // Build an object of sources
+          response.body.download.forEach( source => {
+            sources[source.width] = source;
+          });
+        }
+
+        // set new state
+        this.setState( prevState => {
+          return ({
+            ...prevState,
+            vimeo: {
+              ...prevState['vimeo'],
+              id,
+              sources,
+            },
+          });
+        });
+
+      })
+
+    }
+
+    this.setState( prevState => {
+      return ({
+        ...prevState,
+        vimeo: {
+          ...prevState['vimeo'],
+          id,
+        },
+      });
+    });
+
   }
 
   handleUploadsChange(images) {
@@ -361,8 +417,8 @@ class NoticiaForm extends Component {
               name='vimeoId'
               type='text'
               disabled={this.state.isLoading}
-              value={this.state.vimeoId}
-              onChange={ event => this.setState({ vimeoId: event.target.value })}
+              value={this.state.vimeo.id}
+              onChange={ event => this.handleVimeoChange(event.target.value)}
             />
           </div>
         </div>
