@@ -247,16 +247,17 @@ class NoticiaForm extends Component {
   }
 
   handleVimeoChange(id) {
+    let newState = this.state;
+
+    newState.vimeo['id'] = id;
 
     if(id !== undefined && id !== null && id !== '') { // If id has a value
 
       // Call to get the video data
       const videoData = getVimeoData(id, response => {
 
-        // Inital empty sources
-        let sources = {};
-
         if (response.error) { // Something wetn wrong :(
+          newState.vimeo['sources'] = undefined;
           toastr.warning('Error', 'El ID de Vimeo no es correcto', ToastrOptionsError);
         }
 
@@ -265,36 +266,27 @@ class NoticiaForm extends Component {
           toastr.success('Éxito', `Agregado el video "${response.body.name}"`, ToastrOptionsSuccess);
 
           // Build an object of sources
-          response.body.download.forEach( source => {
-            sources[source.width] = source;
+          response.body.files.forEach( source => {
+            const key = source.width !== undefined ? source.width : 'original';
+            const thumb = response.body.pictures.sizes.find( size => size.width === source.width);
+
+            if(thumb) {
+              source.thumb = thumb.link_with_play_button;
+            }
+
+            newState.vimeo['sources'][key] = source;
           });
+
         }
 
         // set new state
-        this.setState( prevState => {
-          return ({
-            ...prevState,
-            vimeo: {
-              ...prevState['vimeo'],
-              id,
-              sources,
-            },
-          });
-        });
+        this.setState(newState);
 
       })
 
     }
 
-    this.setState( prevState => {
-      return ({
-        ...prevState,
-        vimeo: {
-          ...prevState['vimeo'],
-          id,
-        },
-      });
-    });
+    this.setState(newState);
 
   }
 
