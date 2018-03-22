@@ -35,7 +35,7 @@ const LotesList = ({ lotes, users }) => {
 
               for(let i = 0; i <= (users.length - 1); i++) {
                 if (users[i].value.role === 'member') {
-                  if (Object.values(users[i].value.wishlist).find(item => item.id === lotes[id].key)) {
+                  if (users[i].value.wishlist && Object.values(users[i].value.wishlist).find(item => item.id === lotes[id].key)) {
                     wishlisters++;
                   }
                 }
