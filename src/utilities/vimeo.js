@@ -42,13 +42,14 @@ export const parseVimeoRedirectUrl = (url, callback) => {
   let response = url;
 
   xhr.onreadystatechange = function(e) {
-    if (xhr.status == 200 && xhr.readyState == 4) {
+    if (xhr.status == 200 && xhr.readyState == 2) {
       if (url != xhr.responseURL) {
         console.log("redirect detected to: " + xhr.responseURL)
         response = xhr.responseURL;
       } else {
         console.log("no redirect detected")
       }
+      xhr.abort();
 
       if(typeof callback === 'function') {
         callback(response);

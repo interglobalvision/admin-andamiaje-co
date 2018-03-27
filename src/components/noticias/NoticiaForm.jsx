@@ -320,33 +320,36 @@ class NoticiaForm extends Component {
   getVimeoRedirects() {
     const state = this.state;
 
-    if(state.vimeo.sources !== undefined) {
+    // Sources keys aka sizes (width)
+    const sourcesKeys = Object.keys(state.vimeo.sources);
+
+    if(sourcesKeys.length) {
       // set screen Loading
       this.props.setIsLoading();
 
       // Uses to keep track of how many sources have been resolved
       let counter = 0;
 
-      // Sources keys aka sizes (width)
-      const sourcesKeys = Object.keys(state.vimeo.sources);
-
       sourcesKeys.forEach( key => { // Check each source
         parseVimeoRedirectUrl(state.vimeo.sources[key].link, url => {
           // Make a copy of current state
           let nextState = state;
 
-          debugger;
-
+          // Update with the parsed redirect url
           nextState.vimeo.sources[key].link = url;
 
+          // Increment counter
           counter += 1;
 
+          // Update state
+          this.setState(nextState);
+
+          // Check if all sources have been updated
           if(counter >= sourcesKeys.length) {
             // unset screen Loading
             this.props.setIsLoaded();
           }
 
-          this.setState(nextState);
         });
       });
     }
