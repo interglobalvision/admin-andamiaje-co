@@ -72,6 +72,8 @@ class NoticiaForm extends Component {
     this.handleUploadsChange = this.handleUploadsChange.bind(this);
     this.deleteImage = this.deleteImage.bind(this);
     this.handleArtistaChange = this.handleArtistaChange.bind(this);
+    this.handleVimeoChange = this.handleVimeoChange.bind(this);
+    this.handleVimeoData = this.handleVimeoData.bind(this);
   }
 
   componentWillMount() {
@@ -252,40 +254,55 @@ class NoticiaForm extends Component {
     newState.vimeo['id'] = id;
 
     if(id !== undefined && id !== null && id !== '') { // If id has a value
-
       // Call to get the video data
-      const videoData = getVimeoData(id, response => {
+      getVimeoData(id, this.handleVimeoData);
 
-        if (response.error) { // Something wetn wrong :(
-          newState.vimeo['sources'] = undefined;
-          toastr.warning('Error', 'El ID de Vimeo no es correcto', ToastrOptionsError);
-        }
+    } else {
+      newState.vimeo = {
+        id: ''
+      };
+    }
 
-        if(response.body) { // We got the video data
+    this.setState(newState);
 
-          toastr.success('Éxito', `Agregado el video "${response.body.name}"`, ToastrOptionsSuccess);
+  }
 
-          // Build an object of sources
-          response.body.files.forEach( source => {
-            const key = source.width !== undefined ? source.width : 'original';
-            const thumb = response.body.pictures.sizes.find( size => size.width === source.width);
+  handleVimeoData(response) {
+    let newState = this.state;
 
-            if(thumb) {
-              source.thumb = thumb.link_with_play_button;
-            }
+    if (response.error) { // Something wetn wrong :(
+      newState.vimeo['sources'] = {};
 
-            newState.vimeo['sources'][key] = source;
-          });
+      const message = JSON.parse(response.error.message);
 
-        }
-
-        // set new state
-        this.setState(newState);
-
-      })
+      if(message.error === 'The requested video could not be found') {
+        toastr.warning('Error', 'El ID de Vimeo no es correcto', ToastrOptionsError);
+      } else {
+        toastr.warning('Error', 'Ha sucedido un error con Vimeo', ToastrOptionsError);
+      }
 
     }
 
+    if(response.body) { // We got the video data
+      newState.vimeo['sources'] = {};
+
+      toastr.success('Éxito', `Agregado el video "${response.body.name}"`, ToastrOptionsSuccess);
+
+      // Build an object of sources
+      response.body.files.forEach( source => {
+        const key = source.width !== undefined ? source.width : 'original';
+        const thumb = response.body.pictures.sizes.find( size => size.width === source.width);
+
+        if(thumb) {
+          source.thumb = thumb.link_with_play_button;
+        }
+
+        newState.vimeo['sources'][key] = source;
+      });
+
+    }
+
+    // set new state
     this.setState(newState);
 
   }
