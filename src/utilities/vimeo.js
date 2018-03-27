@@ -34,3 +34,30 @@ export const getVimeoData = (id, callback) => {
 
 
 }
+
+export const parseVimeoRedirectUrl = (url, callback) => {
+
+  const xhr = new XMLHttpRequest();
+
+  let response = url;
+
+  xhr.onreadystatechange = function(e) {
+    if (xhr.status == 200 && xhr.readyState == 4) {
+      if (url != xhr.responseURL) {
+        console.log("redirect detected to: " + xhr.responseURL)
+        response = xhr.responseURL;
+      } else {
+        console.log("no redirect detected")
+      }
+
+      if(typeof callback === 'function') {
+        callback(response);
+      }
+
+    }
+  }
+
+  xhr.open("GET", url, true);
+  xhr.send();
+
+}

@@ -21,7 +21,7 @@ import { ParseEditorContent, emptyEditorState } from '../../utilities/editor';
 import EMOJIS from '../../utilities/emojis';
 
 import { ToastrOptionsSuccess, ToastrOptionsError } from '../../utilities/toastr.js';
-import { getVimeoData } from '../../utilities/vimeo.js';
+import { getVimeoData, parseVimeoRedirectUrl } from '../../utilities/vimeo.js';
 
 import { setIsLoading, setIsLoaded } from '../../redux/actions/loadingStatusActions'
 
@@ -268,10 +268,17 @@ class NoticiaForm extends Component {
   }
 
   handleVimeoData(response) {
-    let newState = this.state;
+
+    // set Loading
+    this.setState({ isLoading: true })
+
+    let vimeo = this.state.vimeo;
 
     if (response.error) { // Something wetn wrong :(
-      newState.vimeo['sources'] = {};
+      // unset Loading
+      this.setState({ isLoading: false })
+
+      vimeo['sources'] = {};
 
       const message = JSON.parse(response.error.message);
 
@@ -284,7 +291,7 @@ class NoticiaForm extends Component {
     }
 
     if(response.body) { // We got the video data
-      newState.vimeo['sources'] = {};
+      vimeo['sources'] = {};
 
       toastr.success('Éxito', `Agregado el video "${response.body.name}"`, ToastrOptionsSuccess);
 
@@ -297,14 +304,52 @@ class NoticiaForm extends Component {
           source.thumb = thumb.link_with_play_button;
         }
 
-        newState.vimeo['sources'][key] = source;
+        vimeo['sources'][key] = source;
       });
+
+      // unset Loading
+      this.setState({ isLoading: false })
 
     }
 
-    // set new state
-    this.setState(newState);
+    // set new state and call getVimeoRedirects
+    this.setState(Object.assign({}, this.state, vimeo), this.getVimeoRedirects);
+  }
 
+  // Go thru vimeo sources and resolve their redirects, update them in the state
+  getVimeoRedirects() {
+    const state = this.state;
+
+    if(state.vimeo.sources !== undefined) {
+      // set screen Loading
+      this.props.setIsLoading();
+
+      // Uses to keep track of how many sources have been resolved
+      let counter = 0;
+
+      // Sources keys aka sizes (width)
+      const sourcesKeys = Object.keys(state.vimeo.sources);
+
+      sourcesKeys.forEach( key => { // Check each source
+        parseVimeoRedirectUrl(state.vimeo.sources[key].link, url => {
+          // Make a copy of current state
+          let nextState = state;
+
+          debugger;
+
+          nextState.vimeo.sources[key].link = url;
+
+          counter += 1;
+
+          if(counter >= sourcesKeys.length) {
+            // unset screen Loading
+            this.props.setIsLoaded();
+          }
+
+          this.setState(nextState);
+        });
+      });
+    }
   }
 
   handleUploadsChange(images) {
