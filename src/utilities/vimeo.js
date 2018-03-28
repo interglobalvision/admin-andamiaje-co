@@ -40,19 +40,19 @@ export const parseVimeoRedirectUrl = (url, callback) => {
   const xhr = new XMLHttpRequest();
 
   xhr.onreadystatechange = function(e) {
-    if (xhr.status == 200 && xhr.readyState == 2) { // readyState 2 = HEADERS_RECEIVED
-      if (url != xhr.responseURL) { // Redirect detected
+    if (xhr.status === 200 && xhr.readyState === 2) { // readyState 2 = HEADERS_RECEIVED
+      if (url !== xhr.responseURL) { // Redirect detected
         response = xhr.responseURL;
       }
+
       xhr.abort();
 
-      if(typeof callback === 'function') {
+      if (typeof callback === 'function') {
         callback(response);
       }
-
     }
   }
 
-  xhr.open("GET", url, true);
+  xhr.open('GET', url, true);
   xhr.send();
 }
