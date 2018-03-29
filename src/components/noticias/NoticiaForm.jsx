@@ -68,7 +68,6 @@ class NoticiaForm extends Component {
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
     this.handleVideoChange = this.handleVideoChange.bind(this);
-    this.handleVimeoChange = this.handleVimeoChange.bind(this);
     this.handleUploadsChange = this.handleUploadsChange.bind(this);
     this.deleteImage = this.deleteImage.bind(this);
     this.handleArtistaChange = this.handleArtistaChange.bind(this);
