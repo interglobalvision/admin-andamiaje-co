@@ -42,7 +42,7 @@ export const parseVimeoRedirectUrl = (url, callback) => {
   xhr.onreadystatechange = function(e) {
     if (xhr.status === 200 && xhr.readyState === 2) { // readyState 2 = HEADERS_RECEIVED
       if (url !== xhr.responseURL) { // Redirect detected
-        response = xhr.responseURL;
+        response = xhr.responseURL.replace('&download=1',''); // Remove the download parameter
       }
 
       xhr.abort();
