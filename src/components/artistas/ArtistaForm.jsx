@@ -17,6 +17,7 @@ import { ParseEditorContent, emptyEditorState } from '../../utilities/editor';
 import EMOJIS from '../../utilities/emojis.js';
 
 import { ToastrOptionsSuccess, ToastrOptionsError } from '../../utilities/toastr.js';
+import { getVimeoData, parseVimeoRedirectUrl } from '../../utilities/vimeo.js';
 
 import { setIsLoading, setIsLoaded } from '../../redux/actions/loadingStatusActions';
 
@@ -45,6 +46,9 @@ class ArtistaForm extends Component {
     video: {
       url: '',
     },
+    vimeo: {
+      id: '',
+    },
     portfolio: [],
     vimeoId: '',
     error: {
@@ -67,9 +71,12 @@ class ArtistaForm extends Component {
     // Bind handlers
     this.handleBioEditorChange = this.handleBioEditorChange.bind(this);
     this.handleCvEditorChange = this.handleCvEditorChange.bind(this);
+    this.handleVideoChange = this.handleVideoChange.bind(this);
     this.handleUploadsChange = this.handleUploadsChange.bind(this);
     this.handlePortfolioChange = this.handlePortfolioChange.bind(this);
     this.deleteImage = this.deleteImage.bind(this);
+    this.handleVimeoChange = this.handleVimeoChange.bind(this);
+    this.handleVimeoData = this.handleVimeoData.bind(this);
   }
 
   componentWillMount() {
@@ -92,7 +99,7 @@ class ArtistaForm extends Component {
       images,
       video,
       portfolio,
-      vimeoId,
+      vimeo,
     } = this.state;
 
     this.setState({ isLoading: true })
@@ -111,7 +118,7 @@ class ArtistaForm extends Component {
         images,
         video,
         portfolio,
-        vimeoId,
+        vimeo,
       })
       .then(() => {
         this.setState({ isLoading: false });
@@ -137,7 +144,7 @@ class ArtistaForm extends Component {
       images,
       video,
       portfolio,
-      vimeoId,
+      vimeo,
     } = this.state;
 
     this.setState({ isLoading: true })
@@ -156,7 +163,7 @@ class ArtistaForm extends Component {
         images,
         video,
         portfolio,
-        vimeoId,
+        vimeo,
       })
       .then(() => {
         this.setState({ isLoading: false });
@@ -242,6 +249,113 @@ class ArtistaForm extends Component {
       });
 
       toastr.warning('Error', 'El link del video no es correcto', ToastrOptionsError);
+    }
+  }
+
+  handleVimeoChange(id) {
+    let newState = this.state;
+
+    newState.vimeo['id'] = id;
+
+    if(id !== undefined && id !== null && id !== '') { // If id has a value
+      // Call to get the video data
+      getVimeoData(id, this.handleVimeoData);
+
+    } else {
+      newState.vimeo = {
+        id: ''
+      };
+    }
+
+    this.setState(newState);
+
+  }
+
+  handleVimeoData(response) {
+
+    // set Loading
+    this.setState({ isLoading: true })
+
+    let vimeo = this.state.vimeo;
+
+    if (response.error) { // Something wetn wrong :(
+      // unset Loading
+      this.setState({ isLoading: false })
+
+      vimeo['sources'] = {};
+
+      const message = JSON.parse(response.error.message);
+
+      if(message.error === 'The requested video could not be found') {
+        toastr.warning('Error', 'El ID de Vimeo no es correcto', ToastrOptionsError);
+      } else {
+        toastr.warning('Error', 'Ha sucedido un error con Vimeo', ToastrOptionsError);
+      }
+
+    }
+
+    if(response.body) { // We got the video data
+      vimeo['sources'] = {};
+
+      toastr.success('Éxito', `Agregado el video "${response.body.name}"`, ToastrOptionsSuccess);
+
+      // Build an object of sources
+      response.body.files.forEach( source => {
+        const key = source.width !== undefined ? source.width : 'original';
+        const thumb = response.body.pictures.sizes.find( size => size.width === source.width);
+
+        if(thumb) {
+          source.thumb = thumb.link_with_play_button;
+        }
+
+        vimeo['sources'][key] = source;
+      });
+
+      // unset Loading
+      this.setState({ isLoading: false })
+
+    }
+
+    // set new state and call getVimeoRedirects
+    this.setState(Object.assign({}, this.state, vimeo), this.getVimeoRedirects);
+  }
+
+  // Go thru vimeo sources and resolve their redirects, update them in the state
+  getVimeoRedirects() {
+    const state = this.state;
+
+    // Sources keys aka sizes (width)
+    const sourcesKeys = Object.keys(state.vimeo.sources);
+
+    if(sourcesKeys.length) {
+      // set screen Loading
+      this.props.setIsLoading();
+
+      // Uses to keep track of how many sources have been resolved
+      let counter = 0;
+
+      sourcesKeys.forEach( key => { // Check each source
+        parseVimeoRedirectUrl(state.vimeo.sources[key].link, url => {
+          // Make a copy of current state
+          let nextState = state;
+
+          // Update with the parsed redirect url
+          nextState.vimeo.sources[key].link = url;
+
+          // Increment counter
+          counter += 1;
+
+          // Update state
+          this.setState(nextState);
+
+          // Check if all sources have been updated
+          if(counter >= sourcesKeys.length) {
+            // unset screen Loading
+            this.props.setIsLoaded();
+          }
+
+        });
+      });
     }
   }
 
@@ -373,8 +487,8 @@ class ArtistaForm extends Component {
               name='vimeoId'
               type='text'
               disabled={this.state.isLoading}
-              value={this.state.vimeoId}
-              onChange={ event => this.setState({ vimeoId: event.target.value })}
+              value={this.state.vimeo.id}
+              onChange={ event => this.handleVimeoChange(event.target.value)}
             />
           </div>
         </div>
