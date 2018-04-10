@@ -7,7 +7,6 @@ export const getVimeoData = (id, callback) => {
     process.env.REACT_APP_VIMEO_ACCESS_TOKEN
   );
 
-
   vimeo.request({
     path: `/me/videos/${id}`,
   }, (error, body, status_code, headers) => {
@@ -15,23 +14,17 @@ export const getVimeoData = (id, callback) => {
     let response = {};
 
     if (error) {
-      console.log('error');
-      console.log(error);
+      console.log('error', error);
       response = { error };
-
     } else {
-      console.log('body');
-      console.log(body);
       response = { body };
     }
-
 
     if(typeof callback === 'function') {
       callback(response);
     }
 
   });
-
 
 }
 
