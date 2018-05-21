@@ -6,6 +6,7 @@ This project contains the source code of the Admin panel for Andamiaje.co
 ```
 git clone git@github.com:interglobalvision/admin-andamiaje-co.git
 cd admin-andamiaje-co
+cp .env.example .env
 yarn
 ```
 
