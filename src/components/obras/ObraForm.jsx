@@ -3,25 +3,21 @@ import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
 import { toastr } from 'react-redux-toastr';
-
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-
-import ArtistaSelectContainer from '../../containers/artistas/ArtistaSelectContainer';
-
-import { ToastrOptionsSuccess } from '../../utilities/toastr.js';
-
+import _findKey from 'lodash/findKey';
 import { convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { setIsLoading, setIsLoaded } from '../../redux/actions/loadingStatusActions'
 
+import ArtistaSelectContainer from '../../containers/artistas/ArtistaSelectContainer';
+import { ToastrOptionsSuccess } from '../../utilities/toastr.js';
 import ImageUploads from '../fields/ImageUploads';
 
-import { ParseEditorContent, emptyEditorState } from '../../utilities/editor';
-import EMOJIS from '../../utilities/emojis.js';
 import { TECNICAS } from '../../utilities/constants.js';
+import { ParseEditorContent, emptyEditorState } from '../../utilities/editor';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import EMOJIS from '../../utilities/emojis.js';
 
-import { setIsLoading, setIsLoaded } from '../../redux/actions/loadingStatusActions'
 
 const mapDispatchToProps = dispatch =>  ({
   setIsLoaded: () => dispatch(setIsLoaded()),
@@ -138,13 +134,15 @@ class ObraForm extends Component {
   }
 
   updateObra() {
+    const { id, firebase } = this.props;
     const { title, year, artista, materials, dimensions, tecnica, notesRawContent, images } = this.state;
 
     this.setState({ isLoading: true })
     this.props.setIsLoading();
 
-    this.props.firebase
-      .update(`obras/${this.props.id}`, {
+    // Update Obra
+    firebase
+      .update(`obras/${id}`, {
         title,
         year,
         artista,
@@ -154,13 +152,58 @@ class ObraForm extends Component {
         notesRawContent,
         images,
       })
+    // Fetch all Lotes
+      .then(() => {
+        return firebase.ref(`lotes`).once('value');
+      })
+    // Find the Lote that contains the Obra we just updated
+      .then((dataSnapshot) => {
+        const data = dataSnapshot.val();
+        let target = {};
+
+        // Find the key of the Lote that matches the condition
+        target.lote = _findKey(data, (lote) => {
+          // Find the key of the Obra (inside the Lote) that matches the condition
+          target.obraIndex = _findKey(lote.obras, (obra) => {
+            // Match the id of the Obra that we are updating
+            if (obra.id === id) {
+              return true;
+            }
+          });
+
+          // Return (the key of this Lote) after finding the Obra (above)
+          if (target.obraIndex !== undefined) {
+            return true;
+          }
+        });
+
+        // If not found just return
+        if (target.obraIndex === undefined) {
+          return;
+        }
+
+        // If we found a Lote containing the Obra, update it with new data
+        return firebase.ref(`lotes/${target.lote}/obras/${target.obraIndex}`).update({
+          title,
+          year,
+          artista,
+          materials,
+          dimensions,
+          tecnica,
+          notesRawContent,
+          images,
+        });
+      })
+      .catch( error => {
+        console.log(error);
+      })
       .then(() => {
         this.setState({ isLoading: false })
         this.props.setIsLoaded();
 
         // Display success toast
         toastr.success('Éxito', 'Obra actualizada');
-      })
+      });
 
   }
 

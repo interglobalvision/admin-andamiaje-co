@@ -5,6 +5,8 @@ import { firebaseConnect } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
 import { toastr } from 'react-redux-toastr';
 
+import _findKey from 'lodash/findKey';
+
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import ArtistaSelectContainer from '../../containers/artistas/ArtistaSelectContainer';
@@ -77,18 +79,58 @@ class LoteForm extends Component {
   }
 
   updateLote() {
+    const { id, firebase } = this.props;
     const { title, price, artista, obras, tecnica } = this.state;
 
     this.setState({ isLoading: true })
     this.props.setIsLoading();
 
-    this.props.firebase
-      .update(`lotes/${this.props.id}`, {
+    firebase
+    // Update Lote
+      .update(`lotes/${id}`, {
         title,
         price,
         artista,
         obras,
         tecnica,
+      })
+    // Fetch all Catalogos
+      .then(() => {
+        return firebase.ref(`catalogos`).once('value');
+      })
+    // Find the Catalogo that contains the Lote we just updated
+      .then((dataSnapshot) => {
+        const catalogos = dataSnapshot.val() || {};
+
+        let target = {};
+
+
+        // Find the key of the Catalogo that matches the condition
+        target.catalogo = _findKey(catalogos, (catalogo) => {
+          // Find the key of the Lote (inside the Catalogo) that matches the condition
+          target.loteIndex = _findKey(catalogo.lotes, (lote) => {
+            // Match the id of the Lote that we are updating
+            if (lote.id === id) {
+              return true;
+            }
+          });
+
+          // Return (the key of this Catalogo) after finding the Lote (above)
+          if (target.loteIndex !== undefined) {
+            return true;
+          }
+        });
+
+        // If not found just return
+        if (target.catalogo === undefined) {
+          return;
+        }
+
+        // If we found a Catalog containing the Lote, update it with new data
+        return firebase.ref(`catalogos/${target.catalogo}/lotes/${target.loteIndex}`).update({title});
+      })
+      .catch( error => {
+        console.log(error);
       })
       .then(() => {
         this.setState({ isLoading: false })
@@ -96,7 +138,7 @@ class LoteForm extends Component {
 
         // Display success toast
         toastr.success('Éxito', 'Lote actualizado', ToastrOptionsSuccess);
-      })
+      });
 
   }
 
